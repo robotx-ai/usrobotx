@@ -1,0 +1,725 @@
+import type { Locale } from "@/lib/i18n";
+
+type NavigationItem = {
+  label: string;
+  href: string;
+};
+
+type LanguageOption = {
+  locale: Locale;
+};
+
+export type NavigationContent = {
+  items: NavigationItem[];
+  languages: LanguageOption[];
+};
+
+export type FooterContent = {
+  tagline: string;
+  title: string;
+  description: string;
+  navigationHeading: string;
+  contactHeading: string;
+  links: NavigationItem[];
+  address: string;
+  phoneLabel: string;
+  phoneRaw: string;
+  email: string;
+};
+
+type HeroContent = {
+  kicker: string;
+  title: string;
+  description: string;
+  primaryAction: string;
+  secondaryAction: string;
+  backgroundVideoSrc: string;
+  backgroundPosterSrc: string;
+};
+
+type Metric = {
+  value: string;
+  label: string;
+};
+
+type IndexedPoint = {
+  index: string;
+  title: string;
+  description: string;
+};
+
+type HomeContent = {
+  hero: HeroContent;
+  companyIntroduction: {
+    kicker: string;
+    title: string;
+    description: string;
+  };
+  metrics: Metric[];
+  positioning: {
+    kicker: string;
+    title: string;
+    description: string;
+    points: IndexedPoint[];
+  };
+  solutions: {
+    kicker: string;
+    title: string;
+    description: string;
+  };
+  story: {
+    kicker: string;
+    title: string;
+    description: string;
+    steps: IndexedPoint[];
+  };
+  callout: {
+    kicker: string;
+    title: string;
+    description: string;
+    primaryAction: string;
+    secondaryAction: string;
+  };
+};
+
+type SolutionCard = {
+  tag: string;
+  title: string;
+  description: string;
+  highlights: string[];
+  imageSrc: string;
+};
+
+type SolutionsContent = {
+  pageHero: {
+    kicker: string;
+    title: string;
+    description: string;
+  };
+  cards: SolutionCard[];
+  callout: {
+    kicker: string;
+    title: string;
+    description: string;
+    primaryLabel: string;
+    primaryHref: string;
+  };
+};
+
+type AboutContent = {
+  pageHero: {
+    kicker: string;
+    title: string;
+    description: string;
+  };
+  mission: {
+    kicker: string;
+    title: string;
+    description: string;
+    values: {
+      title: string;
+      description: string;
+    }[];
+  };
+  advantage: {
+    kicker: string;
+    title: string;
+    description: string;
+    points: IndexedPoint[];
+  };
+};
+
+type ContactContent = {
+  pageHero: {
+    kicker: string;
+    title: string;
+    description: string;
+  };
+  info: {
+    kicker: string;
+    title: string;
+    description: string;
+    address: string;
+    phoneLabel: string;
+    phoneRaw: string;
+    email: string;
+  };
+  form: {
+    kicker: string;
+    title: string;
+    nameLabel: string;
+    namePlaceholder: string;
+    emailLabel: string;
+    emailPlaceholder: string;
+    messageLabel: string;
+    messagePlaceholder: string;
+    submitLabel: string;
+  };
+};
+
+export type SiteContent = {
+  meta: {
+    title: string;
+    description: string;
+  };
+  navigation: NavigationContent;
+  footer: FooterContent;
+  home: HomeContent;
+  solutions: SolutionsContent;
+  about: AboutContent;
+  contact: ContactContent;
+};
+
+const sharedAddress = "17901 Von Karman Ave, Ste 420, Irvine, CA 92614";
+const sharedPhoneLabel = "1-800-519-0881";
+const sharedPhoneRaw = "18005190881";
+const sharedEmail = "info@usrobotx.com";
+const homeHeroVideoSrc = "/media/home/Quadruped_secondary_development_solution_1_web.mp4";
+const homeHeroPosterSrc = "/media/home/Pudu_CC1-8.webp";
+const sharedSolutionImageSrc = "/media/home/Pudu_CC1-8.webp";
+
+const siteContentByLocale: Record<Locale, SiteContent> = {
+  en: {
+    meta: {
+      title: "RobotX AI Inc.",
+      description:
+        "Advanced robotics solutions for industrial automation, education, and mission-critical safety.",
+    },
+    navigation: {
+      items: [
+        { label: "Solutions", href: "/solutions" },
+        { label: "About", href: "/about" },
+        { label: "Contact", href: "/contact" },
+      ],
+      languages: [{ locale: "en" }, { locale: "zh" }],
+    },
+    footer: {
+      tagline: "Future-ready robotics",
+      title: "Build the next field deployment with RobotX AI.",
+      description:
+        "We design technical robotics experiences that connect advanced hardware, operator insight, and practical deployment.",
+      navigationHeading: "Navigate",
+      contactHeading: "Contact",
+      links: [
+        { label: "Solutions", href: "/solutions" },
+        { label: "About", href: "/about" },
+        { label: "Contact", href: "/contact" },
+      ],
+      address: sharedAddress,
+      phoneLabel: sharedPhoneLabel,
+      phoneRaw: sharedPhoneRaw,
+      email: sharedEmail,
+    },
+    home: {
+      hero: {
+        kicker: "RobotX AI Inc.",
+        title: "From Deployment to Intelligence",
+        description:
+          "We build advanced robotic platforms and applied solutions for industrial, educational, humanoid, and life-safety environments with a focus on precision, control, and deployment readiness.",
+        primaryAction: "Explore Solutions",
+        secondaryAction: "Talk to Us",
+        backgroundVideoSrc: homeHeroVideoSrc,
+        backgroundPosterSrc: homeHeroPosterSrc,
+      },
+      companyIntroduction: {
+        kicker: "Company Overview",
+        title: "A data-driven ecosystem for evolving AI robotics.",
+        description:
+          "Powered by a global supply chain and a multi-channel deployment matrix across sales, leasing, and education, RobotX stabilizes cash flow while opening strategic data-entry points. By deeply modeling raw data from vertical industries and performing secondary development on core perception and motion algorithms, we deliver AI solutions for factories, construction, and other complex environments with the capacity for intelligent evolution.",
+      },
+      metrics: [
+        { value: "4", label: "Core solution tracks" },
+        { value: "EN / ZH", label: "Bilingual experience from launch" },
+        { value: "Responsive", label: "Mobile to widescreen ready" },
+      ],
+      positioning: {
+        kicker: "Why RobotX",
+        title: "Scientific clarity, robotic confidence, production-minded execution.",
+        description:
+          "The new site is designed to feel technical and future-facing while still staying approachable for customers evaluating serious robotics capabilities.",
+        points: [
+          {
+            index: "01",
+            title: "System-level thinking",
+            description:
+              "We present robotics as an integrated stack of mobility, sensing, control, and mission workflow rather than isolated hardware.",
+          },
+          {
+            index: "02",
+            title: "Visual credibility",
+            description:
+              "Motion, grid systems, metallic surfaces, and technical overlays support the brand without making the experience feel gimmicky.",
+          },
+          {
+            index: "03",
+            title: "Extensible architecture",
+            description:
+              "The codebase is structured for future Shopify product display, CMS integration, and richer media without redesigning the foundation.",
+          },
+        ],
+      },
+      solutions: {
+        kicker: "Solution Focus",
+        title: "Built for applied robotics across multiple environments.",
+        description:
+          "We are carrying forward the strongest parts of the current website while shifting the presentation toward an engineering-forward brand system.",
+      },
+      story: {
+        kicker: "Deployment Flow",
+        title: "From concept briefing to field-ready communication.",
+        description:
+          "Each section of the site is designed to help customers understand what RobotX builds, where those systems fit, and how to start the conversation.",
+        steps: [
+          {
+            index: "01",
+            title: "Frame the application",
+            description:
+              "Identify whether the customer is evaluating robotics for education, industrial workflows, humanoid interfaces, or firefighting and emergency response.",
+          },
+          {
+            index: "02",
+            title: "Surface the technical edge",
+            description:
+              "Use media-rich panels, highlighted specifications, and clear language to communicate sensing, mobility, control, and remote operation capability.",
+          },
+          {
+            index: "03",
+            title: "Convert into inquiry",
+            description:
+              "Route traffic into direct contact rather than checkout, keeping the site focused on partnership, consultation, and future product display expansion.",
+          },
+        ],
+      },
+      callout: {
+        kicker: "Start the rebuild",
+        title: "A local-first codebase ready for Netlify, GitHub, and future media expansion.",
+        description:
+          "This MVP is built to launch without Shopify dependencies today while leaving clean extension points for display-only product content later.",
+        primaryAction: "Contact RobotX",
+        secondaryAction: "See Our Approach",
+      },
+    },
+    solutions: {
+      pageHero: {
+        kicker: "Solutions",
+        title: "Robotics platforms aligned to real mission needs.",
+        description:
+          "The current WordPress site highlights humanoid, industrial, educational, and firefighting directions. The new experience keeps that structure while making it clearer and more premium.",
+      },
+      cards: [
+        {
+          tag: "Humanoid",
+          title: "Humanoid robotics for interactive, research, and service scenarios.",
+          description:
+            "Designed for organizations exploring human-centered robotics experiences, advanced interaction models, and public-facing deployments.",
+          highlights: [
+            "Human-machine interaction narratives",
+            "Research-ready presentation blocks",
+            "Future support for catalog display modules",
+          ],
+          imageSrc: sharedSolutionImageSrc,
+        },
+        {
+          tag: "Industrial",
+          title: "Industrial robotics for inspection, mobility, and operational efficiency.",
+          description:
+            "A technical content structure suited for advanced automation, monitoring, and remote operation workflows in demanding environments.",
+          highlights: [
+            "Clear sensing and mobility storytelling",
+            "Operator-focused interface framing",
+            "Responsive layouts for media-heavy case studies",
+          ],
+          imageSrc: sharedSolutionImageSrc,
+        },
+        {
+          tag: "Education",
+          title: "Educational robotics for labs, training programs, and technical learning.",
+          description:
+            "Focused on program value, curriculum relevance, and platform accessibility for institutions introducing robotics into teaching and research.",
+          highlights: [
+            "Explains learning and experimentation value",
+            "Supports bilingual academic outreach",
+            "Easy to extend with videos and lab imagery",
+          ],
+          imageSrc: sharedSolutionImageSrc,
+        },
+        {
+          tag: "Firefighting",
+          title: "Robotic firefighting solutions for safer response in extreme conditions.",
+          description:
+            "Inspired by the current site’s life-safety messaging, this section emphasizes remote operation, situational awareness, and personnel protection.",
+          highlights: [
+            "Mission-first storytelling",
+            "High-risk environment messaging",
+            "Media panels ready for field footage",
+          ],
+          imageSrc: sharedSolutionImageSrc,
+        },
+      ],
+      callout: {
+        kicker: "Next step",
+        title: "Need a tailored robotics page or product showcase next?",
+        description:
+          "The current code structure is ready for deeper solution subpages and a future Shopify-fed display layer.",
+        primaryLabel: "Contact Us",
+        primaryHref: "/en/contact",
+      },
+    },
+    about: {
+      pageHero: {
+        kicker: "About",
+        title: "A robotics company building trust through technical clarity.",
+        description:
+          "RobotX AI combines advanced robotics interest with practical deployment thinking. The redesigned website presents that identity with a more scientific and futuristic tone.",
+      },
+      mission: {
+        kicker: "Mission",
+        title: "Show the brand as capable, credible, and ready to collaborate.",
+        description:
+          "The About page should help visitors quickly understand the company, the problem spaces it cares about, and the way it approaches modern robotics.",
+        values: [
+          {
+            title: "Precision",
+            description:
+              "Design and messaging should feel measured, intentional, and rooted in technical confidence.",
+          },
+          {
+            title: "Adaptability",
+            description:
+              "The site is structured to grow from a marketing presence into a richer product and solution platform over time.",
+          },
+          {
+            title: "Accessibility",
+            description:
+              "English and Chinese content, clear sections, and responsive design make the experience easier to use across audiences.",
+          },
+        ],
+      },
+      advantage: {
+        kicker: "How we present the company",
+        title: "A modern site architecture designed for long-term growth.",
+        description:
+          "Instead of copying the WordPress theme, the rebuild uses clearer components, reusable sections, and a brand system made for code ownership.",
+        points: [
+          {
+            index: "01",
+            title: "Code-managed content",
+            description:
+              "Pages are easy to version, review, and deploy through GitHub and Netlify.",
+          },
+          {
+            index: "02",
+            title: "Structured styling",
+            description:
+              "Reusable global CSS tokens support consistent spacing, color, typography, and motion.",
+          },
+          {
+            index: "03",
+            title: "Future integration points",
+            description:
+              "The architecture leaves room for forms, CMS workflows, and Shopify product display without a rewrite.",
+          },
+        ],
+      },
+    },
+    contact: {
+      pageHero: {
+        kicker: "Contact",
+        title: "Start the robotics conversation.",
+        description:
+          "We are focusing the MVP on inquiry and relationship-building instead of direct e-commerce, so the contact experience needs to feel direct, confident, and clear.",
+      },
+      info: {
+        kicker: "Reach RobotX",
+        title: "Talk with our team about solutions, deployment, or collaboration.",
+        description:
+          "The contact details are based on the current live website and can be adjusted easily as the new site evolves.",
+        address: sharedAddress,
+        phoneLabel: sharedPhoneLabel,
+        phoneRaw: sharedPhoneRaw,
+        email: sharedEmail,
+      },
+      form: {
+        kicker: "Inquiry Form",
+        title: "Tell us what you are building.",
+        nameLabel: "Name",
+        namePlaceholder: "Your name",
+        emailLabel: "Email",
+        emailPlaceholder: "Your email",
+        messageLabel: "Message",
+        messagePlaceholder: "Tell us about your robotics use case, timeline, or question.",
+        submitLabel: "Send Inquiry",
+      },
+    },
+  },
+  zh: {
+    meta: {
+      title: "RobotX AI Inc.",
+      description: "面向工业、教育与关键任务场景的先进机器人解决方案。",
+    },
+    navigation: {
+      items: [
+        { label: "解决方案", href: "/solutions" },
+        { label: "关于我们", href: "/about" },
+        { label: "联系我们", href: "/contact" },
+      ],
+      languages: [{ locale: "en" }, { locale: "zh" }],
+    },
+    footer: {
+      tagline: "面向未来的机器人品牌",
+      title: "与 RobotX AI 一起打造下一代机器人应用场景。",
+      description:
+        "我们用更技术化、更清晰的方式呈现机器人能力，把先进硬件、感知控制与真实部署需求连接起来。",
+      navigationHeading: "页面导航",
+      contactHeading: "联系信息",
+      links: [
+        { label: "解决方案", href: "/solutions" },
+        { label: "关于我们", href: "/about" },
+        { label: "联系我们", href: "/contact" },
+      ],
+      address: sharedAddress,
+      phoneLabel: sharedPhoneLabel,
+      phoneRaw: sharedPhoneRaw,
+      email: sharedEmail,
+    },
+    home: {
+      hero: {
+        kicker: "RobotX AI Inc.",
+        title: "以部署驱动规模,以数据铸造壁垒。",
+        description:
+          "我们专注于工业、教育、人形机器人与消防等方向的先进机器人平台与解决方案，强调精确控制、工程能力与落地部署。",
+        primaryAction: "查看解决方案",
+        secondaryAction: "联系我们",
+        backgroundVideoSrc: homeHeroVideoSrc,
+        backgroundPosterSrc: homeHeroPosterSrc,
+      },
+      companyIntroduction: {
+        kicker: "公司简介",
+        title: "以数据驱动智能的闭环生态",
+        description:
+          "依托全球供应链与多维部署矩阵（销售、租赁、教育）稳固现金流，并开辟战略级数据入口。通过对垂直领域原始数据的深度建模，二次开发核心感知与运动算法，为工厂、建筑等复杂场景交付具备“智能进化”能力的 AI 方案。",
+      },
+      metrics: [
+        { value: "4", label: "核心解决方案方向" },
+        { value: "中 / EN", label: "上线即支持双语" },
+        { value: "响应式", label: "适配移动端到大屏" },
+      ],
+      positioning: {
+        kicker: "为什么选择 RobotX",
+        title: "更科学的表达、更机器人的气质、更可扩展的代码结构。",
+        description:
+          "新网站会比当前 WordPress 版本更具技术感与未来感，同时仍然保持清晰、可信、便于客户理解。",
+        points: [
+          {
+            index: "01",
+            title: "系统级表达",
+            description:
+              "我们把机器人展示为移动、感知、控制与任务流程整合后的系统，而不是孤立的单一硬件。",
+          },
+          {
+            index: "02",
+            title: "品牌可信度",
+            description:
+              "通过金属感表面、技术网格、数据化动效与清晰布局，让品牌更专业而不过度炫技。",
+          },
+          {
+            index: "03",
+            title: "面向未来扩展",
+            description:
+              "代码结构已为后续 Shopify 产品展示、CMS 内容管理与更多媒体内容预留接口。",
+          },
+        ],
+      },
+      solutions: {
+        kicker: "解决方案方向",
+        title: "面向多种机器人应用环境而设计。",
+        description:
+          "我们保留当前网站中最重要的业务结构，同时通过更工程化的设计语言提升品牌气质。",
+      },
+      story: {
+        kicker: "转化路径",
+        title: "从业务场景到合作咨询的完整信息路径。",
+        description:
+          "每一个页面板块都在帮助访客理解 RobotX 做什么、适合哪些场景，以及如何开始进一步沟通。",
+        steps: [
+          {
+            index: "01",
+            title: "明确应用场景",
+            description:
+              "帮助访客快速判断需求属于教育、工业、人形机器人，还是消防与应急响应方向。",
+          },
+          {
+            index: "02",
+            title: "突出技术优势",
+            description:
+              "用媒体化模块、重点参数和简洁文案表达感知、控制、运动与远程操作能力。",
+          },
+          {
+            index: "03",
+            title: "引导业务咨询",
+            description:
+              "MVP 以咨询转化为主，不放结账流程，为后续展示型产品页面保留扩展空间。",
+          },
+        ],
+      },
+      callout: {
+        kicker: "本次重建目标",
+        title: "先把本地代码环境和品牌基础搭建好，再逐步扩展媒体与产品展示。",
+        description:
+          "这个 MVP 当前不依赖 Shopify，也不会阻碍后续加入只展示不售卖的产品模块。",
+        primaryAction: "联系 RobotX",
+        secondaryAction: "了解我们",
+      },
+    },
+    solutions: {
+      pageHero: {
+        kicker: "解决方案",
+        title: "围绕真实任务需求构建的机器人能力展示。",
+        description:
+          "当前 WordPress 网站中的人形、工业、教育和消防方向会被保留，但新的表达方式会更清晰、更高级、更符合机器人品牌气质。",
+      },
+      cards: [
+        {
+          tag: "人形机器人",
+          title: "适用于交互、研究与服务场景的人形机器人方案。",
+          description:
+            "面向需要展示人机交互、前沿研究能力和品牌形象输出的组织与项目。",
+          highlights: [
+            "强化人机交互场景表达",
+            "适合研究与展示型页面结构",
+            "后续可扩展产品展示模块",
+          ],
+          imageSrc: sharedSolutionImageSrc,
+        },
+        {
+          tag: "工业机器人",
+          title: "服务于巡检、移动作业与效率提升的工业机器人方案。",
+          description:
+            "适合强调自动化、监测、远程操控和复杂环境作业能力的技术型内容展示。",
+          highlights: [
+            "清晰讲述感知与移动能力",
+            "突出操作端和系统控制逻辑",
+            "适合媒体较多的案例扩展",
+          ],
+          imageSrc: sharedSolutionImageSrc,
+        },
+        {
+          tag: "教育机器人",
+          title: "面向实验室、教学项目与技术培训的教育机器人方案。",
+          description:
+            "突出教学价值、平台开放性以及科研和课程结合的可能性，适合学校与研究机构。",
+          highlights: [
+            "强调学习与实验价值",
+            "支持中英双语学术传播",
+            "后续方便加入实验室照片与视频",
+          ],
+          imageSrc: sharedSolutionImageSrc,
+        },
+        {
+          tag: "消防机器人",
+          title: "面向极端环境与人员安全的机器人消防方案。",
+          description:
+            "延续当前网站中消防方向的核心价值，重点突出远程操控、现场感知与人员保护能力。",
+          highlights: [
+            "任务导向型叙事",
+            "适合高风险场景表达",
+            "可直接承接现场视频素材",
+          ],
+          imageSrc: sharedSolutionImageSrc,
+        },
+      ],
+      callout: {
+        kicker: "下一步",
+        title: "后续如需更细分的解决方案页面或产品展示层，也可以直接扩展。",
+        description:
+          "当前代码结构已经为未来的子页面、案例展示和 Shopify 产品数据接入留出空间。",
+        primaryLabel: "联系我们",
+        primaryHref: "/zh/contact",
+      },
+    },
+    about: {
+      pageHero: {
+        kicker: "关于我们",
+        title: "用更清晰的技术表达建立机器人品牌信任感。",
+        description:
+          "RobotX AI 将先进机器人兴趣与真实部署思维结合起来，新的官网会以更科学、更未来的方式呈现这一品牌形象。",
+      },
+      mission: {
+        kicker: "品牌目标",
+        title: "让访客快速理解公司能力、可信度与合作方式。",
+        description:
+          "关于我们页面需要帮助访客理解公司是谁、关注哪些问题、以及如何理解 RobotX 对现代机器人应用的判断。",
+        values: [
+          {
+            title: "精确",
+            description: "视觉与文案都应体现克制、专业与工程化的品牌气质。",
+          },
+          {
+            title: "适应性",
+            description: "网站结构能从公司展示站逐步演进为更丰富的产品与方案平台。",
+          },
+          {
+            title: "可访问性",
+            description: "双语与响应式设计帮助不同背景的访客更容易理解与使用网站。",
+          },
+        ],
+      },
+      advantage: {
+        kicker: "重建方式",
+        title: "用现代代码架构替代主题式堆叠，支持长期增长。",
+        description:
+          "我们不会简单复制 WordPress 的样子，而是通过更清晰的组件体系和品牌系统来重建整个官网基础。",
+        points: [
+          {
+            index: "01",
+            title: "代码化管理内容",
+            description: "页面内容易于通过 GitHub 管理、审查与部署到 Netlify。",
+          },
+          {
+            index: "02",
+            title: "结构化样式系统",
+            description: "全局 CSS 变量统一控制色彩、间距、字体与动效。",
+          },
+          {
+            index: "03",
+            title: "预留未来集成接口",
+            description: "方便后续增加表单、CMS 工作流与 Shopify 展示型产品数据。",
+          },
+        ],
+      },
+    },
+    contact: {
+      pageHero: {
+        kicker: "联系我们",
+        title: "开启一次关于机器人应用的沟通。",
+        description:
+          "MVP 阶段我们聚焦业务咨询与合作沟通，而不是直接电商销售，因此联系页面需要足够直接、专业和清晰。",
+      },
+      info: {
+        kicker: "联系 RobotX",
+        title: "欢迎与我们讨论解决方案、部署需求或合作想法。",
+        description:
+          "这里的联系方式基于当前官网公开信息，后续也可以在新站中很方便地调整。",
+        address: sharedAddress,
+        phoneLabel: sharedPhoneLabel,
+        phoneRaw: sharedPhoneRaw,
+        email: sharedEmail,
+      },
+      form: {
+        kicker: "咨询表单",
+        title: "告诉我们你的需求。",
+        nameLabel: "姓名",
+        namePlaceholder: "请输入姓名",
+        emailLabel: "邮箱",
+        emailPlaceholder: "请输入邮箱",
+        messageLabel: "留言",
+        messagePlaceholder: "请介绍你的机器人应用场景、时间计划或具体问题。",
+        submitLabel: "发送咨询",
+      },
+    },
+  },
+};
+
+export function getSiteContent(locale: Locale): SiteContent {
+  return siteContentByLocale[locale] ?? siteContentByLocale.en;
+}
