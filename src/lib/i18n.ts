@@ -4,5 +4,5 @@ export type Locale = (typeof locales)[number];
 
 export const localeNames: Record<Locale, string> = {
   en: "EN",
-  zh: "中文",
+  zh: "中",
 };

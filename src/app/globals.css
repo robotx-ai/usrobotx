@@ -112,7 +112,7 @@ button {
 .section-title {
   max-width: 18ch;
   font-family: var(--font-display), sans-serif;
-  font-size: clamp(2.2rem, 4vw, 4.6rem);
+  font-size: clamp(2.2rem, 3vw, 4.6rem);
   line-height: 1.06;
 }
 
@@ -124,7 +124,9 @@ button {
 }
 
 .section-copy-wide {
-  max-width: 78ch;
+  max-width: 90%;
+  margin-inline: 1rem;
+  white-space: pre-wrap;
 }
 
 .button-row {
@@ -223,6 +225,11 @@ button {
   max-width: 13rem;
 }
 
+.site-menu-group{
+  display: inline-flex;
+  width:90%;
+  justify-content: space-between;
+}
 .site-menu-toggle {
   display: none;
   flex-direction: column;
@@ -240,12 +247,16 @@ button {
 
 .site-navigation-panel {
   display: flex;
+  width:70%;
+  justify-content: space-between;
   align-items: center;
   gap: 1.2rem;
 }
 
 .site-navigation {
   display: flex;
+  width:80%;
+  justify-content: space-around;
   align-items: center;
   gap: 1.25rem;
 }
@@ -259,6 +270,7 @@ button {
 }
 
 .site-navigation-link {
+  font-size: 1.2rem;
   color: var(--text-secondary);
 }
 
@@ -272,7 +284,7 @@ button {
 }
 
 .language-switcher-link {
-  padding: 0.5rem 0.8rem;
+  padding: 0.3rem 0.6rem;
   border-radius: 999px;
   color: var(--text-muted);
   font-size: 0.92rem;
@@ -287,6 +299,10 @@ button {
   position: relative;
   overflow: clip;
   min-height: 100svh;
+}
+
+.media-background-section {
+  position: relative;
 }
 
 .hero-video-layer,
@@ -310,7 +326,7 @@ button {
 
 .hero-media-overlay {
   background:
-    linear-gradient(90deg, #f4f7f9f0 0%, #f4f7f9d1 4%, #f4f7f96b 20%, #f4f7f99e 100%);
+    linear-gradient(90deg, #f4f7f9f0 0%, #f4f7f9d1 24%, #f4f7f96b 50%, #f4f7f99e 100%);
 }
 
 .hero-grid-layer {
@@ -352,7 +368,7 @@ button {
 }
 
 .metrics-panel,
-.company-introduction-panel,
+
 .callout-panel,
 .feature-panel,
 .solution-showcase-card,
@@ -452,6 +468,7 @@ button {
 
 .feature-panel-title {
   font-size: 1.24rem;
+  margin-top: 1rem;
   line-height: 1.5;
 }
 
@@ -625,7 +642,7 @@ button {
 }
 
 .site-footer-title {
-  max-width: 18ch;
+  max-width: 22ch;
   font-size: 1.6rem;
   line-height: 1.4;
 }
@@ -668,14 +685,21 @@ button {
 
 @media (max-width: 960px) {
   .site-menu-toggle {
+    height:100%;
     display: inline-flex;
+    margin-top: 0.5rem;
   }
-
+  .site-menu-group{
+    height: 100%;
+    display: flex;
+    gap: 0.5rem;
+  }
+  
   .site-navigation-panel {
     position: absolute;
     top: calc(100% + 0.5rem);
     right: var(--container-inline-padding);
-    left: var(--container-inline-padding);
+    
     display: none;
     flex-direction: column;
     align-items: stretch;
@@ -693,6 +717,9 @@ button {
   .site-navigation {
     flex-direction: column;
     align-items: flex-start;
+  }
+  .hero-copy{
+    max-width: 50ch;
   }
 
   .hero-layout,
@@ -725,11 +752,11 @@ button {
 
 @media (max-width: 720px) {
   .site-header-inner {
-    min-height: 5rem;
+    min-height:3rem;
   }
 
   .site-logo {
-    max-width: min(14rem, 56vw);
+    max-width: min(11rem, 56vw);
   }
 
   .hero-layout {

@@ -212,7 +212,7 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
     },
     home: {
       hero: {
-        kicker: "RobotX AI Inc.",
+        kicker: "",
         title: "From Deployment to Intelligence",
         description:
           "We build advanced robotic platforms and applied solutions for industrial, educational, humanoid, and life-safety environments with a focus on precision, control, and deployment readiness.",
@@ -225,7 +225,7 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
         kicker: "Company Overview",
         title: "A data-driven ecosystem for evolving AI robotics.",
         description:
-          "Powered by a global supply chain and a multi-channel deployment matrix across sales, leasing, and education, RobotX stabilizes cash flow while opening strategic data-entry points. By deeply modeling raw data from vertical industries and performing secondary development on core perception and motion algorithms, we deliver AI solutions for factories, construction, and other complex environments with the capacity for intelligent evolution.",
+          "We use a global supply network and offer flexible options—including sales, rental, and education—to make robotics accessible and practical for our customers.\n\nBy combining real-world industry experience with advanced technology, we build and customize robots for environments like factories and construction sites. Our solutions are designed to improve over time and adapt to your changing needs.",
       },
       metrics: [
         { value: "4", label: "Core solution tracks" },
@@ -497,7 +497,7 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
         kicker: "公司简介",
         title: "以数据驱动智能的闭环生态",
         description:
-          "依托全球供应链与多维部署矩阵（销售、租赁、教育）稳固现金流，并开辟战略级数据入口。通过对垂直领域原始数据的深度建模，二次开发核心感知与运动算法，为工厂、建筑等复杂场景交付具备“智能进化”能力的 AI 方案。",
+          "我们依托全球供应链体系，并结合销售、租赁及教育等多元化业务模式，为客户提供稳定且可扩展的机器人解决方案。\n\n通过融合不同行业的实际数据，并结合先进的感知与运动控制技术，我们能够针对制造业、建筑业等复杂应用场景进行定制化开发。我们的机器人系统具备持续优化与智能升级的能力，能够随着客户需求不断演进。",
       },
       metrics: [
         { value: "4", label: "核心解决方案方向" },

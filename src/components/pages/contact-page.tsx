@@ -9,17 +9,17 @@ export function ContactPage({ content }: ContactPageProps) {
     <div className="page-shell">
       <section className="page-hero-section">
         <div className="section-container section-stack">
-          <span className="section-kicker">{content.contact.pageHero.kicker}</span>
+          <span className="section-kicker"></span>
           <h1 className="section-title">{content.contact.pageHero.title}</h1>
-          <p className="section-copy">{content.contact.pageHero.description}</p>
+          {/* <p className="section-copy">{content.contact.pageHero.description}</p> */}
         </div>
       </section>
 
       <section className="section-container contact-layout section-spacing">
         <article className="contact-info-panel">
           <span className="section-kicker">{content.contact.info.kicker}</span>
-          <h2 className="feature-panel-title">{content.contact.info.title}</h2>
-          <p className="section-copy">{content.contact.info.description}</p>
+          <h2 className="feature-panel-title pt-12">{content.contact.info.title}</h2>
+          {/* <p className="section-copy">{content.contact.info.description}</p> */}
           <div className="contact-detail-list">
             <p>{content.contact.info.address}</p>
             <a href={`tel:${content.contact.info.phoneRaw}`}>

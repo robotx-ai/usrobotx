@@ -11,7 +11,7 @@ type HomePageProps = {
 export function HomePage({ locale, content }: HomePageProps) {
   return (
     <>
-      <section className="hero-section" id="hero">
+      <section className="hero-section media-background-section" id="hero">
         <div className="hero-video-layer">
           <video
             className="hero-background-video"
