@@ -55,6 +55,15 @@ type HomeContent = {
     title: string;
     description: string;
   };
+  deploymentCycle: {
+    kicker: string;
+    title: string;
+    description: string;
+    items: {
+      key: string;
+      label: string;
+    }[];
+  };
   metrics: Metric[];
   positioning: {
     kicker: string;
@@ -215,17 +224,28 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
         kicker: "",
         title: "From Deployment to Intelligence",
         description:
-          "We build advanced robotic platforms and applied solutions for industrial, educational, humanoid, and life-safety environments with a focus on precision, control, and deployment readiness.",
+          "We build advanced robotic platforms and applied solutions.",
         primaryAction: "Explore Solutions",
         secondaryAction: "Talk to Us",
         backgroundVideoSrc: homeHeroVideoSrc,
         backgroundPosterSrc: homeHeroPosterSrc,
       },
       companyIntroduction: {
-        kicker: "Company Overview",
+        kicker: "What we do",
         title: "A data-driven ecosystem for evolving AI robotics.",
         description:
           "We use a global supply network and offer flexible options—including sales, rental, and education—to make robotics accessible and practical for our customers.\n\nBy combining real-world industry experience with advanced technology, we build and customize robots for environments like factories and construction sites. Our solutions are designed to improve over time and adapt to your changing needs.",
+      },
+      deploymentCycle: {
+        kicker: "Closed-Loop Intelligence",
+        title: "Deploy. Learn. Evolve.",
+        description:
+          "Every deployment becomes data. Every data point trains the brain. Every brain makes the entire fleet smarter.",
+        items: [
+          { key: "deploy", label: "Deploy" },
+          { key: "learn", label: "Learn" },
+          { key: "evolve", label: "Evolve" },
+        ],
       },
       metrics: [
         { value: "4", label: "Core solution tracks" },
@@ -259,7 +279,7 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
         ],
       },
       solutions: {
-        kicker: "Solution Focus",
+        kicker: "We Solve Your Problems",
         title: "Built for applied robotics across multiple environments.",
         description:
           "We are carrying forward the strongest parts of the current website while shifting the presentation toward an engineering-forward brand system.",
@@ -498,6 +518,17 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
         title: "以数据驱动智能的闭环生态",
         description:
           "我们依托全球供应链体系，并结合销售、租赁及教育等多元化业务模式，为客户提供稳定且可扩展的机器人解决方案。\n\n通过融合不同行业的实际数据，并结合先进的感知与运动控制技术，我们能够针对制造业、建筑业等复杂应用场景进行定制化开发。我们的机器人系统具备持续优化与智能升级的能力，能够随着客户需求不断演进。",
+      },
+      deploymentCycle: {
+        kicker: "闭环智能",
+        title: "Deploy · Learn · Evolve",
+        description:
+          "每一次部署都是数据,每一条数据都在训练大脑,每一个大脑都让整个机队更聪明。",
+        items: [
+          { key: "deploy", label: "Deploy" },
+          { key: "learn", label: "Learn" },
+          { key: "evolve", label: "Evolve" },
+        ],
       },
       metrics: [
         { value: "4", label: "核心解决方案方向" },

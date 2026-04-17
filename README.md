@@ -20,6 +20,14 @@ npm run dev
 
 Open `http://localhost:3000`.
 
+For local-network testing on another device or via your machine IP, use:
+
+```bash
+npm run dev:network
+```
+
+Then open `http://<your-local-ip>:3000`.
+
 ## Available routes
 
 - `/en`
@@ -59,6 +67,7 @@ src/
 - The home hero uses a local background video
 - Solution visuals currently use local placeholder images from `public/media/home`
 - The site is display/contact focused and does not include e-commerce
+- Use `npm run dev` for `localhost` development and `npm run dev:network` for LAN preview
 
 ## Future extensions
 

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { DeploymentCycleSection } from "@/components/deployment-cycle-section";
 import { RevealSection } from "@/components/reveal-section";
 import type { SiteContent } from "@/data/site-content";
 import type { Locale } from "@/lib/i18n";
@@ -21,7 +22,10 @@ export function HomePage({ locale, content }: HomePageProps) {
             playsInline
             poster={content.home.hero.backgroundPosterSrc}
           >
-            <source src={content.home.hero.backgroundVideoSrc} type="video/mp4" />
+            <source
+              src={content.home.hero.backgroundVideoSrc}
+              type="video/mp4"
+            />
           </video>
         </div>
         <div className="hero-media-overlay" />
@@ -46,37 +50,30 @@ export function HomePage({ locale, content }: HomePageProps) {
       <RevealSection className="section-spacing">
         <section className="section-container company-introduction-panel">
           <div className="section-stack">
-            <span className="section-kicker">{content.home.companyIntroduction.kicker}</span>
-            <h2 className="section-title">{content.home.companyIntroduction.title}</h2>
+            <span className="section-kicker">
+              {content.home.companyIntroduction.kicker}
+            </span>
+            <h2 className="section-title">
+              {content.home.companyIntroduction.title}
+            </h2>
             <p className="section-copy section-copy-wide">
               {content.home.companyIntroduction.description}
             </p>
           </div>
         </section>
-      </RevealSection>
-
-      <RevealSection className="section-spacing">
-        <section className="section-container content-grid">
-          <div className="section-stack">
-            <span className="section-kicker">{content.home.positioning.kicker}</span>
-            <h2 className="section-title">{content.home.positioning.title}</h2>
-            <p className="section-copy">{content.home.positioning.description}</p>
-          </div>
-          <div className="panel-grid">
-            {content.home.positioning.points.map((point) => (
-              <article key={point.title} className="feature-panel">
-                <span className="feature-panel-index">{point.index}</span>
-                <h3 className="feature-panel-title">{point.title}</h3>
-                <p className="feature-panel-copy">{point.description}</p>
-              </article>
-            ))}
-          </div>
-        </section>
+        <DeploymentCycleSection
+          kicker={content.home.deploymentCycle.kicker}
+          title={content.home.deploymentCycle.title}
+          description={content.home.deploymentCycle.description}
+          items={content.home.deploymentCycle.items}
+        />
       </RevealSection>
 
       <RevealSection className="section-spacing">
         <section className="section-container section-stack">
-          <span className="section-kicker">{content.home.solutions.kicker}</span>
+          <span className="section-kicker">
+            {content.home.solutions.kicker}
+          </span>
           <h2 className="section-title">{content.home.solutions.title}</h2>
           <p className="section-copy">{content.home.solutions.description}</p>
 
@@ -107,6 +104,29 @@ export function HomePage({ locale, content }: HomePageProps) {
       </RevealSection>
 
       <RevealSection className="section-spacing">
+        <section className="section-container content-grid">
+          <div className="section-stack">
+            <span className="section-kicker">
+              {content.home.positioning.kicker}
+            </span>
+            <h2 className="section-title">{content.home.positioning.title}</h2>
+            <p className="section-copy">
+              {content.home.positioning.description}
+            </p>
+          </div>
+          <div className="panel-grid">
+            {content.home.positioning.points.map((point) => (
+              <article key={point.title} className="feature-panel">
+                <span className="feature-panel-index">{point.index}</span>
+                <h3 className="feature-panel-title">{point.title}</h3>
+                <p className="feature-panel-copy">{point.description}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+      </RevealSection>
+
+      {/* <RevealSection className="section-spacing">
         <section className="section-container story-layout">
           <div className="section-stack">
             <span className="section-kicker">{content.home.story.kicker}</span>
@@ -123,12 +143,17 @@ export function HomePage({ locale, content }: HomePageProps) {
             ))}
           </div>
         </section>
-      </RevealSection>
+      </RevealSection> */}
 
       <RevealSection className="section-spacing">
-        <section className="section-container callout-panel" id="contact-callout">
+        <section
+          className="section-container callout-panel"
+          id="contact-callout"
+        >
           <div className="section-stack">
-            <span className="section-kicker">{content.home.callout.kicker}</span>
+            <span className="section-kicker">
+              {content.home.callout.kicker}
+            </span>
             <h2 className="section-title">{content.home.callout.title}</h2>
             <p className="section-copy">{content.home.callout.description}</p>
           </div>
