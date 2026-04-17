@@ -48,6 +48,11 @@ type IndexedPoint = {
   description: string;
 };
 
+type PillarCard = {
+  title: string;
+  items: string[];
+};
+
 type HomeContent = {
   hero: HeroContent;
   companyIntroduction: {
@@ -71,11 +76,18 @@ type HomeContent = {
     description: string;
     points: IndexedPoint[];
   };
+  deploymentPlaces: {
+    kicker: string;
+    title: string;
+    description: string;
+  };
+  pillars: PillarCard[];
   solutions: {
     kicker: string;
     title: string;
     description: string;
   };
+  featuredSolutions: SolutionCard[];
   story: {
     kicker: string;
     title: string;
@@ -280,12 +292,127 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
           },
         ],
       },
+      deploymentPlaces: {
+        kicker: "Deployments",
+        title: "Production Deployments.\nNumerous Sites Around United States",
+        description:
+          "Trusted by global industry leaders with many more strategic partnerships to be announced soon.",
+      },
+      pillars: [
+        {
+          title: "RobotX Spatial-First Architecture",
+          items: [
+            "3D LiDAR spatial perception: operates without video streams, works on weak or no network",
+            "Multimodal fusion: camera semantics + IMU positioning + edge security filtering",
+            "Real-time 3D SLAM: autonomous navigation, 3D environment modeling, and path planning",
+            "Edge + cloud hybrid: low-latency edge control + cloud reinforcement learning evolution",
+            "RobotX OS: vendor-agnostic spatial operating layer with unified access",
+          ],
+        },
+        {
+          title: "Supply Chain & Deployment Network",
+          items: [
+            "Foundation for real-world data collection",
+            "Exclusive dealership and distribution rights with top robotics companies",
+            "Multi-channel deployment: sales, rental, and education",
+            "Every robot learns from operational data while it works",
+          ],
+        },
+        {
+          title: "Enterprise End-to-End Solutions",
+          items: [
+            "Brain Box hardware",
+            "Custom vertical skill packs (subscription model)",
+            "Enterprise-grade end-to-end solutions",
+            "RobotX Lab simulations",
+          ],
+        },
+      ],
       solutions: {
         kicker: "We Solve Your Problems",
         title: "Built for applied robotics across multiple environments.",
-        description:
-          "We are carrying forward the strongest parts of the current website while shifting the presentation toward an engineering-forward brand system.",
+        description: "",
       },
+      featuredSolutions: [
+        {
+          tag: "Inspection AI: Factories",
+          title:
+            "Inspection AI for factory patrol, anomaly detection, and operations visibility.",
+          description:
+            "Built for industrial sites that need robots to capture equipment status, identify irregular conditions, and feed actionable data back into the operation loop.",
+          highlights: [
+            "Routine patrol automation",
+            "Condition monitoring workflows",
+            "Factory-ready deployment storytelling",
+          ],
+          imageSrc: sharedSolutionImageSrc,
+          backgroundVideoSrc: "/media/solutions/robot-dog-farm-1.mp4",
+          backgroundPosterSrc: homeHeroPosterSrc,
+        },
+        {
+          tag: "Cleaning AI: Malls / Factories",
+          title: "Cleaning AI for commercial spaces and industrial facilities.",
+          description:
+            "Designed for teams that need autonomous cleaning, repeatable route coverage, and service quality across shopping centers, public facilities, and production floors.",
+          highlights: [
+            "Large-area coverage",
+            "Autonomous cleaning routes",
+            "Facility operations positioning",
+          ],
+          imageSrc: sharedSolutionImageSrc,
+          backgroundVideoSrc: "/media/solutions/cleaning-robot.mp4",
+        },
+        {
+          tag: "Logistics AI: Warehouses",
+          title:
+            "Logistics AI for warehouse movement, transfer, and internal material flow.",
+          description:
+            "A strong fit for warehouse environments where robotic mobility can reduce manual transport friction and improve workflow continuity from storage to dispatch.",
+          highlights: [
+            "Multi-warehouse transport path optimization",
+            "Multi-Robot Collaborative Material Handling",
+          ],
+          imageSrc: sharedSolutionImageSrc,
+          backgroundVideoSrc: "/media/solutions/logistic-robot.mp4",
+        },
+        {
+          tag: "Construction AI: Job Sites",
+          title:
+            "Construction AI for complex, changing, and high-noise building sites.",
+          description:
+            "Positioned for construction teams that need robotics to support site monitoring, data capture, and safer field execution in dynamic outdoor environments.",
+          highlights: [
+            "Site data capture",
+            "Dynamic terrain communication",
+            "Field deployment credibility",
+          ],
+          imageSrc: sharedSolutionImageSrc,
+          backgroundVideoSrc: homeHeroVideoSrc,
+        },
+        {
+          tag: "Service AI: Hotels / Restaurants",
+          title:
+            "Service AI for guest-facing delivery, guidance, and hospitality workflows.",
+          description:
+            "Best suited for hotels and restaurants where a robotic presence can streamline service touchpoints while reinforcing a modern, technology-forward guest experience.",
+          highlights: ["Guest interaction", "Hospitality delivery service"],
+          imageSrc: sharedSolutionImageSrc,
+          backgroundVideoSrc: "/media/solutions/restaurant-robot.mp4",
+        },
+        {
+          tag: "Companion AI: Homes",
+          title:
+            "Companion AI for household assistance, interaction, and daily support.",
+          description:
+            "A future-facing category for family environments where companionship, assistance, and intuitive interaction matter as much as the robotic platform itself.",
+          highlights: [
+            "Assistance and care positioning",
+            "Emotion-aware product storytelling",
+          ],
+          imageSrc: sharedSolutionImageSrc,
+          backgroundVideoSrc: "/media/solutions/compaion-robot.mp4",
+        },
+      ],
       story: {
         kicker: "Deployment Flow",
         title: "From concept briefing to field-ready communication.",
@@ -589,12 +716,104 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
           },
         ],
       },
+      deploymentPlaces: {
+        kicker: "部署范围",
+        title: "生产级部署。\n遍布美国多个站点",
+        description:
+          "受全球行业领导者信赖，更多战略合作伙伴关系即将公布。",
+      },
+      pillars: [
+        {
+          title: "RobotX 自研 Spatial-First 架构",
+          items: [
+            "3D LiDAR 空间感知：不依赖视频流，弱网/断⽹仍可运⾏",
+            "多模态融合：摄像头语义 + IMU定位 + 边缘安全过滤",
+            "实时 3D SLAM：自主导航、三维环境建模与路径规划",
+            "边缘+云端混合：边缘低延迟控制 + 云端强化学习进化",
+            "RobotX OS：厂商⽆关的空间操作层，统⼀接⼊",
+          ],
+        },
+        {
+          title: "供应链与部署网络",
+          items: [
+            "数据采集的前提",
+            "顶级机器人公司独家代理权、经销权",
+            "多渠道部署：销售/租赁/教育",
+            "每台机器人会边工作边用数据自我学习",
+          ],
+        },
+        {
+          title: "企业级端到端解决方案",
+          items: [
+            "Brain Box 硬件",
+            "定制垂直技能包（订阅制）",
+            "企业级端到端解决方案",
+            "RobotX 实验室，模拟",
+          ],
+        },
+      ],
       solutions: {
         kicker: "解决方案方向",
         title: "面向多种机器人应用环境而设计。",
-        description:
-          "我们保留当前网站中最重要的业务结构，同时通过更工程化的设计语言提升品牌气质。",
+        description: "",
       },
+      featuredSolutions: [
+        {
+          tag: "巡检AI：工厂",
+          title: "巡检AI——工厂巡检、异常检测与运营可视化。",
+          description:
+            "为需要机器人进行设备状态采集、异常情况识别并反馈可执行数据的工业现场量身打造。",
+          highlights: ["例行巡检自动化", "设备状态监测工作流", "工厂部署就绪"],
+          imageSrc: sharedSolutionImageSrc,
+          backgroundVideoSrc: homeHeroVideoSrc,
+          backgroundPosterSrc: homeHeroPosterSrc,
+        },
+        {
+          tag: "清洁AI：商场 / 工厂",
+          title: "清洁AI——商业空间与工业设施的自动清洁。",
+          description:
+            "为需要自主清洁、全覆盖路线规划和服务质量标准化的购物中心、公共设施和生产车间而设计。",
+          highlights: ["大面积覆盖", "自主清洁路线", "智能清洁"],
+          imageSrc: sharedSolutionImageSrc,
+          backgroundVideoSrc: "/media/solutions/cleaning-robot.mp4",
+        },
+        {
+          tag: "物流AI：仓库",
+          title: "物流AI——仓库搬运、转运与物料流优化。",
+          description:
+            "完美适配仓储环境，通过机器人移动能力减少人工搬运阻力，提升工作流连贯性，从存储到派遣的全流程优化。",
+          highlights: ["多仓库运输路径优化", "多机器人协同重物搬运"],
+          imageSrc: sharedSolutionImageSrc,
+          backgroundVideoSrc: "/media/solutions/logistic-robot.mp4",
+        },
+        {
+          tag: "建筑AI：建筑工地",
+          title: "建筑AI——复杂、多变、高噪声建筑工地。",
+          description:
+            "为建筑团队提供现场监测、数据采集和动态户外环境中更安全、更高效的现场执行能力支持。",
+          highlights: ["现场数据采集", "动态地形沟通", "现场部署可信度"],
+          imageSrc: sharedSolutionImageSrc,
+          backgroundVideoSrc: homeHeroVideoSrc,
+        },
+        {
+          tag: "服务AI：酒店 / 餐厅",
+          title: "服务AI——面向客人的配送、引导与服务流程。",
+          description:
+            "最适合酒店和餐厅应用，机器人可优化服务接触点并强化现代科技导向的客户体验。",
+          highlights: ["宾客互动", "酒店餐厅运送服务"],
+          imageSrc: sharedSolutionImageSrc,
+          backgroundVideoSrc: "/media/solutions/restaurant-robot.mp4",
+        },
+        {
+          tag: "陪伴AI：家庭",
+          title: "陪伴AI——居家协助、互动与日常支持。",
+          description:
+            "面向未来的应用场景，在家庭环境中，陪伴、协助与直观交互与机器人平台本身一样重要。",
+          highlights: ["协助与护理定位", "情感感知的产品叙事"],
+          imageSrc: sharedSolutionImageSrc,
+          backgroundVideoSrc: "/media/solutions/compaion-robot.mp4",
+        },
+      ],
       story: {
         kicker: "转化路径",
         title: "从业务场景到合作咨询的完整信息路径。",

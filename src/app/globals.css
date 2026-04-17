@@ -646,6 +646,7 @@ button {
 }
 
 .solutions-carousel-shell {
+  width:100%;
   display: grid;
   grid-template-columns: minmax(18rem, 0.78fr) minmax(0, 1.22fr);
   align-items: flex-start;
@@ -653,18 +654,23 @@ button {
   padding-top: 1.75rem;
   border-top: 1px solid rgba(45, 71, 89, 0.16);
 }
-
+#solutions-carousel-title{
+  max-width: 35ch;
+  width: 100%;
+  font-size: clamp(2.2rem, 2vw, 4.6rem);
+}
 .solutions-carousel-intro {
   position: sticky;
-  top: 8vh;
+  top: 12vh;
   display: grid;
   gap: 2rem;
   max-width: 39ch;
+  left: min(10%, 2rem);
 }
 
 .solutions-carousel-description-card {
-  padding: 1.75rem;
-  
+  padding-inline: 1.75rem;
+  padding-top: 1rem;
 }
 
 @keyframes active-copy-in {
@@ -711,7 +717,6 @@ button {
 .solutions-carousel-stage {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: var(--solutions-card-scroll-gap);
   align-content: start;
   padding-top: 0.5rem;
   padding-bottom: clamp(6rem, 16vh, 10rem);
@@ -720,8 +725,6 @@ button {
 .solutions-carousel-card {
   position: relative;
   min-height: clamp(20rem, 48vw, 27rem);
-  border: 1px solid rgba(45, 71, 89, 0.18);
-  border-radius: calc(var(--radius-large) + 0.25rem);
   overflow: hidden;
   background:
     linear-gradient(180deg, rgba(246, 249, 251, 0.94), rgba(224, 232, 237, 0.92));
@@ -1070,6 +1073,92 @@ button {
   transform: translateY(0);
 }
 
+/* deployment-places */
+
+.deployment-places-panel {
+  display: flex;
+  gap: 3rem;
+  align-items: stretch;
+  min-height: 28rem;
+}
+
+.deployment-places-copy {
+  flex: 0 0 auto;
+  width: min(38rem, 50%);
+  display: grid;
+  gap: 1.9rem;
+  align-content: start;
+}
+
+.deployment-places-map {
+  flex: 1 1 auto;
+  min-height: 24rem;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-large);
+  background-image: url("/media/home/united-map.png");
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+/* positioning pillars */
+
+.positioning-section {
+  display: grid;
+  gap: 3rem;
+}
+
+.positioning-pillars {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.positioning-pillar-card {
+  padding: 2rem;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-large);
+  background: var(--background-panel);
+  backdrop-filter: blur(14px);
+  box-shadow: var(--shadow-soft);
+  display: grid;
+  gap: 1.25rem;
+  align-content: start;
+}
+
+.positioning-pillar-title {
+  font-family: var(--font-display), sans-serif;
+  font-size: 1.18rem;
+  line-height: 1.45;
+}
+
+.positioning-pillar-list {
+  list-style: none;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.positioning-pillar-item {
+  position: relative;
+  padding-left: 1.25rem;
+  color: var(--text-secondary);
+  font-size: 0.94rem;
+  line-height: 1.65;
+}
+
+.positioning-pillar-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.58em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent-primary);
+}
+
 @media (max-width: 960px) {
   .site-menu-toggle {
     height: 100%;
@@ -1149,6 +1238,18 @@ button {
   .solutions-carousel-card {
     min-height: min(24rem, 70vw);
     transform: none;
+  }
+
+  .deployment-places-panel {
+    flex-direction: column;
+  }
+
+  .deployment-places-copy {
+    width: 100%;
+  }
+
+  .positioning-pillars {
+    grid-template-columns: 1fr;
   }
 }
 
