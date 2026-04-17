@@ -97,6 +97,8 @@ type SolutionCard = {
   description: string;
   highlights: string[];
   imageSrc: string;
+  backgroundVideoSrc?: string;
+  backgroundPosterSrc?: string;
 };
 
 type SolutionsContent = {
@@ -328,50 +330,76 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
       },
       cards: [
         {
-          tag: "Humanoid",
-          title: "Humanoid robotics for interactive, research, and service scenarios.",
+          tag: "Inspection AI: Factories",
+          title: "Inspection AI for factory patrol, anomaly detection, and operations visibility.",
           description:
-            "Designed for organizations exploring human-centered robotics experiences, advanced interaction models, and public-facing deployments.",
+            "Built for industrial sites that need robots to capture equipment status, identify irregular conditions, and feed actionable data back into the operation loop.",
           highlights: [
-            "Human-machine interaction narratives",
-            "Research-ready presentation blocks",
-            "Future support for catalog display modules",
+            "Routine patrol automation",
+            "Condition monitoring workflows",
+            "Factory-ready deployment storytelling",
+          ],
+          imageSrc: sharedSolutionImageSrc,
+          backgroundVideoSrc: homeHeroVideoSrc,
+          backgroundPosterSrc: homeHeroPosterSrc,
+        },
+        {
+          tag: "Cleaning AI: Malls / Factories",
+          title: "Cleaning AI for commercial spaces and industrial facilities.",
+          description:
+            "Designed for teams that need autonomous cleaning, repeatable route coverage, and service quality across shopping centers, public facilities, and production floors.",
+          highlights: [
+            "Large-area coverage",
+            "Autonomous cleaning routes",
+            "Facility operations positioning",
           ],
           imageSrc: sharedSolutionImageSrc,
         },
         {
-          tag: "Industrial",
-          title: "Industrial robotics for inspection, mobility, and operational efficiency.",
+          tag: "Logistics AI: Warehouses",
+          title: "Logistics AI for warehouse movement, transfer, and internal material flow.",
           description:
-            "A technical content structure suited for advanced automation, monitoring, and remote operation workflows in demanding environments.",
+            "A strong fit for warehouse environments where robotic mobility can reduce manual transport friction and improve workflow continuity from storage to dispatch.",
           highlights: [
-            "Clear sensing and mobility storytelling",
-            "Operator-focused interface framing",
-            "Responsive layouts for media-heavy case studies",
+            "Intra-warehouse transport",
+            "Operational efficiency framing",
+            "Scalable fulfillment storytelling",
           ],
           imageSrc: sharedSolutionImageSrc,
         },
         {
-          tag: "Education",
-          title: "Educational robotics for labs, training programs, and technical learning.",
-          description:
-            "Focused on program value, curriculum relevance, and platform accessibility for institutions introducing robotics into teaching and research.",
-          highlights: [
-            "Explains learning and experimentation value",
-            "Supports bilingual academic outreach",
-            "Easy to extend with videos and lab imagery",
-          ],
-          imageSrc: sharedSolutionImageSrc,
-        },
-        {
-          tag: "Firefighting",
-          title: "Robotic firefighting solutions for safer response in extreme conditions.",
+          tag: "Construction AI: Job Sites",
+          title: "Construction AI for complex, changing, and high-noise building sites.",
           description:
             "Inspired by the current site’s life-safety messaging, this section emphasizes remote operation, situational awareness, and personnel protection.",
           highlights: [
-            "Mission-first storytelling",
-            "High-risk environment messaging",
-            "Media panels ready for field footage",
+            "Site intelligence capture",
+            "Dynamic terrain communication",
+            "Field deployment credibility",
+          ],
+          imageSrc: sharedSolutionImageSrc,
+        },
+        {
+          tag: "Service AI: Hotels / Restaurants",
+          title: "Service AI for guest-facing delivery, guidance, and hospitality workflows.",
+          description:
+            "Best suited for hotels and restaurants where a robotic presence can streamline service touchpoints while reinforcing a modern, technology-forward guest experience.",
+          highlights: [
+            "Guest interaction framing",
+            "Hospitality scenario storytelling",
+            "Front-of-house automation value",
+          ],
+          imageSrc: sharedSolutionImageSrc,
+        },
+        {
+          tag: "Companion AI: Homes",
+          title: "Companion AI for household assistance, interaction, and daily support.",
+          description:
+            "A future-facing category for family environments where companionship, assistance, and intuitive interaction matter as much as the robotic platform itself.",
+          highlights: [
+            "Home interaction narratives",
+            "Assistance and care positioning",
+            "Emotion-aware product storytelling",
           ],
           imageSrc: sharedSolutionImageSrc,
         },

@@ -85,8 +85,9 @@ export function DeploymentCycleSection({
     <section ref={sectionReference} className="section-container deployment-cycle-section">
       <div className="section-stack">
         {/* <span className="section-kicker">{kicker}</span> */}
-        <p className="section-copy section-copy-wide deployment-cycle-description">{description}</p>
-        {/* <p className="section-copy section-copy-wide">{description}</p> */}
+        <p className="section-copy section-copy-wide deployment-cycle-description">
+          {description}
+        </p>
       </div>
 
       <div className="deployment-cycle-visual">
