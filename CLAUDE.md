@@ -173,8 +173,12 @@ Keep these in mind — they change the cost model for any large change:
 
 If you're about to spend >1 session on something that these questions could invalidate, stop and confirm first.
 
-## Commit Style
+## Commit & Push Style
 
+- **Commit under the user's git identity only.** Use whatever `git config user.name` / `user.email` are set to — do **not** override them. Never add a `Co-Authored-By: Claude` trailer or any other AI-assistant attribution to commits on this repo. Commit messages describe the change, not who typed it.
+- **Push with the user's `gh` / git credentials.** Do not re-auth, do not switch remotes, do not push via a different account. If a push fails on auth, surface it — don't work around it.
+- **Never push without explicit user instruction.** Committing ≠ pushing. Even after an approved commit, `git push` needs its own green light every time.
+- **Never force-push `main`.** If history needs rewriting, stop and ask.
 - Small, focused commits; one concern per commit
 - Run `pnpm lint` and `pnpm build` before committing UI/logic changes
 - Never skip hooks (`--no-verify`) unless explicitly authorized
