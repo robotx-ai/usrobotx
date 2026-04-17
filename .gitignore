@@ -48,6 +48,12 @@ desktop.ini
 # TypeScript
 *.tsbuildinfo
 
+# Claude Code — personal permission cache (not project config)
+.claude/settings.local.json
+
+# playwright-cli runtime artifacts (snapshots, screenshots, console logs)
+.playwright-cli/
+
 # package manager caches
 /.pnp
 .pnp.*
