@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { MDXRemote, type MDXRemoteProps } from "next-mdx-remote/rsc";
 import { ImageCarousel, ImageSlide } from "@/components/media/image-carousel";
+import { NewsVideo } from "@/components/media/news-video";
 import { NewsCoverParallax } from "@/components/pages/news-cover-parallax";
 import type { SiteContent } from "@/data/site-content";
 import type { Locale } from "@/lib/i18n";
@@ -13,6 +14,7 @@ import { formatNewsDate } from "@/lib/news-date";
 const mdxComponents: MDXRemoteProps["components"] = {
   ImageCarousel,
   ImageSlide,
+  NewsVideo,
 };
 
 type NewsArticlePageProps = {
