@@ -24,12 +24,24 @@ export function SolutionsCarouselSection({
   const [visitedCards, setVisitedCards] = useState<ReadonlySet<number>>(
     () => new Set([0, 1]),
   );
+  const [loadedCards, setLoadedCards] = useState<ReadonlySet<number>>(
+    () => new Set(),
+  );
   const cardReferences = useRef<Array<HTMLElement | null>>([]);
   const videoReferences = useRef<Array<HTMLVideoElement | null>>([]);
   const activeCardIndexRef = useRef(0);
   const scrollDebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const displayedIndex = hoveredCardIndex ?? activeCardIndex;
   const activeCard = cards[displayedIndex] ?? cards[0];
+
+  const markLoaded = useCallback((index: number) => {
+    setLoadedCards((prev) => {
+      if (prev.has(index)) return prev;
+      const next = new Set(prev);
+      next.add(index);
+      return next;
+    });
+  }, []);
 
   const markVisited = useCallback(
     (near: number) => {
@@ -160,7 +172,7 @@ export function SolutionsCarouselSection({
             const nearIndex = hoveredCardIndex ?? activeCardIndex;
             const isNearActive = Math.abs(index - nearIndex) <= 1;
             const shouldHaveSource = visitedCards.has(index) || isNearActive;
-            const shouldShowPulse = !shouldHaveSource;
+            const shouldShowPulse = !loadedCards.has(index);
 
             return (
               <article
@@ -185,6 +197,9 @@ export function SolutionsCarouselSection({
                       <video
                         ref={(element) => {
                           videoReferences.current[index] = element;
+                          if (element && element.readyState >= 3) {
+                            markLoaded(index);
+                          }
                         }}
                         className="solutions-carousel-video"
                         autoPlay
@@ -193,6 +208,8 @@ export function SolutionsCarouselSection({
                         playsInline
                         preload="metadata"
                         poster={card.backgroundPosterSrc}
+                        onCanPlay={() => markLoaded(index)}
+                        onLoadedData={() => markLoaded(index)}
                       >
                         {shouldHaveSource ? (
                           <source src={card.backgroundVideoSrc} type="video/mp4" />

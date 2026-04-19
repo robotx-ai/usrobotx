@@ -44,6 +44,8 @@ export function ImageSequence({
   const containerRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const bitmapsRef = useRef<Array<ImageBitmap | null>>([]);
+  const firstFrameDrawnRef = useRef(false);
+  const [firstFrameDrawn, setFirstFrameDrawn] = useState(false);
   const [width, setWidth] = useState<number>(manifest.widths[manifest.widths.length - 1]);
 
   useEffect(() => {
@@ -88,6 +90,10 @@ export function ImageSequence({
           bitmaps[index] = bitmap;
           if (currentFrame === -1 && index === 0) {
             drawFrame(0);
+            if (!firstFrameDrawnRef.current) {
+              firstFrameDrawnRef.current = true;
+              setFirstFrameDrawn(true);
+            }
           }
         } catch {
           // ignore, drawFrame will no-op
@@ -180,7 +186,12 @@ export function ImageSequence({
     >
       <MediaLoadingPulse className="image-sequence-priority" />
       {!reducedMotion && (
-        <canvas ref={canvasRef} className="image-sequence-canvas" aria-hidden="true" />
+        <canvas
+          ref={canvasRef}
+          className="image-sequence-canvas"
+          aria-hidden="true"
+          style={{ opacity: firstFrameDrawn ? 1 : 0 }}
+        />
       )}
       {children}
     </div>
