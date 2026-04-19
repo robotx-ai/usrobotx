@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { DeploymentCycleSection } from "@/components/deployment-cycle-section";
 import { HomeHero } from "@/components/pages/sections/home-hero";
+import { RxBrainSection } from "@/components/pages/sections/rx-brain-section";
 import { RevealSection } from "@/components/reveal-section";
 import { SolutionsCarouselSection } from "@/components/solutions-carousel-section";
 import type { SiteContent } from "@/data/site-content";
@@ -37,6 +38,8 @@ export function HomePage({ locale, content }: HomePageProps) {
           items={content.home.deploymentCycle.items}
         />
       </RevealSection>
+
+      <RxBrainSection locale={locale} content={content.home.rxBrain} />
 
       <RevealSection className="section-spacing">
         <section className="section-container deployment-places-panel">

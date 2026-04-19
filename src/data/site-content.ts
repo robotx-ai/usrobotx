@@ -38,6 +38,23 @@ type HeroContent = {
   videoAriaLabel: string;
 };
 
+export type RxBrainContent = {
+  kicker: string;
+  subtitle: string;
+  description: string;
+  ctaLabel: string;
+  wordmarkAlt: string;
+  imageSequenceAriaLabel: string;
+};
+
+type TechnologyContent = {
+  pageHero: {
+    kicker: string;
+    title: string;
+    description: string;
+  };
+};
+
 type Metric = {
   value: string;
   label: string;
@@ -61,6 +78,7 @@ type HomeContent = {
     title: string;
     description: string;
   };
+  rxBrain: RxBrainContent;
   deploymentCycle: {
     kicker: string;
     title: string;
@@ -192,6 +210,7 @@ export type SiteContent = {
   solutions: SolutionsContent;
   about: AboutContent;
   contact: ContactContent;
+  technology: TechnologyContent;
 };
 
 const sharedAddress = "17901 Von Karman Ave, Ste 420, Irvine, CA 92614";
@@ -254,6 +273,17 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
         title: "A data-driven ecosystem for evolving AI robotics.",
         description:
           "We use a global supply network and offer flexible options—including sales, rental, and education—to make robotics accessible and practical for our customers.\n\nBy combining real-world industry experience with advanced technology, we build and customize robots for environments like factories and construction sites. Our solutions are designed to improve over time and adapt to your changing needs.",
+      },
+      rxBrain: {
+        kicker: "Coming soon",
+        subtitle:
+          "RX BRAIN™ is the general-purpose intelligence at the core of every RobotX platform.",
+        description:
+          "RX BRAIN unifies perception, planning, and control across tasks and environments. Every deployment teaches it. Every robot runs it. Every fleet gets sharper.",
+        ctaLabel: "Technology",
+        wordmarkAlt: "RX BRAIN",
+        imageSequenceAriaLabel:
+          "Abstract visualization of the RX BRAIN system",
       },
       deploymentCycle: {
         kicker: "Closed-Loop Intelligence",
@@ -635,6 +665,14 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
         submitLabel: "Send Inquiry",
       },
     },
+    technology: {
+      pageHero: {
+        kicker: "Technology",
+        title: "RX BRAIN — Technology",
+        description:
+          "Detailed technology page coming soon. For now, explore our solutions or get in touch.",
+      },
+    },
   },
   zh: {
     meta: {
@@ -683,6 +721,16 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
         title: "以数据驱动智能的闭环生态",
         description:
           "我们依托全球供应链体系，并结合销售、租赁及教育等多元化业务模式，为客户提供稳定且可扩展的机器人解决方案。\n\n通过融合不同行业的实际数据，并结合先进的感知与运动控制技术，我们能够针对制造业、建筑业等复杂应用场景进行定制化开发。我们的机器人系统具备持续优化与智能升级的能力，能够随着客户需求不断演进。",
+      },
+      rxBrain: {
+        kicker: "即将推出",
+        subtitle:
+          "RX BRAIN™ 是支撑每一台 RobotX 机器人的通用智能核心。",
+        description:
+          "RX BRAIN 将感知、规划与控制融合在同一模型中，跨任务、跨场景持续进化。每一次部署都在训练它，每一台机器人都在运行它，整支机队变得更敏锐。",
+        ctaLabel: "技术",
+        wordmarkAlt: "RX BRAIN",
+        imageSequenceAriaLabel: "RX BRAIN 系统的抽象可视化",
       },
       deploymentCycle: {
         kicker: "闭环智能",
@@ -1033,6 +1081,13 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
         messageLabel: "留言",
         messagePlaceholder: "请介绍你的机器人应用场景、时间计划或具体问题。",
         submitLabel: "发送咨询",
+      },
+    },
+    technology: {
+      pageHero: {
+        kicker: "技术",
+        title: "RX BRAIN — 技术",
+        description: "详细技术说明即将上线。欢迎先浏览我们的解决方案或联系我们。",
       },
     },
   },

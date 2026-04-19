@@ -5,14 +5,19 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useReducedMotion } from "./use-reduced-motion";
-import type { HeroFramesManifest } from "@/data/hero-frames";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
+export type ImageSequenceManifest = {
+  readonly widths: readonly number[];
+  readonly count: number;
+  readonly path: (width: number, index: number) => string;
+};
+
 type ImageSequenceProps = {
-  manifest: HeroFramesManifest;
+  manifest: ImageSequenceManifest;
   pinnedHeight: string;
   ariaLabel: string;
   className?: string;
