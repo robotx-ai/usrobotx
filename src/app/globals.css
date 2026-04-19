@@ -1443,6 +1443,52 @@ p {
   z-index: 1;
 }
 
+/* Media loading pulse — RobotX-X placeholder shown before media is ready */
+
+.media-loading-pulse {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--background-primary);
+  z-index: 0;
+}
+
+.media-loading-pulse-mark {
+  width: 120px;
+  height: 120px;
+  background-image: url("/media/logos/robotx-square-transparent.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  animation: media-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes media-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.98);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.02);
+  }
+}
+
+.solutions-carousel-video-pulse {
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .media-loading-pulse-mark {
+    animation: none;
+    opacity: 0.6;
+    transform: none;
+  }
+}
+
 /* RX BRAIN section */
 
 .rx-brain-section {

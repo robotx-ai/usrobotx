@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { MediaLoadingPulse } from "@/components/motion/media-loading-pulse";
 import type { SiteContent } from "@/data/site-content";
 
 type SolutionCard = SiteContent["solutions"]["cards"][number];
@@ -155,22 +156,27 @@ export function SolutionsCarouselSection({
               >
                 <div className="solutions-carousel-media">
                   {showVideo ? (
-                    <video
-                      ref={(element) => {
-                        videoReferences.current[index] = element;
-                      }}
-                      className="solutions-carousel-video"
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      preload="metadata"
-                      poster={card.backgroundPosterSrc ?? card.imageSrc}
-                    >
-                      {isNearActive ? (
-                        <source src={card.backgroundVideoSrc} type="video/mp4" />
+                    <>
+                      <video
+                        ref={(element) => {
+                          videoReferences.current[index] = element;
+                        }}
+                        className="solutions-carousel-video"
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        preload="metadata"
+                        poster={card.backgroundPosterSrc ?? card.imageSrc}
+                      >
+                        {isNearActive ? (
+                          <source src={card.backgroundVideoSrc} type="video/mp4" />
+                        ) : null}
+                      </video>
+                      {!isNearActive ? (
+                        <MediaLoadingPulse className="solutions-carousel-video-pulse" />
                       ) : null}
-                    </video>
+                    </>
                   ) : (
                     <div
                       className="solutions-carousel-image"

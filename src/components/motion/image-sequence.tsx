@@ -4,6 +4,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { MediaLoadingPulse } from "./media-loading-pulse";
 import { useReducedMotion } from "./use-reduced-motion";
 
 if (typeof window !== "undefined") {
@@ -44,7 +45,6 @@ export function ImageSequence({
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const bitmapsRef = useRef<Array<ImageBitmap | null>>([]);
   const [width, setWidth] = useState<number>(manifest.widths[manifest.widths.length - 1]);
-  const priorityFrameSrc = manifest.path(width, 0);
 
   useEffect(() => {
     setWidth(pickWidth(manifest.widths));
@@ -178,15 +178,7 @@ export function ImageSequence({
       role="img"
       aria-label={ariaLabel}
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        className="image-sequence-priority"
-        src={priorityFrameSrc}
-        alt=""
-        aria-hidden="true"
-        fetchPriority="high"
-        decoding="async"
-      />
+      <MediaLoadingPulse className="image-sequence-priority" />
       {!reducedMotion && (
         <canvas ref={canvasRef} className="image-sequence-canvas" aria-hidden="true" />
       )}
