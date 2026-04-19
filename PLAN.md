@@ -1,6 +1,6 @@
 # usrobotx — Plan
 
-_Last updated: 2026-04-18_
+_Last updated: 2026-04-19_
 
 > **Asset convention:** all raw footage and video masters live in `/raw_assets/` (gitignored). Web-ready exports are produced from those sources and either served via CDN or copied into `/public/media/`. Never commit large video binaries to the repo.
 
@@ -117,3 +117,61 @@ Pick one fieldai section (likely the homepage hero scrubber or a `/solutions/*` 
 **Phase 1 media ask:**
 - Hero: web-ready MP4 + webp poster exported from `raw_assets/Hero Content.mp4`.
 - Everything else (later phases): MP4 B-roll + high-res stills.
+
+---
+
+## Phase 2 — Mobile performance hardening (2026-04-19)
+
+**Trigger:** after the first production deploy, `https://usrobotx.com/` broke on mobile — page would load twice then stop loading. Diagnosis: the home page was fetching ~200 MB of media on mount, and Netlify's default `Cache-Control: public, max-age=0, must-revalidate` defeated the browser cache so every reload re-downloaded everything. Mobile browsers hit memory/bandwidth ceilings and aborted in-flight video fetches, which triggered video-element retry loops, which OOM'd the tab.
+
+### What shipped (Plan B)
+
+Scoped fix — targets the two biggest wins without touching the hero or rx-brain sequence. Plan C (hero mobile variant + rx-brain dedupe) is still open.
+
+1. **Solutions carousel — lazy-attach video sources.** `src/components/solutions-carousel-section.tsx`
+   - Compute `nearIndex = hoveredCardIndex ?? activeCardIndex` and `isNearActive = Math.abs(index - nearIndex) <= 1`.
+   - Only render `<source>` for near-active cards; far cards keep the `<video>` element with its poster but no source → no MP4 fetch.
+   - Added `preload="metadata"` to the `<video>`.
+   - Added `videoReferences` ref array + a `useEffect` keyed on `[activeCardIndex, hoveredCardIndex, cards]` that calls `video.load()` when a card transitions from far → near. Needed because HTML spec does not re-run resource selection when a `<source>` is appended to an already-mounted `<video>`.
+   - Verified: initial-load MP4 requests dropped from 5 → 2 on the solutions carousel (only active + adjacent). Scrolling to make a far card active triggers `.load()` and playback starts as expected.
+
+2. **Netlify cache headers.** `netlify.toml`
+   ```toml
+   [[headers]]
+     for = "/_next/image*"
+     [headers.values]
+       Cache-Control = "public, max-age=31536000, immutable"
+
+   [[headers]]
+     for = "/_next/static/*"
+     [headers.values]
+       Cache-Control = "public, max-age=31536000, immutable"
+
+   [[headers]]
+     for = "/media/*"
+     [headers.values]
+       Cache-Control = "public, max-age=604800, stale-while-revalidate=86400"
+   ```
+   - `/_next/static/*` and `/_next/image*` are content-hashed → safe to cache 1 year immutable.
+   - `/media/*` changes only on deploy → 7-day browser cache with 1-day stale-while-revalidate.
+   - HTML left to Next.js adapter + Netlify Durable cache (already handled).
+
+### Verification on record
+
+| Check | Before | After |
+|---|---|---|
+| Unique MP4 fetches on mobile home load | 6 (hero + 5 carousel) | 3 (hero + 2 near-active carousel) |
+| Solutions-video request count in first 6s | 25 (abort-retry flood) | 10 (normal byte-range buffering for 2 videos) |
+| Cache-Control on static assets | `public, max-age=0, must-revalidate` | `max-age=31536000, immutable` / `max-age=604800, swr=86400` |
+| `/en` + `/zh` home mobile smoke | crashed / reloaded | loads cleanly, 0 console errors |
+
+### Deferred / still open (Plan C, not yet scheduled)
+
+- **Hero mobile variant.** `hero.mp4` is 27 MB and autoplays eagerly on mount. Produce `hero-mobile.mp4` (720p, ~4 MB) and add a `<source media="(max-width: 768px)">` — or skip video on mobile and animate the poster.
+- **rx-brain double-resolution fetch.** Network trace showed both the 1080 AND 2000 frame sets fetching on mobile despite the width picker choosing 1080. Confirm where the 2000-px requests are coming from (likely the observer preloading ahead of the picker) and gate them behind the same viewport check.
+- **Carousel: detach `<video>` element entirely for far cards.** Current fix keeps the `<video>` mounted with no source — small HTMLMediaElement overhead per card. Swap to a `<div>` with `background-image` for non-near cards if profiling shows it matters.
+
+### Deploy notes
+
+- `[context.production] ignore = "exit 0"` in `netlify.toml` means pushing to `main` does **not** trigger a Netlify production deploy. Production ships only via `npm run deploy:prod` (CLI, from an authenticated shell with Windows Developer Mode enabled so `@netlify/plugin-nextjs` can create its symlinks).
+- Preview deploys: `npm run deploy:preview` → returns a throwaway preview URL for pre-merge checking.

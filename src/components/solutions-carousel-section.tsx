@@ -21,6 +21,8 @@ export function SolutionsCarouselSection({
   const [activeCardIndex, setActiveCardIndex] = useState(0);
   const [hoveredCardIndex, setHoveredCardIndex] = useState<number | null>(null);
   const cardReferences = useRef<Array<HTMLElement | null>>([]);
+  const videoReferences = useRef<Array<HTMLVideoElement | null>>([]);
+  const previousNearIndexRef = useRef(0);
   const activeCardIndexRef = useRef(0);
   const scrollDebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const displayedIndex = hoveredCardIndex ?? activeCardIndex;
@@ -78,6 +80,21 @@ export function SolutionsCarouselSection({
     };
   }, [cards]);
 
+  useEffect(() => {
+    const nearIndex = hoveredCardIndex ?? activeCardIndex;
+    const previousNear = previousNearIndexRef.current;
+
+    cards.forEach((_, index) => {
+      const wasNear = Math.abs(index - previousNear) <= 1;
+      const isNow = Math.abs(index - nearIndex) <= 1;
+      if (!wasNear && isNow) {
+        videoReferences.current[index]?.load();
+      }
+    });
+
+    previousNearIndexRef.current = nearIndex;
+  }, [activeCardIndex, hoveredCardIndex, cards]);
+
   return (
     <section
       className="section-spacing solutions-carousel-section"
@@ -119,6 +136,8 @@ export function SolutionsCarouselSection({
         >
           {cards.map((card, index) => {
             const showVideo = Boolean(card.backgroundVideoSrc);
+            const nearIndex = hoveredCardIndex ?? activeCardIndex;
+            const isNearActive = Math.abs(index - nearIndex) <= 1;
 
             return (
               <article
@@ -137,14 +156,20 @@ export function SolutionsCarouselSection({
                 <div className="solutions-carousel-media">
                   {showVideo ? (
                     <video
+                      ref={(element) => {
+                        videoReferences.current[index] = element;
+                      }}
                       className="solutions-carousel-video"
                       autoPlay
                       muted
                       loop
                       playsInline
+                      preload="metadata"
                       poster={card.backgroundPosterSrc ?? card.imageSrc}
                     >
-                      <source src={card.backgroundVideoSrc} type="video/mp4" />
+                      {isNearActive ? (
+                        <source src={card.backgroundVideoSrc} type="video/mp4" />
+                      ) : null}
                     </video>
                   ) : (
                     <div
