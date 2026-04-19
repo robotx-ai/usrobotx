@@ -51,6 +51,7 @@ Skip it for: one-line fixes, typos, content-only tweaks to `site-content.ts`.
 
 Dispatch rules:
 
+- **Adding, editing, or translating a news article is always a `cms` dispatch, not inline work.** If the ask also touches `src/`, split into two dispatches — `principal-frontend` for the code first, then `cms` for the content that satisfies the new schema.
 - **Route by surface, not keyword.** If the change only touches `content/**` and `public/media/news/**`, use `cms`. If it touches anything under `src/**` or `globals.css`, use `principal-frontend`. A change that spans both (e.g. new article + new layout field) is two dispatches, not one — `principal-frontend` for the code, then `cms` for the content, in that order so the content satisfies the new schema.
 - `cms` never writes to `src/`, `site-content.ts`, `globals.css`, or `package.json`. If its task implies those, it stops and hands back.
 - `cms` verifies with `npm run build` (the MDX loader runs at build time, so malformed front-matter fails there). Lint is not useful for MDX — skip it.
