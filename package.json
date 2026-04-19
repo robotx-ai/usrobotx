@@ -10,7 +10,9 @@
     "lint": "eslint",
     "build:hero": "node scripts/build-hero-frames.mjs",
     "build:rx-brain": "node scripts/build-rx-brain-frames.mjs",
-    "build:fonts": "node scripts/fetch-fonts.mjs"
+    "build:fonts": "node scripts/fetch-fonts.mjs",
+    "deploy:preview": "netlify deploy --build",
+    "deploy:prod": "netlify deploy --build --prod"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

@@ -1,0 +1,8 @@
+[build]
+  command = "next build"
+  publish = ".next"
+
+# Skip auto-deploys triggered by pushes to main.
+# Deploy production manually with: npm run deploy:prod
+[context.production]
+  ignore = "exit 0"
