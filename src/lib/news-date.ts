@@ -4,6 +4,7 @@ const EN_DATE_FORMATTER = new Intl.DateTimeFormat("en-US", {
   year: "numeric",
   month: "long",
   day: "numeric",
+  timeZone: "UTC",
 });
 
 export function formatNewsDate(dateIso: string, locale: Locale): string {
