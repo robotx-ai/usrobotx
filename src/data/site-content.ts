@@ -35,6 +35,7 @@ type HeroContent = {
   secondaryAction: string;
   backgroundVideoSrc: string;
   backgroundPosterSrc: string;
+  imageSequenceAriaLabel: string;
 };
 
 type Metric = {
@@ -243,6 +244,8 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
         secondaryAction: "Talk to Us",
         backgroundVideoSrc: homeHeroVideoSrc,
         backgroundPosterSrc: homeHeroPosterSrc,
+        imageSequenceAriaLabel:
+          "Quadruped inspection robot walking through an industrial yard",
       },
       companyIntroduction: {
         kicker: "What we do",
@@ -667,6 +670,7 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
         secondaryAction: "联系我们",
         backgroundVideoSrc: homeHeroVideoSrc,
         backgroundPosterSrc: homeHeroPosterSrc,
+        imageSequenceAriaLabel: "四足巡检机器人在工业场景中行走",
       },
       companyIntroduction: {
         kicker: "公司简介",

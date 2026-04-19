@@ -44,6 +44,8 @@ desktop.ini
 
 # large local source media
 /public/media/home/Quadruped_secondary_development_solution_1.mp4
+/public/media/videos/
+/public/media/hero/frames/_tmp/
 
 # TypeScript
 *.tsbuildinfo
