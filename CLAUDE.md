@@ -41,17 +41,21 @@ Three user gates: plan approval, review triage, commit approval.
 Use `/dev-pipeline` for: any new section, any multi-file change, anything you'd otherwise write a plan for manually.
 Skip it for: one-line fixes, typos, content-only tweaks to `site-content.ts`.
 
-#### Project agents (`.claude/agents/engineering/`)
+#### Project agents (`.claude/agents/`)
 
-| Agent                | When to use                                                                     |
-| -------------------- | ------------------------------------------------------------------------------- |
-| `principal-frontend` | Next.js / React / TS work — pages, sections, motion, bilingual copy wiring      |
-| `e2e`                | Browser verification after UI/motion changes via `playwright-cli`               |
+| Agent                | Location                                  | When to use                                                                     |
+| -------------------- | ----------------------------------------- | ------------------------------------------------------------------------------- |
+| `principal-frontend` | `.claude/agents/engineering/`             | Next.js / React / TS work — pages, sections, motion, bilingual copy wiring      |
+| `e2e`                | `.claude/agents/engineering/`             | Browser verification after UI/motion changes via `playwright-cli`               |
+| `cms`                | `.claude/agents/content/`                 | MDX content only — add, update, or translate articles under `content/news/` (and future `content/*` collections). Handles front-matter, en/zh parity, cover-image wiring. Never touches `src/` or styles. |
 
 Dispatch rules:
 
+- **Route by surface, not keyword.** If the change only touches `content/**` and `public/media/news/**`, use `cms`. If it touches anything under `src/**` or `globals.css`, use `principal-frontend`. A change that spans both (e.g. new article + new layout field) is two dispatches, not one — `principal-frontend` for the code, then `cms` for the content, in that order so the content satisfies the new schema.
+- `cms` never writes to `src/`, `site-content.ts`, `globals.css`, or `package.json`. If its task implies those, it stops and hands back.
+- `cms` verifies with `npm run build` (the MDX loader runs at build time, so malformed front-matter fails there). Lint is not useful for MDX — skip it.
 - `e2e` runs alone and sequentially — needs stable dev server + exclusive browser.
-- Always finish UI work with `e2e`. Lint + build do not verify motion or bilingual parity.
+- Always finish UI work with `e2e`. Lint + build do not verify motion or bilingual parity. Pure content edits (`cms` only) do not need `e2e` — a build pass plus a screenshot is enough; add `e2e` only if you want to verify prev/next nav or spotlight ordering after editorial changes.
 - `e2e` runs `playwright-cli` **offscreen** — the sandbox blocks subagents from attaching a GUI to the user's desktop. Screenshots and programmatic checks are real; the user does not see a window.
 - After `e2e` returns, the main session does a **live visible smoke check** using the Playwright MCP tools (`mcp__plugin_playwright_playwright__browser_navigate`, `browser_resize`, `browser_evaluate`, `browser_take_screenshot`, `browser_close`). These open a real Chromium window on the user's desktop — the only way the user sees the change live. Keep it short (one or two routes, one viewport); the subagent already covered the matrix.
 - No backend/migrate/deploy agents — this repo doesn't have those surfaces.
