@@ -21,7 +21,7 @@ You are an expert TypeScript/React/Next.js frontend developer for the usrobotx b
 - **TypeScript** (`strict` via `tsconfig.json`)
 - **Plain CSS** — global `src/app/globals.css` using CSS variables. **No Tailwind.** No CSS modules today (may be introduced if we add co-located styles — flag first).
 - **Bilingual routing** — `src/app/[locale]/` with `en` / `zh`; locale resolution in `src/lib/i18n.ts`
-- **No motion library installed yet.** If the task needs one (GSAP/ScrollTrigger, `motion`, Lenis), flag it and get approval — don't silently add a dependency.
+- **Motion stack:** `gsap` + `@gsap/react` + `ScrollTrigger` (used by the rx-brain pinned canvas scrubber) and `lenis` (smooth scroll). Extend these. Don't silently add a second motion library — flag and ask.
 
 ## Repo Structure
 
@@ -41,9 +41,14 @@ src/
 ├── components/
 │   ├── site-header.tsx
 │   ├── site-footer.tsx
-│   ├── reveal-section.tsx              — the only motion primitive today
+│   ├── reveal-section.tsx              — fade-in-on-scroll primitive
 │   ├── deployment-cycle-section.tsx
-│   ├── solutions-carousel-section.tsx
+│   ├── solutions-carousel-section.tsx  — lazy-mount carousel (visited-sticky, canplay-gated)
+│   ├── motion/
+│   │   ├── image-sequence.tsx          — pinned GSAP canvas scrubber (rx-brain)
+│   │   ├── media-loading-pulse.tsx     — pulsing X placeholder
+│   │   ├── use-reduced-motion.ts
+│   │   └── use-in-view-autoplay.ts
 │   └── pages/                          — page-level section compositions
 ├── data/
 │   └── site-content.ts                 — ~784 lines, bilingual copy for every section
@@ -111,7 +116,15 @@ export function Hero({ locale }: { locale: Locale }) {
 
 ### Reveal / scroll primitive
 
-Extend `reveal-section.tsx` rather than rewriting per-page. If a new motion shape is needed (pinned, parallax, scrubbed), build a sibling primitive in `src/components/` rather than embedding scroll logic in a page component.
+Extend `reveal-section.tsx` rather than rewriting per-page. If a new motion shape is needed (pinned, parallax, scrubbed), build a sibling primitive in `src/components/motion/` rather than embedding scroll logic in a page component.
+
+### Media loading placeholder
+
+Deferred / async media (lazy-mounted carousel videos, scroll-scrubbed canvas frames) renders `<MediaLoadingPulse />` until the media is actually playable — not a poster image. For `<video>`, drive pulse visibility off `onCanPlay` / `onLoadedData` + a ref-callback `readyState >= 3` fallback for cached playback. For canvas scrubbers, hide the canvas (`opacity: 0`) until the first `drawFrame` succeeds so the pulse underneath shows through. Never invent a per-section placeholder image or reuse stock robot photos as a loading state.
+
+### GSAP + ScrollTrigger pinning
+
+When re-creating a `ScrollTrigger` on a dependency change (e.g., responsive width picker), always pass `revertOnUpdate: true` to `useGSAP`. Without it, the previous pin's spacer padding is not reverted and subsequent mounts stack pin distances, teleporting the pinned element off-screen after first scroll.
 
 ### Media
 

@@ -123,9 +123,14 @@ src/
     globals.css
   components/
     site-header.tsx, site-footer.tsx
-    reveal-section.tsx           — the only motion primitive today
+    reveal-section.tsx           — fade-in-on-scroll primitive
     deployment-cycle-section.tsx
-    solutions-carousel-section.tsx
+    solutions-carousel-section.tsx — lazy-loaded carousel (see Patterns below)
+    motion/
+      image-sequence.tsx         — pinned GSAP ScrollTrigger canvas scrubber (rx-brain section)
+      media-loading-pulse.tsx    — pulsing RobotX-X placeholder, shown while media is loading
+      use-reduced-motion.ts
+      use-in-view-autoplay.ts
     pages/                       — page-level section compositions
   data/
     site-content.ts              — ~784 lines, bilingual strings for every section
@@ -140,7 +145,7 @@ PLAN.md                          — intent, direction, gaps, open questions
 
 **Asset rule:** all video sources live in `raw_assets/` (gitignored). Only optimized, web-ready derivatives get copied into `public/media/` and committed. If a video belongs in the repo, it must be the final compressed export — never the master.
 
-No tests, no Storybook, no CMS, no motion library installed yet (no `gsap`, `framer-motion`, `motion`, `lenis`). If `PLAN.md`'s motion-fidelity spike lands, it will likely introduce one — pick deliberately, don't accrete.
+No tests, no Storybook, no CMS. Motion stack in use: `gsap` + `@gsap/react` (ScrollTrigger for the rx-brain pinned scrubber), `lenis` (smooth scroll). Don't add a second motion library — extend these.
 
 ## Tech Stack
 
@@ -159,6 +164,8 @@ Scripts:
 | `pnpm build`          | `next build` — includes type-check           |
 | `pnpm start`          | Production server                            |
 | `pnpm lint`           | ESLint                                       |
+| `npm run deploy:preview` | `netlify deploy --build` — upload preview URL |
+| `npm run deploy:prod`    | `netlify deploy --build --prod` — publish to production |
 
 ## Design Direction
 
@@ -171,6 +178,14 @@ Rules of thumb:
 - **Bilingual parity.** Every new string, label, aria tag, and motion caption lands in both `en` and `zh` inside `site-content.ts`. Don't ship one-sided strings.
 - **No hardcoded colors in components.** Use CSS variables defined in `globals.css`.
 - **Respect `prefers-reduced-motion`.** Every scroll/parallax effect needs a reduced-motion fallback.
+- **Loading placeholders use `<MediaLoadingPulse>`.** Any deferred / async media (carousel videos, scroll-scrubbed canvases, per-card autoplay) renders a pulsing RobotX-X mark (`/media/logos/robotx-square-transparent.png`) until the media is actually playable. Don't invent per-section placeholders or reach for a different stock image.
+
+## Deploy
+
+- `main` push is intentionally blocked from auto-deploying via `[context.production] ignore = "exit 0"` in `netlify.toml`.
+- Previews ship via `npm run deploy:preview` (throwaway URL). Production ships via `npm run deploy:prod` — only after user approval.
+- Windows requires Developer Mode on for the local `@netlify/plugin-nextjs` step to create symlinks. If the deploy errors with `EPERM: symlink`, that's the cause.
+- Git note: this repo is a sparse checkout. `git add <path>` may error with "outside of your sparse-checkout definition" — pass `--sparse` to override.
 
 ## Open Questions (from `PLAN.md`)
 

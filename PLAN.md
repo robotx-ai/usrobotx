@@ -120,7 +120,7 @@ Pick one fieldai section (likely the homepage hero scrubber or a `/solutions/*` 
 
 ---
 
-## Phase 2 — Mobile performance hardening (2026-04-19)
+## Phase 2 — Mobile performance + loading hardening (2026-04-19)
 
 **Trigger:** after the first production deploy, `https://usrobotx.com/` broke on mobile — page would load twice then stop loading. Diagnosis: the home page was fetching ~200 MB of media on mount, and Netlify's default `Cache-Control: public, max-age=0, must-revalidate` defeated the browser cache so every reload re-downloaded everything. Mobile browsers hit memory/bandwidth ceilings and aborted in-flight video fetches, which triggered video-element retry loops, which OOM'd the tab.
 
@@ -165,13 +165,24 @@ Scoped fix — targets the two biggest wins without touching the hero or rx-brai
 | Cache-Control on static assets | `public, max-age=0, must-revalidate` | `max-age=31536000, immutable` / `max-age=604800, swr=86400` |
 | `/en` + `/zh` home mobile smoke | crashed / reloaded | loads cleanly, 0 console errors |
 
-### Deferred / still open (Plan C, not yet scheduled)
+### Follow-up work that shipped later the same day
 
-- **Hero mobile variant.** `hero.mp4` is 27 MB and autoplays eagerly on mount. Produce `hero-mobile.mp4` (720p, ~4 MB) and add a `<source media="(max-width: 768px)">` — or skip video on mobile and animate the poster.
-- **rx-brain double-resolution fetch.** Network trace showed both the 1080 AND 2000 frame sets fetching on mobile despite the width picker choosing 1080. Confirm where the 2000-px requests are coming from (likely the observer preloading ahead of the picker) and gate them behind the same viewport check.
-- **Carousel: detach `<video>` element entirely for far cards.** Current fix keeps the `<video>` mounted with no source — small HTMLMediaElement overhead per card. Swap to a `<div>` with `background-image` for non-near cards if profiling shows it matters.
+After Plan B landed the user reported (1) the pulse placeholder flashed and vanished faster than the media could load and (2) the rx-brain pinned section was invisible on scroll-down until the end. Both were root-cause fixes:
+
+- **Rx-brain pin regression** — `useGSAP` cleanup killed the ScrollTrigger without `revert = true`, so when the `width` state flipped from SSR-fallback `2000` to the client-picked `1080` on mobile the pin's spacer padding accumulated (observed 3376 px = 2 × 1688). Fix: pass `revertOnUpdate: true` to `useGSAP`. The `useGSAP` contract is "revert on unmount only" by default; `revertOnUpdate: true` extends that to dependency changes.
+- **`MediaLoadingPulse` placeholder** — replaced the full-resolution priority `<img>` on the rx-brain sequence and overlaid far-card videos in the carousel with a pulsing `/media/logos/robotx-square-transparent.png` mark (CSS keyframe, respects `prefers-reduced-motion`). This also removed the Next.js auto-preload hint for rx-brain frame 0.
+- **`Pudu_CC1-8.webp` removed from code.** It was the universal `imageSrc` / `backgroundPosterSrc` fallback for every carousel card. `SolutionCard.imageSrc` is now optional and consumers fall back to `<MediaLoadingPulse>` if missing. The file stays on disk, unreferenced from `src/`.
+- **Carousel visited-sticky.** Original Plan B removed `<source>` when a card scrolled out of near range, so each re-entry called `video.load()` and flashed a black reload. Now `visitedCards: Set<number>` is sticky — once a card has been near, its source stays forever. After the user scrolls through the carousel every video is loaded and never reloads.
+- **Pulse persists until media is playable.** Carousel pulse is keyed on `loadedCards` (set by `onCanPlay` / `onLoadedData` plus a ref-callback `readyState >= 3` check for cached videos that raced past the React listener). Rx-brain canvas opens at `opacity: 0`; the `MediaLoadingPulse` below shows through until the first `drawFrame(0)` flips `firstFrameDrawn` to true. On slow networks users now see the pulsing X for the full load window.
+
+### Deferred / still open
+
+- **Hero mobile variant.** `hero.mp4` is 27 MB and autoplays eagerly on mount. Produce `hero-mobile.mp4` (720p, ~4 MB) from the master in `raw_assets/`, add `<source media="(max-width: 768px)">`. `MediaLoadingPulse` is intentionally NOT wired on the hero — hero keeps `hero-poster.webp` so LCP stays a real image. See `TODO.md` items 3 and 9.
+- **rx-brain double-resolution fetch.** The 2026-04-19 mobile trace showed both the 1080 AND 2000 frame sets fetching. After the priority `<img>` swap (which removed the Next.js preload hint for the 2000 frame 0), this may already be resolved — needs a fresh trace to confirm. See `TODO.md` item 8.
+- **Carousel: detach `<video>` element entirely for far cards.** Current fix keeps the `<video>` mounted with no source — small HTMLMediaElement overhead per card. Swap to a `<div>` with `background-image` for non-near cards if profiling shows it matters. Unlikely to matter in practice.
 
 ### Deploy notes
 
 - `[context.production] ignore = "exit 0"` in `netlify.toml` means pushing to `main` does **not** trigger a Netlify production deploy. Production ships only via `npm run deploy:prod` (CLI, from an authenticated shell with Windows Developer Mode enabled so `@netlify/plugin-nextjs` can create its symlinks).
 - Preview deploys: `npm run deploy:preview` → returns a throwaway preview URL for pre-merge checking.
+- Repo is a sparse checkout — `git add <path>` sometimes errors with "outside of your sparse-checkout definition"; pass `--sparse` to override.
