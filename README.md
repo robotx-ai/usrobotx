@@ -7,7 +7,7 @@ Code-managed rebuild of `usrobotx.com` using `Next.js`, bilingual routing, local
 - `Next.js` App Router
 - `TypeScript`
 - global CSS in `src/app/globals.css`
-- local media in `public/media`
+- web-ready media in `public/media` (raw footage and video masters live in `raw_assets/`, which is gitignored)
 
 ## Local development
 
@@ -43,8 +43,9 @@ Then open `http://<your-local-ip>:3000`.
 
 ```text
 public/
-  media/
+  media/           # web-ready, committed
     home/
+raw_assets/        # gitignored — raw footage, Premiere projects, video masters
 src/
   app/
   components/
@@ -59,6 +60,7 @@ src/
 - Home page layout lives in `src/components/pages/home-page.tsx`
 - Header and footer live in `src/components/site-header.tsx` and `src/components/site-footer.tsx`
 - Local media assets are currently sourced from `public/media/home`
+- Raw footage and video masters live in `raw_assets/` (gitignored). Web exports (optimized MP4, WebM, poster stills) are produced from those masters and copied into `public/media/` before being committed.
 
 ## Current implementation notes
 

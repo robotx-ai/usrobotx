@@ -35,6 +35,24 @@ type HeroContent = {
   secondaryAction: string;
   backgroundVideoSrc: string;
   backgroundPosterSrc: string;
+  videoAriaLabel: string;
+};
+
+export type RxBrainContent = {
+  kicker: string;
+  subtitle: string;
+  description: string;
+  ctaLabel: string;
+  wordmarkAlt: string;
+  imageSequenceAriaLabel: string;
+};
+
+type TechnologyContent = {
+  pageHero: {
+    kicker: string;
+    title: string;
+    description: string;
+  };
 };
 
 type Metric = {
@@ -60,6 +78,7 @@ type HomeContent = {
     title: string;
     description: string;
   };
+  rxBrain: RxBrainContent;
   deploymentCycle: {
     kicker: string;
     title: string;
@@ -191,6 +210,7 @@ export type SiteContent = {
   solutions: SolutionsContent;
   about: AboutContent;
   contact: ContactContent;
+  technology: TechnologyContent;
 };
 
 const sharedAddress = "17901 Von Karman Ave, Ste 420, Irvine, CA 92614";
@@ -199,6 +219,8 @@ const sharedPhoneRaw = "18005190881";
 const sharedEmail = "info@usrobotx.com";
 const homeHeroVideoSrc = "/media/home/Quadruped_secondary_development_solution_1_web.mp4";
 const homeHeroPosterSrc = "/media/home/Pudu_CC1-8.webp";
+const homepageHeroVideoSrc = "/media/hero/hero.mp4";
+const homepageHeroPosterSrc = "/media/hero/hero-poster.webp";
 const sharedSolutionImageSrc = "/media/home/Pudu_CC1-8.webp";
 
 const siteContentByLocale: Record<Locale, SiteContent> = {
@@ -241,14 +263,27 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
           "We build advanced robotic platforms and applied solutions.",
         primaryAction: "Explore Solutions",
         secondaryAction: "Talk to Us",
-        backgroundVideoSrc: homeHeroVideoSrc,
-        backgroundPosterSrc: homeHeroPosterSrc,
+        backgroundVideoSrc: homepageHeroVideoSrc,
+        backgroundPosterSrc: homepageHeroPosterSrc,
+        videoAriaLabel:
+          "Quadruped inspection robot walking through an industrial yard",
       },
       companyIntroduction: {
         kicker: "What we do",
         title: "A data-driven ecosystem for evolving AI robotics.",
         description:
           "We use a global supply network and offer flexible options—including sales, rental, and education—to make robotics accessible and practical for our customers.\n\nBy combining real-world industry experience with advanced technology, we build and customize robots for environments like factories and construction sites. Our solutions are designed to improve over time and adapt to your changing needs.",
+      },
+      rxBrain: {
+        kicker: "Coming soon",
+        subtitle:
+          "RX BRAIN™ is the general-purpose intelligence at the core of every RobotX platform.",
+        description:
+          "RX BRAIN unifies perception, planning, and control across tasks and environments. Every deployment teaches it. Every robot runs it. Every fleet gets sharper.",
+        ctaLabel: "Technology",
+        wordmarkAlt: "RX BRAIN",
+        imageSequenceAriaLabel:
+          "Abstract visualization of the RX BRAIN system",
       },
       deploymentCycle: {
         kicker: "Closed-Loop Intelligence",
@@ -467,8 +502,7 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
             "Factory-ready deployment storytelling",
           ],
           imageSrc: sharedSolutionImageSrc,
-          backgroundVideoSrc: homeHeroVideoSrc,
-          backgroundPosterSrc: homeHeroPosterSrc,
+          backgroundVideoSrc: "/media/solutions/robot-dog-farm-1.mp4",
         },
         {
           tag: "Cleaning AI: Malls / Factories",
@@ -481,6 +515,7 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
             "Facility operations positioning",
           ],
           imageSrc: sharedSolutionImageSrc,
+          backgroundVideoSrc: "/media/solutions/cleaning-robot.mp4",
         },
         {
           tag: "Logistics AI: Warehouses",
@@ -493,6 +528,7 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
             "Scalable fulfillment storytelling",
           ],
           imageSrc: sharedSolutionImageSrc,
+          backgroundVideoSrc: "/media/solutions/logistic-robot.mp4",
         },
         {
           tag: "Construction AI: Job Sites",
@@ -505,6 +541,7 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
             "Field deployment credibility",
           ],
           imageSrc: sharedSolutionImageSrc,
+          backgroundVideoSrc: homeHeroVideoSrc,
         },
         {
           tag: "Service AI: Hotels / Restaurants",
@@ -517,6 +554,7 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
             "Front-of-house automation value",
           ],
           imageSrc: sharedSolutionImageSrc,
+          backgroundVideoSrc: "/media/solutions/restaurant-robot.mp4",
         },
         {
           tag: "Companion AI: Homes",
@@ -529,6 +567,7 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
             "Emotion-aware product storytelling",
           ],
           imageSrc: sharedSolutionImageSrc,
+          backgroundVideoSrc: "/media/solutions/compaion-robot.mp4",
         },
       ],
       callout: {
@@ -626,6 +665,14 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
         submitLabel: "Send Inquiry",
       },
     },
+    technology: {
+      pageHero: {
+        kicker: "Technology",
+        title: "RX BRAIN — Technology",
+        description:
+          "Detailed technology page coming soon. For now, explore our solutions or get in touch.",
+      },
+    },
   },
   zh: {
     meta: {
@@ -665,14 +712,25 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
           "我们专注于工业、教育、人形机器人与消防等方向的先进机器人平台与解决方案，强调精确控制、工程能力与落地部署。",
         primaryAction: "查看解决方案",
         secondaryAction: "联系我们",
-        backgroundVideoSrc: homeHeroVideoSrc,
-        backgroundPosterSrc: homeHeroPosterSrc,
+        backgroundVideoSrc: homepageHeroVideoSrc,
+        backgroundPosterSrc: homepageHeroPosterSrc,
+        videoAriaLabel: "四足巡检机器人在工业场景中行走",
       },
       companyIntroduction: {
         kicker: "公司简介",
         title: "以数据驱动智能的闭环生态",
         description:
           "我们依托全球供应链体系，并结合销售、租赁及教育等多元化业务模式，为客户提供稳定且可扩展的机器人解决方案。\n\n通过融合不同行业的实际数据，并结合先进的感知与运动控制技术，我们能够针对制造业、建筑业等复杂应用场景进行定制化开发。我们的机器人系统具备持续优化与智能升级的能力，能够随着客户需求不断演进。",
+      },
+      rxBrain: {
+        kicker: "即将推出",
+        subtitle:
+          "RX BRAIN™ 是支撑每一台 RobotX 机器人的通用智能核心。",
+        description:
+          "RX BRAIN 将感知、规划与控制融合在同一模型中，跨任务、跨场景持续进化。每一次部署都在训练它，每一台机器人都在运行它，整支机队变得更敏锐。",
+        ctaLabel: "技术",
+        wordmarkAlt: "RX BRAIN",
+        imageSequenceAriaLabel: "RX BRAIN 系统的抽象可视化",
       },
       deploymentCycle: {
         kicker: "闭环智能",
@@ -858,52 +916,82 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
       },
       cards: [
         {
-          tag: "人形机器人",
-          title: "适用于交互、研究与服务场景的人形机器人方案。",
+          tag: "巡检 AI：工厂",
+          title: "面向工厂巡检、异常检测与运营可视化的巡检 AI。",
           description:
-            "面向需要展示人机交互、前沿研究能力和品牌形象输出的组织与项目。",
+            "面向需要机器人捕捉设备状态、识别异常情况并将可执行数据回传到运营闭环的工业场景。",
           highlights: [
-            "强化人机交互场景表达",
-            "适合研究与展示型页面结构",
-            "后续可扩展产品展示模块",
+            "日常巡检自动化",
+            "设备状态监测流程",
+            "工厂部署案例表达",
           ],
           imageSrc: sharedSolutionImageSrc,
+          backgroundVideoSrc: "/media/solutions/robot-dog-farm-1.mp4",
         },
         {
-          tag: "工业机器人",
-          title: "服务于巡检、移动作业与效率提升的工业机器人方案。",
+          tag: "清洁 AI：商场 / 工厂",
+          title: "面向商业空间与工业场所的清洁 AI。",
           description:
-            "适合强调自动化、监测、远程操控和复杂环境作业能力的技术型内容展示。",
+            "为需要自主清洁、可复用巡线与稳定服务质量的团队打造，覆盖购物中心、公共设施与生产车间。",
           highlights: [
-            "清晰讲述感知与移动能力",
-            "突出操作端和系统控制逻辑",
-            "适合媒体较多的案例扩展",
+            "大面积覆盖能力",
+            "自主清洁路径规划",
+            "设施运营场景定位",
           ],
           imageSrc: sharedSolutionImageSrc,
+          backgroundVideoSrc: "/media/solutions/cleaning-robot.mp4",
         },
         {
-          tag: "教育机器人",
-          title: "面向实验室、教学项目与技术培训的教育机器人方案。",
+          tag: "物流 AI：仓储",
+          title: "面向仓内搬运、调度与物料流转的物流 AI。",
           description:
-            "突出教学价值、平台开放性以及科研和课程结合的可能性，适合学校与研究机构。",
+            "适合机器人移动能力能够减少人工搬运摩擦、在存储到出货全流程中保持作业连续性的仓储环境。",
           highlights: [
-            "强调学习与实验价值",
-            "支持中英双语学术传播",
-            "后续方便加入实验室照片与视频",
+            "仓内运输自动化",
+            "运营效率表达",
+            "可规模化履约叙事",
           ],
           imageSrc: sharedSolutionImageSrc,
+          backgroundVideoSrc: "/media/solutions/logistic-robot.mp4",
         },
         {
-          tag: "消防机器人",
-          title: "面向极端环境与人员安全的机器人消防方案。",
+          tag: "施工 AI：工地",
+          title: "面向复杂、多变与高噪声建筑工地的施工 AI。",
           description:
-            "延续当前网站中消防方向的核心价值，重点突出远程操控、现场感知与人员保护能力。",
+            "延续当前网站中安全优先的表达，强调远程操控、态势感知与人员保护能力。",
           highlights: [
-            "任务导向型叙事",
-            "适合高风险场景表达",
-            "可直接承接现场视频素材",
+            "工地态势采集",
+            "动态地形通讯",
+            "现场部署可信度",
           ],
           imageSrc: sharedSolutionImageSrc,
+          backgroundVideoSrc: homeHeroVideoSrc,
+        },
+        {
+          tag: "服务 AI：酒店 / 餐饮",
+          title: "面向面客配送、引导与酒店餐饮流程的服务 AI。",
+          description:
+            "适合酒店与餐饮场景，机器人可以优化服务触点，同时强化现代、科技感的宾客体验。",
+          highlights: [
+            "宾客互动表达",
+            "酒店餐饮场景叙事",
+            "前厅自动化价值",
+          ],
+          imageSrc: sharedSolutionImageSrc,
+          backgroundVideoSrc: "/media/solutions/restaurant-robot.mp4",
+        },
+        {
+          tag: "陪伴 AI：家庭",
+          title: "面向家庭陪伴、互动与日常辅助的陪伴 AI。",
+          description:
+            "面向家庭环境的未来方向，陪伴、辅助与自然互动与机器人平台本身同等重要。",
+          highlights: [
+            "家庭互动叙事",
+            "辅助与关怀定位",
+            "情感感知产品表达",
+          ],
+          imageSrc: sharedSolutionImageSrc,
+          backgroundVideoSrc: "/media/solutions/compaion-robot.mp4",
         },
       ],
       callout: {
@@ -993,6 +1081,13 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
         messageLabel: "留言",
         messagePlaceholder: "请介绍你的机器人应用场景、时间计划或具体问题。",
         submitLabel: "发送咨询",
+      },
+    },
+    technology: {
+      pageHero: {
+        kicker: "技术",
+        title: "RX BRAIN — 技术",
+        description: "详细技术说明即将上线。欢迎先浏览我们的解决方案或联系我们。",
       },
     },
   },

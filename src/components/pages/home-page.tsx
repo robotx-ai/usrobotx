@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { DeploymentCycleSection } from "@/components/deployment-cycle-section";
+import { HomeHero } from "@/components/pages/sections/home-hero";
+import { RxBrainSection } from "@/components/pages/sections/rx-brain-section";
 import { RevealSection } from "@/components/reveal-section";
 import { SolutionsCarouselSection } from "@/components/solutions-carousel-section";
 import type { SiteContent } from "@/data/site-content";
@@ -13,40 +15,7 @@ type HomePageProps = {
 export function HomePage({ locale, content }: HomePageProps) {
   return (
     <>
-      <section className="hero-section media-background-section" id="hero">
-        <div className="hero-video-layer">
-          <video
-            className="hero-background-video"
-            autoPlay
-            muted
-            loop
-            playsInline
-            poster={content.home.hero.backgroundPosterSrc}
-          >
-            <source
-              src={content.home.hero.backgroundVideoSrc}
-              type="video/mp4"
-            />
-          </video>
-        </div>
-        <div className="hero-media-overlay" />
-        <div className="hero-grid-layer" />
-        <div className="section-container hero-layout">
-          <div className="hero-copy-panel">
-            <span className="section-kicker">{content.home.hero.kicker}</span>
-            <h1 className="hero-title">{content.home.hero.title}</h1>
-            <p className="hero-copy">{content.home.hero.description}</p>
-            <div className="button-row">
-              <Link className="primary-button" href={`/${locale}/solutions`}>
-                {content.home.hero.primaryAction}
-              </Link>
-              <Link className="secondary-button" href={`/${locale}/contact`}>
-                {content.home.hero.secondaryAction}
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HomeHero locale={locale} content={content.home.hero} />
 
       <RevealSection className="section-spacing">
         <section className="section-container company-introduction-panel">
@@ -69,6 +38,8 @@ export function HomePage({ locale, content }: HomePageProps) {
           items={content.home.deploymentCycle.items}
         />
       </RevealSection>
+
+      <RxBrainSection locale={locale} content={content.home.rxBrain} />
 
       <RevealSection className="section-spacing">
         <section className="section-container deployment-places-panel">

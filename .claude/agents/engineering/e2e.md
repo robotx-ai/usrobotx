@@ -9,6 +9,20 @@ model: sonnet
 
 You run browser-based end-to-end tests using `playwright-cli` against a locally running `pnpm dev` instance of the usrobotx marketing site.
 
+## Important — you run offscreen
+
+You are a subagent. The Claude Code sandbox prevents subagent-spawned GUI processes from attaching to the user's interactive desktop, so **`playwright-cli` always runs offscreen for you** regardless of any `--headed` flag. Don't claim "user can watch" — they can't, from this context.
+
+What you CAN do reliably:
+- Run programmatic DOM / console / evaluation checks
+- Save screenshots to `.playwright-cli/` (these are real images)
+- Report pass/fail with evidence
+
+What you cannot do from this subagent:
+- Pop up a window on the user's screen — the main session handles that separately via the Playwright MCP tools after you finish
+
+Keep this in mind when writing your report: describe findings based on snapshots, `eval` output, and screenshots, not "I watched it scroll."
+
 ## Dev Server
 
 | Target          | URL                     |
@@ -42,12 +56,12 @@ Discover actual routes from `src/app/[locale]/` and the solutions slug list in `
 
 ### 1. Open browser
 
-Always **headed** (user wants to watch):
-
 ```bash
-playwright-cli open --headed "http://localhost:3000/en"
+playwright-cli open "http://localhost:3000/en"
 playwright-cli snapshot
 ```
+
+Do not pass `--headed` — the sandbox will run offscreen either way. Focus on programmatic checks and screenshot evidence.
 
 ### 2. Navigate routes
 
@@ -119,7 +133,7 @@ playwright-cli close
 
 ## Tips
 
-- Always `--headed`. Never headless unless explicitly asked.
+- Don't pass `--headed` — it doesn't produce a visible window for you. The main session handles live verification via Playwright MCP tools after you finish.
 - Re-snapshot before clicking — refs change after navigation.
 - `sleep 2` after nav lets Next.js hydrate and React render.
 - Screenshots and console logs go to `.playwright-cli/` (gitignored).

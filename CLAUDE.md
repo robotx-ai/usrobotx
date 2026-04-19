@@ -52,6 +52,8 @@ Dispatch rules:
 
 - `e2e` runs alone and sequentially — needs stable dev server + exclusive browser.
 - Always finish UI work with `e2e`. Lint + build do not verify motion or bilingual parity.
+- `e2e` runs `playwright-cli` **offscreen** — the sandbox blocks subagents from attaching a GUI to the user's desktop. Screenshots and programmatic checks are real; the user does not see a window.
+- After `e2e` returns, the main session does a **live visible smoke check** using the Playwright MCP tools (`mcp__plugin_playwright_playwright__browser_navigate`, `browser_resize`, `browser_evaluate`, `browser_take_screenshot`, `browser_close`). These open a real Chromium window on the user's desktop — the only way the user sees the change live. Keep it short (one or two routes, one viewport); the subagent already covered the matrix.
 - No backend/migrate/deploy agents — this repo doesn't have those surfaces.
 
 #### Supporting skills
@@ -97,7 +99,8 @@ Bilingual marketing site for `usrobotx.com` — display- and contact-focused, **
 - Next.js 16 App Router, React 19, TypeScript
 - Bilingual routing via `src/app/[locale]/` (`en`, `zh`)
 - Content hard-coded in `src/data/site-content.ts` today; CMS migration is an open question — see `PLAN.md`
-- Local media in `public/media/` — placeholders today, real product photography and robot footage planned
+- Web-ready media in `public/media/` — placeholders today, real product photography and robot footage planned
+- Raw footage and video masters in `raw_assets/` — **gitignored**; never commit video binaries to the repo
 - Future: Shopify-fed display-only product pages, Netlify deploy, SEO redirects from the legacy WordPress site
 
 Target feel: motion-first, scroll-driven storytelling, dense multi-resolution media, deep per-industry solution pages. Benchmark: `fieldai-mirror/`.
@@ -125,10 +128,13 @@ src/
   lib/
     i18n.ts                      — locale resolution
 public/
-  media/                         — ~27 MB placeholders (home/, solutions/, logo, hero)
+  media/                         — web-ready exports only (home/, solutions/, logo, hero). Ships to the browser — keep sizes tight.
+raw_assets/                      — gitignored. Raw footage, Premiere projects, video masters. Web exports are produced from here.
 fieldai-mirror/                  — reference mirror; see Source of Truth above
 PLAN.md                          — intent, direction, gaps, open questions
 ```
+
+**Asset rule:** all video sources live in `raw_assets/` (gitignored). Only optimized, web-ready derivatives get copied into `public/media/` and committed. If a video belongs in the repo, it must be the final compressed export — never the master.
 
 No tests, no Storybook, no CMS, no motion library installed yet (no `gsap`, `framer-motion`, `motion`, `lenis`). If `PLAN.md`'s motion-fidelity spike lands, it will likely introduce one — pick deliberately, don't accrete.
 

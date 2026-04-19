@@ -134,6 +134,23 @@ This site has no dedicated `principal-architect` agent — the project is small 
 
 **All Phase 5 agents MUST use `model: "sonnet"`** — pass this in every Agent dispatch.
 
+### Two-layer verification
+
+Claude Code's sandbox blocks subagents from attaching GUI processes to the user's desktop, so `playwright-cli` inside the `e2e` subagent always runs offscreen — screenshots are real, but no window pops up. To give the user a live, visible browser, the **main session** must drive the Playwright MCP tools directly.
+
+Run both layers, in this order:
+
+1. **Thorough programmatic pass — `e2e` subagent + `playwright-cli` (offscreen):**
+   - Fast, broad coverage across routes × locales × viewports
+   - Runs in the subagent so it doesn't bloat main-session context
+   - Produces screenshots into `.playwright-cli/` and reports pass/fail per route
+2. **Live visible smoke check — main session + Playwright MCP (headed window):**
+   - The main session calls `mcp__plugin_playwright_playwright__browser_navigate`, `browser_resize`, `browser_evaluate`, `browser_take_screenshot`, `browser_close` directly
+   - This opens an actual Chromium window on the user's desktop — the only way the user sees the change live
+   - Minimum: `/en` + `/zh` home at 1440×900, confirm video/motion plays, one full-viewport screenshot per locale
+
+### Flow
+
 1. **Start dev server** if not already running:
    ```bash
    pnpm dev &
@@ -144,10 +161,11 @@ This site has no dedicated `principal-architect` agent — the project is small 
    - Desktop + mobile viewports
    - Scroll/motion sections
    - `prefers-reduced-motion` fallback spot-check
-3. **Close browser when done.** Leave the dev server running unless you started it; if you started it, kill it.
-4. If QA finds issues: fix via `principal-frontend`, re-run QA. Max 2 cycles before escalating.
+3. **After the subagent reports, run the live smoke check from the main session** using the `mcp__plugin_playwright_playwright__*` tools. Navigate to the changed routes, take one screenshot per locale, close the browser. The user watches this happen.
+4. **Close browser when done.** Leave the dev server running unless you started it; if you started it, kill it.
+5. If QA finds issues: fix via `principal-frontend`, re-run QA. Max 2 cycles before escalating.
 
-**E2E runs ALONE.** Never parallel with other agents.
+**E2E runs ALONE.** Never parallel with other agents. The main-session MCP smoke check also runs alone, AFTER the subagent completes — never concurrently.
 
 ## Phase 6: COMMIT ← Gate 3
 
