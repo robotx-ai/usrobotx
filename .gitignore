@@ -59,6 +59,12 @@ desktop.ini
 # playwright runtime artifacts (snapshots, screenshots, console logs)
 .playwright-cli/
 .playwright-mcp/
+# stray screenshots / network dumps written to repo root during interactive QA
+/*.png
+/*.jpg
+/*.jpeg
+/*-network.txt
+/fix-verify-*.txt
 
 # package manager caches
 /.pnp
