@@ -1,6 +1,6 @@
 # usrobotx — Plan
 
-_Last updated: 2026-04-17_
+_Last updated: 2026-04-18_
 
 ## Intention
 
@@ -50,3 +50,55 @@ Target experience:
 
 ## Suggested next move
 Pick one fieldai section (likely the homepage hero scrubber or a `/solutions/*` page) and rebuild it here as a **motion-fidelity spike** — one page, real motion, real media. That spike tells us the true gap and whether the self-built path is worth the ongoing cost.
+
+---
+
+## Phase 1 — Homepage Hero Motion Spike
+
+**Scope:** one section (homepage hero scrubber), real motion, bilingual, stand-in media OK. Ship it or kill the self-built path.
+
+### Pre-work decisions (blockers — resolve before coding)
+- [ ] Confirm bilingual `en`/`zh` is firm for the spike
+- [ ] Confirm self-built vs. Webflow — spike only makes sense if self-built is still on the table
+- [ ] Pick motion stack: `GSAP + ScrollTrigger` **or** `Motion + Lenis` (recommend GSAP)
+- [ ] Identify hero media source: existing footage, a placeholder image sequence, or commissioned shoot
+
+### Motion foundation
+- [ ] Install chosen motion deps + `lenis` (smooth scroll)
+- [ ] Add `<LenisProvider>` in `src/app/[locale]/layout.tsx`
+- [ ] Honor `prefers-reduced-motion` globally (disable Lenis + ScrollTrigger animations)
+- [ ] Create `src/components/motion/` with first primitive: `ImageSequence` (scroll-scrubbed canvas sequence)
+
+### Hero section rebuild
+- [ ] Study `fieldai-mirror/www.fieldai.com/index.html` hero — inspect DOM, transforms, scroll math
+- [ ] Design hero shot list: ~60–120 frames for the scrub sequence
+- [ ] Generate `webp` variants at 500 / 800 / 1080 / 1600 / 2000 widths
+- [ ] Build `HomeHero` section using `ImageSequence` primitive
+- [ ] Wire bilingual hero copy in `src/data/site-content.ts` (headline, sub, captions, aria)
+- [ ] Replace current homepage hero in `src/components/pages/` composition
+
+### Asset pipeline (minimum viable)
+- [ ] Document `webp` variant generation command (e.g. `sharp-cli`) in `package.json`
+- [ ] Confirm `next/image` config for local multi-resolution serving
+
+### Verification
+- [ ] `pnpm lint` + `pnpm build` clean
+- [ ] `e2e` agent runs `playwright-cli --headed` on `/en` and `/zh` — scroll through hero, confirm scrub + reduced-motion fallback
+- [ ] Compare side-by-side with fieldai hero — document gap (feel, smoothness, frame cadence)
+
+### Go/no-go checkpoint
+- [ ] Write a short spike report: effort spent, achieved fidelity, remaining work to apply same pattern across 6 solution pages + news/team
+- [ ] Decide: continue self-built → Phase 2, or pivot to Webflow
+
+## Media requirements
+
+| Animation type                              | Format                            | Notes                                                                                          |
+| ------------------------------------------- | --------------------------------- | ---------------------------------------------------------------------------------------------- |
+| Scroll-scrubbed hero sequence               | **Image sequence (webp / jpg)**   | 60–120 frames, 1600–2000px wide, painted to `<canvas>`. **Not MP4** — `currentTime` scrubbing is unreliable on Safari/iOS. |
+| Section B-roll / looping background         | **MP4 (H.264)** + **WebM (VP9)**  | Muted, autoplay, loop, `playsInline`. 1080p, 3–8s, under 3 MB.                                 |
+| Still photography (product, team, posters)  | **webp** (jpg fallback)           | Multi-resolution: 500 / 800 / 1080 / 1600 / 2000 widths. Served via `next/image`.              |
+| 3D / interactive                            | GLB/GLTF                          | Not Phase 1.                                                                                   |
+
+**Phase 1 media ask:**
+- Hero: image sequence (PNG or high-quality JPG frames — we convert to webp in the pipeline). If only an MP4 source exists, extract frames with `ffmpeg` as a starting point.
+- Everything else (later phases): MP4 B-roll + high-res stills.
