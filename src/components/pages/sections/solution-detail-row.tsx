@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import { MediaLoadingPulse } from "@/components/motion/media-loading-pulse";
 import { useInViewAutoPlay } from "@/components/motion/use-in-view-autoplay";
 
 export type SolutionDetailRowProps = {
@@ -8,7 +9,7 @@ export type SolutionDetailRowProps = {
   title: string;
   description: string;
   highlights: string[];
-  imageSrc: string;
+  imageSrc?: string;
   backgroundVideoSrc?: string;
   backgroundPosterSrc?: string;
 };
@@ -18,14 +19,13 @@ export function SolutionDetailRow({
   title,
   description,
   highlights,
-  imageSrc,
   backgroundVideoSrc,
   backgroundPosterSrc,
 }: SolutionDetailRowProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   useInViewAutoPlay(videoRef);
 
-  const poster = backgroundPosterSrc ?? imageSrc;
+  const poster = backgroundPosterSrc;
 
   return (
     <article className="solution-detail-panel">
@@ -45,9 +45,10 @@ export function SolutionDetailRow({
         ) : (
           <div
             className="solution-detail-video solution-detail-still"
-            style={{ backgroundImage: `url(${poster})` }}
             aria-hidden="true"
-          />
+          >
+            <MediaLoadingPulse />
+          </div>
         )}
         <span className="solution-status-tag">{tag}</span>
       </div>

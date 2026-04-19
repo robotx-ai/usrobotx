@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { MediaLoadingPulse } from "@/components/motion/media-loading-pulse";
 import type { SiteContent } from "@/data/site-content";
 
@@ -21,13 +21,38 @@ export function SolutionsCarouselSection({
 }: SolutionsCarouselSectionProps) {
   const [activeCardIndex, setActiveCardIndex] = useState(0);
   const [hoveredCardIndex, setHoveredCardIndex] = useState<number | null>(null);
+  const [visitedCards, setVisitedCards] = useState<ReadonlySet<number>>(
+    () => new Set([0, 1]),
+  );
   const cardReferences = useRef<Array<HTMLElement | null>>([]);
   const videoReferences = useRef<Array<HTMLVideoElement | null>>([]);
-  const previousNearIndexRef = useRef(0);
   const activeCardIndexRef = useRef(0);
   const scrollDebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const displayedIndex = hoveredCardIndex ?? activeCardIndex;
   const activeCard = cards[displayedIndex] ?? cards[0];
+
+  const markVisited = useCallback(
+    (near: number) => {
+      setVisitedCards((prev) => {
+        const additions: number[] = [];
+        for (let offset = -1; offset <= 1; offset += 1) {
+          const candidate = near + offset;
+          if (
+            candidate >= 0 &&
+            candidate < cards.length &&
+            !prev.has(candidate)
+          ) {
+            additions.push(candidate);
+          }
+        }
+        if (additions.length === 0) return prev;
+        const next = new Set(prev);
+        additions.forEach((i) => next.add(i));
+        return next;
+      });
+    },
+    [cards.length],
+  );
 
   useEffect(() => {
     const cardElements = cardReferences.current.filter(
@@ -61,6 +86,7 @@ export function SolutionsCarouselSection({
             activeCardIndexRef.current = nextIndex;
             setActiveCardIndex(nextIndex);
             setHoveredCardIndex(null);
+            markVisited(nextIndex);
           }, 100);
         }
       },
@@ -79,22 +105,16 @@ export function SolutionsCarouselSection({
       observer.disconnect();
       if (scrollDebounceRef.current) clearTimeout(scrollDebounceRef.current);
     };
-  }, [cards]);
+  }, [cards, markVisited]);
 
   useEffect(() => {
-    const nearIndex = hoveredCardIndex ?? activeCardIndex;
-    const previousNear = previousNearIndexRef.current;
-
-    cards.forEach((_, index) => {
-      const wasNear = Math.abs(index - previousNear) <= 1;
-      const isNow = Math.abs(index - nearIndex) <= 1;
-      if (!wasNear && isNow) {
-        videoReferences.current[index]?.load();
+    visitedCards.forEach((index) => {
+      const video = videoReferences.current[index];
+      if (video && video.readyState === 0) {
+        video.load();
       }
     });
-
-    previousNearIndexRef.current = nearIndex;
-  }, [activeCardIndex, hoveredCardIndex, cards]);
+  }, [visitedCards]);
 
   return (
     <section
@@ -139,6 +159,8 @@ export function SolutionsCarouselSection({
             const showVideo = Boolean(card.backgroundVideoSrc);
             const nearIndex = hoveredCardIndex ?? activeCardIndex;
             const isNearActive = Math.abs(index - nearIndex) <= 1;
+            const shouldHaveSource = visitedCards.has(index) || isNearActive;
+            const shouldShowPulse = !shouldHaveSource;
 
             return (
               <article
@@ -152,7 +174,10 @@ export function SolutionsCarouselSection({
                     : ""
                 }`}
                 data-card-index={index}
-                onMouseEnter={() => setHoveredCardIndex(index)}
+                onMouseEnter={() => {
+                  setHoveredCardIndex(index);
+                  markVisited(index);
+                }}
               >
                 <div className="solutions-carousel-media">
                   {showVideo ? (
@@ -167,23 +192,25 @@ export function SolutionsCarouselSection({
                         loop
                         playsInline
                         preload="metadata"
-                        poster={card.backgroundPosterSrc ?? card.imageSrc}
+                        poster={card.backgroundPosterSrc}
                       >
-                        {isNearActive ? (
+                        {shouldHaveSource ? (
                           <source src={card.backgroundVideoSrc} type="video/mp4" />
                         ) : null}
                       </video>
-                      {!isNearActive ? (
+                      {shouldShowPulse ? (
                         <MediaLoadingPulse className="solutions-carousel-video-pulse" />
                       ) : null}
                     </>
-                  ) : (
+                  ) : card.imageSrc ? (
                     <div
                       className="solutions-carousel-image"
                       style={{
                         backgroundImage: `url(${card.imageSrc})`,
                       }}
                     />
+                  ) : (
+                    <MediaLoadingPulse className="solutions-carousel-video-pulse" />
                   )}
                   <div className="solutions-carousel-media-overlay" />
                 </div>

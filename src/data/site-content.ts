@@ -127,7 +127,7 @@ type SolutionCard = {
   title: string;
   description: string;
   highlights: string[];
-  imageSrc: string;
+  imageSrc?: string;
   backgroundVideoSrc?: string;
   backgroundPosterSrc?: string;
 };
@@ -238,10 +238,8 @@ const sharedPhoneLabel = "1-800-519-0881";
 const sharedPhoneRaw = "18005190881";
 const sharedEmail = "info@usrobotx.com";
 const homeHeroVideoSrc = "/media/home/Quadruped_secondary_development_solution_1_web.mp4";
-const homeHeroPosterSrc = "/media/home/Pudu_CC1-8.webp";
 const homepageHeroVideoSrc = "/media/hero/hero.mp4";
 const homepageHeroPosterSrc = "/media/hero/hero-poster.webp";
-const sharedSolutionImageSrc = "/media/home/Pudu_CC1-8.webp";
 
 const siteContentByLocale: Record<Locale, SiteContent> = {
   en: {
@@ -357,9 +355,7 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
             "Condition monitoring workflows",
             "Factory-ready deployment storytelling",
           ],
-          imageSrc: sharedSolutionImageSrc,
           backgroundVideoSrc: "/media/solutions/robot-dog-farm-1.mp4",
-          backgroundPosterSrc: homeHeroPosterSrc,
         },
         {
           tag: "Cleaning AI: Malls / Factories",
@@ -371,7 +367,6 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
             "Autonomous cleaning routes",
             "Facility operations positioning",
           ],
-          imageSrc: sharedSolutionImageSrc,
           backgroundVideoSrc: "/media/solutions/cleaning-robot.mp4",
         },
         {
@@ -384,7 +379,6 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
             "Multi-warehouse transport path optimization",
             "Multi-Robot Collaborative Material Handling",
           ],
-          imageSrc: sharedSolutionImageSrc,
           backgroundVideoSrc: "/media/solutions/logistic-robot.mp4",
         },
         {
@@ -398,7 +392,6 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
             "Dynamic terrain communication",
             "Field deployment credibility",
           ],
-          imageSrc: sharedSolutionImageSrc,
           backgroundVideoSrc: homeHeroVideoSrc,
         },
         {
@@ -408,7 +401,6 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
           description:
             "Best suited for hotels and restaurants where a robotic presence can streamline service touchpoints while reinforcing a modern, technology-forward guest experience.",
           highlights: ["Guest interaction", "Hospitality delivery service"],
-          imageSrc: sharedSolutionImageSrc,
           backgroundVideoSrc: "/media/solutions/restaurant-robot.mp4",
         },
         {
@@ -421,7 +413,6 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
             "Assistance and care positioning",
             "Emotion-aware product storytelling",
           ],
-          imageSrc: sharedSolutionImageSrc,
           backgroundVideoSrc: "/media/solutions/compaion-robot.mp4",
         },
       ],
@@ -478,7 +469,6 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
             "Condition monitoring workflows",
             "Factory-ready deployment storytelling",
           ],
-          imageSrc: sharedSolutionImageSrc,
           backgroundVideoSrc: "/media/solutions/robot-dog-farm-1.mp4",
         },
         {
@@ -491,7 +481,6 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
             "Autonomous cleaning routes",
             "Facility operations positioning",
           ],
-          imageSrc: sharedSolutionImageSrc,
           backgroundVideoSrc: "/media/solutions/cleaning-robot.mp4",
         },
         {
@@ -504,7 +493,6 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
             "Operational efficiency framing",
             "Scalable fulfillment storytelling",
           ],
-          imageSrc: sharedSolutionImageSrc,
           backgroundVideoSrc: "/media/solutions/logistic-robot.mp4",
         },
         {
@@ -517,7 +505,6 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
             "Dynamic terrain communication",
             "Field deployment credibility",
           ],
-          imageSrc: sharedSolutionImageSrc,
           backgroundVideoSrc: homeHeroVideoSrc,
         },
         {
@@ -530,7 +517,6 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
             "Hospitality scenario storytelling",
             "Front-of-house automation value",
           ],
-          imageSrc: sharedSolutionImageSrc,
           backgroundVideoSrc: "/media/solutions/restaurant-robot.mp4",
         },
         {
@@ -543,7 +529,6 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
             "Assistance and care positioning",
             "Emotion-aware product storytelling",
           ],
-          imageSrc: sharedSolutionImageSrc,
           backgroundVideoSrc: "/media/solutions/compaion-robot.mp4",
         },
       ],
@@ -775,9 +760,7 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
           description:
             "为需要机器人进行设备状态采集、异常情况识别并反馈可执行数据的工业现场量身打造。",
           highlights: ["例行巡检自动化", "设备状态监测工作流", "工厂部署就绪"],
-          imageSrc: sharedSolutionImageSrc,
           backgroundVideoSrc: homeHeroVideoSrc,
-          backgroundPosterSrc: homeHeroPosterSrc,
         },
         {
           tag: "清洁AI：商场 / 工厂",
@@ -785,7 +768,6 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
           description:
             "为需要自主清洁、全覆盖路线规划和服务质量标准化的购物中心、公共设施和生产车间而设计。",
           highlights: ["大面积覆盖", "自主清洁路线", "智能清洁"],
-          imageSrc: sharedSolutionImageSrc,
           backgroundVideoSrc: "/media/solutions/cleaning-robot.mp4",
         },
         {
@@ -794,7 +776,6 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
           description:
             "完美适配仓储环境，通过机器人移动能力减少人工搬运阻力，提升工作流连贯性，从存储到派遣的全流程优化。",
           highlights: ["多仓库运输路径优化", "多机器人协同重物搬运"],
-          imageSrc: sharedSolutionImageSrc,
           backgroundVideoSrc: "/media/solutions/logistic-robot.mp4",
         },
         {
@@ -803,7 +784,6 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
           description:
             "为建筑团队提供现场监测、数据采集和动态户外环境中更安全、更高效的现场执行能力支持。",
           highlights: ["现场数据采集", "动态地形沟通", "现场部署可信度"],
-          imageSrc: sharedSolutionImageSrc,
           backgroundVideoSrc: homeHeroVideoSrc,
         },
         {
@@ -812,7 +792,6 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
           description:
             "最适合酒店和餐厅应用，机器人可优化服务接触点并强化现代科技导向的客户体验。",
           highlights: ["宾客互动", "酒店餐厅运送服务"],
-          imageSrc: sharedSolutionImageSrc,
           backgroundVideoSrc: "/media/solutions/restaurant-robot.mp4",
         },
         {
@@ -821,7 +800,6 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
           description:
             "面向未来的应用场景，在家庭环境中，陪伴、协助与直观交互与机器人平台本身一样重要。",
           highlights: ["协助与护理定位", "情感感知的产品叙事"],
-          imageSrc: sharedSolutionImageSrc,
           backgroundVideoSrc: "/media/solutions/compaion-robot.mp4",
         },
       ],
@@ -878,7 +856,6 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
             "设备状态监测流程",
             "工厂部署案例表达",
           ],
-          imageSrc: sharedSolutionImageSrc,
           backgroundVideoSrc: "/media/solutions/robot-dog-farm-1.mp4",
         },
         {
@@ -891,7 +868,6 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
             "自主清洁路径规划",
             "设施运营场景定位",
           ],
-          imageSrc: sharedSolutionImageSrc,
           backgroundVideoSrc: "/media/solutions/cleaning-robot.mp4",
         },
         {
@@ -904,7 +880,6 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
             "运营效率表达",
             "可规模化履约叙事",
           ],
-          imageSrc: sharedSolutionImageSrc,
           backgroundVideoSrc: "/media/solutions/logistic-robot.mp4",
         },
         {
@@ -917,7 +892,6 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
             "动态地形通讯",
             "现场部署可信度",
           ],
-          imageSrc: sharedSolutionImageSrc,
           backgroundVideoSrc: homeHeroVideoSrc,
         },
         {
@@ -930,7 +904,6 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
             "酒店餐饮场景叙事",
             "前厅自动化价值",
           ],
-          imageSrc: sharedSolutionImageSrc,
           backgroundVideoSrc: "/media/solutions/restaurant-robot.mp4",
         },
         {
@@ -943,7 +916,6 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
             "辅助与关怀定位",
             "情感感知产品表达",
           ],
-          imageSrc: sharedSolutionImageSrc,
           backgroundVideoSrc: "/media/solutions/compaion-robot.mp4",
         },
       ],
