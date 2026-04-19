@@ -613,35 +613,6 @@ p {
   font-size: 0.9rem;
 }
 
-/* Home — deployment places */
-
-.deployment-places-panel {
-  display: flex;
-  gap: 3rem;
-  align-items: stretch;
-  min-height: 28rem;
-}
-
-.deployment-places-copy {
-  flex: 0 0 auto;
-  width: min(38rem, 50%);
-  display: grid;
-  gap: 1.5rem;
-  align-content: start;
-}
-
-.deployment-places-map {
-  flex: 1 1 auto;
-  min-height: 24rem;
-  border: 1px solid var(--surface-border);
-  background-color: var(--background-secondary);
-  background-image: url("/media/home/united-map.png");
-  background-size: cover;
-  background-position: center;
-  filter: invert(1) grayscale(1) contrast(1.05);
-  opacity: 0.85;
-}
-
 /* Home — solutions carousel */
 
 .solutions-carousel-section {
@@ -1318,14 +1289,6 @@ p {
     min-height: min(24rem, 70vw);
   }
 
-  .deployment-places-panel {
-    flex-direction: column;
-  }
-
-  .deployment-places-copy {
-    width: 100%;
-  }
-
   .story-step-card {
     grid-template-columns: 1fr;
     gap: 0.5rem;
@@ -1893,6 +1856,188 @@ p {
   border-left: 2px solid var(--accent-primary);
   color: var(--text-primary);
   font-style: italic;
+}
+
+/* News — article MDX body: embedded ImageCarousel */
+
+.image-carousel {
+  --image-carousel-aspect: 3 / 2;
+  position: relative;
+  display: grid;
+  gap: 1rem;
+  width: 100%;
+}
+
+/* Break out of the 62ch .rich-text column when embedded in an article body.
+   Uses the right-column track width set by .news-article-body's grid, so we
+   don't introduce horizontal scrollbars via viewport tricks. */
+.news-article-body .rich-text > .image-carousel {
+  max-width: none;
+  width: 100%;
+  margin-block: 1rem;
+}
+
+.image-carousel__rail {
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  border: 1px solid var(--surface-border);
+  background: var(--background-panel);
+}
+
+.image-carousel__rail::-webkit-scrollbar {
+  display: none;
+}
+
+.image-carousel__track {
+  display: flex;
+  flex-wrap: nowrap;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.image-carousel__slide {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.image-carousel__slide-figure {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.image-carousel__media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: var(--image-carousel-aspect);
+  overflow: hidden;
+  background: var(--background-panel);
+}
+
+.image-carousel__media img {
+  object-fit: cover;
+}
+
+.image-carousel__pulse {
+  z-index: 1;
+}
+
+.image-carousel__caption {
+  padding: 0 0.25rem;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  line-height: 1.5;
+  letter-spacing: 0.005em;
+}
+
+.image-carousel--single .image-carousel__media {
+  border: 1px solid var(--surface-border);
+}
+
+.image-carousel__controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.image-carousel__nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 1px solid var(--surface-border-strong);
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background-color var(--transition-standard),
+    border-color var(--transition-standard),
+    color var(--transition-standard),
+    opacity var(--transition-standard);
+}
+
+.image-carousel__nav:hover:not(:disabled) {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: var(--text-on-dark);
+}
+
+.image-carousel__nav:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.image-carousel__dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex: 1 1 auto;
+}
+
+.image-carousel__dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  padding: 0;
+  border: 1px solid var(--surface-border-strong);
+  background: transparent;
+  cursor: pointer;
+  transition:
+    background-color var(--transition-standard),
+    border-color var(--transition-standard),
+    transform var(--transition-standard);
+}
+
+.image-carousel__dot:hover {
+  background: var(--text-secondary);
+}
+
+.image-carousel__dot--active {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  transform: scale(1.2);
+}
+
+.image-carousel__nav:focus-visible,
+.image-carousel__dot:focus-visible,
+.image-carousel:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+.image-carousel__live {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .image-carousel__rail {
+    scroll-behavior: auto;
+  }
+
+  .image-carousel__dot--active {
+    transform: none;
+  }
 }
 
 /* News — article prev/next nav */

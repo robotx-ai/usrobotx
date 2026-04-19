@@ -44,35 +44,18 @@ export function HomePage({ locale, content, latestArticles }: HomePageProps) {
 
       <RxBrainSection locale={locale} content={content.home.rxBrain} />
 
-      <RevealSection className="section-spacing">
-        <section className="section-container deployment-places-panel">
-          <div className="deployment-places-copy">
-            <span className="section-kicker">
-              {content.home.deploymentPlaces.kicker}
-            </span>
-            <h2 className="section-title">
-              {content.home.deploymentPlaces.title}
-            </h2>
-            <p className="section-copy">
-              {content.home.deploymentPlaces.description}
-            </p>
-          </div>
-          <div className="deployment-places-map" />
-        </section>
-      </RevealSection>
+      <LatestEventsSection
+        locale={locale}
+        articles={latestArticles}
+        copy={content.home.latestEvents}
+        readArticleLabel={content.news.meta.readArticle}
+      />
 
       <SolutionsCarouselSection
         kicker={content.home.solutions.kicker}
         title={content.home.solutions.title}
         description={content.home.solutions.description}
         cards={content.home.featuredSolutions}
-      />
-
-      <LatestEventsSection
-        locale={locale}
-        articles={latestArticles}
-        copy={content.home.latestEvents}
-        readArticleLabel={content.news.meta.readArticle}
       />
 
       <RevealSection className="section-spacing">

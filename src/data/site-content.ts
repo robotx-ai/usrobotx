@@ -95,11 +95,6 @@ type HomeContent = {
     }[];
   };
   metrics: Metric[];
-  deploymentPlaces: {
-    kicker: string;
-    title: string;
-    description: string;
-  };
   latestEvents: LatestEventsContent;
   solutions: {
     kicker: string;
@@ -321,12 +316,6 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
         { value: "EN / ZH", label: "Bilingual experience from launch" },
         { value: "Responsive", label: "Mobile to widescreen ready" },
       ],
-      deploymentPlaces: {
-        kicker: "Deployments",
-        title: "Production Deployments.\nNumerous Sites Around United States",
-        description:
-          "Trusted by global industry leaders with many more strategic partnerships to be announced soon.",
-      },
       latestEvents: {
         kicker: "Latest from RobotX",
         title: "Deployments, partnerships, and platform news from the field.",
@@ -731,12 +720,6 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
         { value: "中 / EN", label: "上线即支持双语" },
         { value: "响应式", label: "适配移动端到大屏" },
       ],
-      deploymentPlaces: {
-        kicker: "部署范围",
-        title: "生产级部署。\n遍布美国多个站点",
-        description:
-          "受全球行业领导者信赖，更多战略合作伙伴关系即将公布。",
-      },
       latestEvents: {
         kicker: "RobotX 最新动态",
         title: "来自现场的部署、合作与平台更新。",
