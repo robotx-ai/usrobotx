@@ -55,13 +55,44 @@ Rules:
 
 - `title` — single line, no trailing period unless it's a full sentence. Matches the visual hierarchy on the index and article hero.
 - `date` — strict ISO `yyyy-mm-dd`. Parsed via `Date.UTC` in `news-date.ts`, so timezone-free. Do not ship `YYYY-MM-DDTHH:MM:SSZ`.
-- `category` — short label rendered in coral (`--accent-primary`). Keep the vocabulary small: today we have `Press Release`, `Deployment`, `Company`. Introducing a fourth is a decision, not a drift — call it out in your report.
+- `category` — short label rendered in coral (`--accent-primary`). Keep the vocabulary small. The only category used on published articles today is `Press Release` / `新闻发布`; `Deployment` / `部署落地` and `Company` / `公司动态` are the reserved labels for deployment announcements and company milestones when those ship. Introducing a fourth is a decision, not a drift — call it out in your report.
 - `summary` — 1–2 sentences, under ~200 chars. Rendered on both the index card and the article hero; write once, used twice.
 - `coverImage` — absolute path beginning with `/media/news/`. Must exist in `public/media/news/` (see cover-image rules below).
 - `featured` — optional, defaults to false. Homepage spotlight pulls from `featured: true` first, then falls back to the latest by date. Cap featured items at 4 to match the rail length.
 - `coverAlt` — optional. If omitted, the card and hero use `title` as alt text. Prefer a real alt when the photo shows specific subjects (robot model, site, team).
 
-Body is plain MDX prose. Existing patterns you can use: `##` / `###` headings, paragraphs, `**bold**`, bullet lists, links. Embedded JSX components are not wired yet — if you think you need one, stop and flag it.
+Body is plain MDX prose. Patterns you can use: `##` / `###` headings, paragraphs, `**bold**`, bullet lists, links.
+
+### Embedded components
+
+One JSX component is wired into the MDX pipeline today: **`<ImageCarousel>`** (with `<ImageSlide>` children). Use it when you have 2+ photos that belong together — a signing ceremony series, a deployment-site walkthrough, before/after pairs. For a single hero image, use the article's `coverImage` front-matter instead, not a one-slide carousel.
+
+Authoring shape (use exactly this — children only, not a `slides={[...]}` prop):
+
+```mdx
+<ImageCarousel ariaLabel="Short description of the set">
+  <ImageSlide
+    src="/media/news/<slug>/photo-1.webp"
+    alt="Full sentence describing the photo — required."
+    caption="Short caption, <14 words, no trailing period"
+  />
+  <ImageSlide
+    src="/media/news/<slug>/photo-2.webp"
+    alt="..."
+    caption="..."
+  />
+</ImageCarousel>
+```
+
+Rules:
+
+- **String attributes only.** `next-mdx-remote/rsc` does not forward JSX expression attributes (`slides={[...]}`, `foo={someVar}`), only string-literal ones. Every prop above is a plain quoted string — keep it that way.
+- **Leave a blank line before and after** the `<ImageCarousel>` block. Do not wrap it in a paragraph.
+- **`ariaLabel` on `<ImageCarousel>` is required** (string). `alt` on each `<ImageSlide>` is required. `caption` is optional but recommended — it carries the narrative beat.
+- **Translate `ariaLabel`, `alt`, `caption` in `zh.mdx`.** Same structure, same slide order, same image paths.
+- **Assets:** put carousel images under `public/media/news/<slug>/*.webp` (one folder per article) — do not reuse the article's cover in the carousel. Web-ready WebP, target ~1600w, under ~200KB each. The cover at `public/media/news/<slug>.webp` is still a separate file.
+
+No other components are wired. If you need something else (video embed, quote block, inline data chart), stop and flag it — that's `principal-frontend` scope.
 
 ## Bilingual Rules
 
