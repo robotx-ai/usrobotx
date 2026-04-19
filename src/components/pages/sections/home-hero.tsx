@@ -1,8 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { ImageSequence } from "@/components/motion/image-sequence";
-import { heroFrames } from "@/data/hero-frames";
 import type { Locale } from "@/lib/i18n";
 
 type HomeHeroContent = {
@@ -11,7 +9,9 @@ type HomeHeroContent = {
   description: string;
   primaryAction: string;
   secondaryAction: string;
-  imageSequenceAriaLabel: string;
+  backgroundVideoSrc: string;
+  backgroundPosterSrc: string;
+  videoAriaLabel: string;
 };
 
 type HomeHeroProps = {
@@ -25,13 +25,27 @@ export function HomeHero({ locale, content }: HomeHeroProps) {
       className="hero-section media-background-section hero-section-sequence"
       id="hero"
     >
-      <ImageSequence
-        manifest={heroFrames}
-        pinnedHeight="100vh"
-        ariaLabel={content.imageSequenceAriaLabel}
-      >
+      <div className="hero-media-frame">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          className="hero-media-poster"
+          src={content.backgroundPosterSrc}
+          alt={content.videoAriaLabel}
+          loading="eager"
+          decoding="async"
+        />
+        <video
+          className="hero-media-video"
+          src={content.backgroundVideoSrc}
+          poster={content.backgroundPosterSrc}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-hidden="true"
+        />
         <div className="hero-media-overlay" />
-        <div className="hero-grid-layer" />
         <div className="section-container hero-layout">
           <div className="hero-copy-panel">
             {content.kicker ? (
@@ -49,7 +63,7 @@ export function HomeHero({ locale, content }: HomeHeroProps) {
             </div>
           </div>
         </div>
-      </ImageSequence>
+      </div>
     </section>
   );
 }
