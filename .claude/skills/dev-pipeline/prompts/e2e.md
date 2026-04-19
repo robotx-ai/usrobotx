@@ -2,6 +2,8 @@
 
 Dispatch as `e2e` agent AFTER lint + build pass. Run ALONE — never parallel. **Always use `model: "sonnet"`.**
 
+> **Sandbox reality:** the `e2e` subagent runs `playwright-cli` **offscreen** — the Claude Code sandbox blocks subagent-spawned GUI processes from attaching to the user's desktop, so no window ever pops up regardless of a `--headed` flag. Screenshots are accurate, but the user cannot watch the test run live. For a visible window, the **main session** runs a follow-up smoke check with the `mcp__plugin_playwright_playwright__*` tools after the subagent finishes. See `SKILL.md` Phase 5.
+
 ```
 Agent(subagent_type="e2e", model="sonnet"):
   description: "E2E test usrobotx site"
@@ -63,3 +65,27 @@ Agent(subagent_type="e2e", model="sonnet"):
 
     Report ALL issues, including nits.
 ```
+
+## After the subagent returns — main-session live smoke check
+
+The subagent's tests run offscreen; the user cannot see them. Once the subagent reports back, the **main session** does a short live verification using the Playwright MCP tools (these open a real Chromium window on the user's desktop).
+
+Minimum sequence for a UI change:
+
+```
+mcp__plugin_playwright_playwright__browser_navigate   url=http://localhost:3000/en
+mcp__plugin_playwright_playwright__browser_resize     width=1440 height=900
+mcp__plugin_playwright_playwright__browser_evaluate   function=...   # optional: probe video state, html lang, etc.
+mcp__plugin_playwright_playwright__browser_take_screenshot filename=<route>-en.png
+mcp__plugin_playwright_playwright__browser_navigate   url=http://localhost:3000/zh
+mcp__plugin_playwright_playwright__browser_take_screenshot filename=<route>-zh.png
+mcp__plugin_playwright_playwright__browser_close
+```
+
+Rules:
+
+- Only run this from the main session — subagents cannot call MCP tools.
+- Run AFTER the `e2e` subagent has reported; never in parallel.
+- The goal is a user-visible demo, not exhaustive coverage. Hit the one or two routes that changed at one desktop viewport. The subagent already covered the matrix.
+- If the user confirmed they saw the window, the check is done. Close the browser.
+- If no window appears, report it — the MCP server may be configured headless on this machine, and the user should know.

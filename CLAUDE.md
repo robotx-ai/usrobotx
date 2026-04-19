@@ -52,6 +52,8 @@ Dispatch rules:
 
 - `e2e` runs alone and sequentially — needs stable dev server + exclusive browser.
 - Always finish UI work with `e2e`. Lint + build do not verify motion or bilingual parity.
+- `e2e` runs `playwright-cli` **offscreen** — the sandbox blocks subagents from attaching a GUI to the user's desktop. Screenshots and programmatic checks are real; the user does not see a window.
+- After `e2e` returns, the main session does a **live visible smoke check** using the Playwright MCP tools (`mcp__plugin_playwright_playwright__browser_navigate`, `browser_resize`, `browser_evaluate`, `browser_take_screenshot`, `browser_close`). These open a real Chromium window on the user's desktop — the only way the user sees the change live. Keep it short (one or two routes, one viewport); the subagent already covered the matrix.
 - No backend/migrate/deploy agents — this repo doesn't have those surfaces.
 
 #### Supporting skills
