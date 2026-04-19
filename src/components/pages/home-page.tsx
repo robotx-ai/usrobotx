@@ -1,18 +1,21 @@
 import Link from "next/link";
 import { DeploymentCycleSection } from "@/components/deployment-cycle-section";
 import { HomeHero } from "@/components/pages/sections/home-hero";
+import { LatestEventsSection } from "@/components/pages/sections/latest-events-section";
 import { RxBrainSection } from "@/components/pages/sections/rx-brain-section";
 import { RevealSection } from "@/components/reveal-section";
 import { SolutionsCarouselSection } from "@/components/solutions-carousel-section";
 import type { SiteContent } from "@/data/site-content";
 import type { Locale } from "@/lib/i18n";
+import type { NewsArticleMeta } from "@/lib/news-types";
 
 type HomePageProps = {
   locale: Locale;
   content: SiteContent;
+  latestArticles: NewsArticleMeta[];
 };
 
-export function HomePage({ locale, content }: HomePageProps) {
+export function HomePage({ locale, content, latestArticles }: HomePageProps) {
   return (
     <>
       <HomeHero locale={locale} content={content.home.hero} />
@@ -65,52 +68,12 @@ export function HomePage({ locale, content }: HomePageProps) {
         cards={content.home.featuredSolutions}
       />
 
-      <RevealSection className="section-spacing">
-        <section className="section-container positioning-section">
-          <div className="section-stack">
-            <span className="section-kicker">
-              {content.home.positioning.kicker}
-            </span>
-            <h2 className="section-title">{content.home.positioning.title}</h2>
-            <p className="section-copy">
-              {content.home.positioning.description}
-            </p>
-          </div>
-          <div className="positioning-pillars">
-            {content.home.pillars.map((pillar) => (
-              <article key={pillar.title} className="positioning-pillar-card">
-                <h3 className="positioning-pillar-title">{pillar.title}</h3>
-                <ul className="positioning-pillar-list">
-                  {pillar.items.map((item) => (
-                    <li key={item} className="positioning-pillar-item">
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </article>
-            ))}
-          </div>
-        </section>
-      </RevealSection>
-
-      {/* <RevealSection className="section-spacing">
-        <section className="section-container story-layout">
-          <div className="section-stack">
-            <span className="section-kicker">{content.home.story.kicker}</span>
-            <h2 className="section-title">{content.home.story.title}</h2>
-            <p className="section-copy">{content.home.story.description}</p>
-          </div>
-          <div className="story-rail">
-            {content.home.story.steps.map((step) => (
-              <article key={step.title} className="story-step-card">
-                <span className="story-step-index">{step.index}</span>
-                <h3 className="feature-panel-title">{step.title}</h3>
-                <p className="feature-panel-copy">{step.description}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-      </RevealSection> */}
+      <LatestEventsSection
+        locale={locale}
+        articles={latestArticles}
+        copy={content.home.latestEvents}
+        readArticleLabel={content.news.meta.readArticle}
+      />
 
       <RevealSection className="section-spacing">
         <section

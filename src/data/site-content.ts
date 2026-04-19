@@ -66,9 +66,15 @@ type IndexedPoint = {
   description: string;
 };
 
-type PillarCard = {
+type LatestEventsContent = {
+  kicker: string;
   title: string;
-  items: string[];
+  description: string;
+  ctaLabel: string;
+  ctaHref: string;
+  previousLabel: string;
+  nextLabel: string;
+  currentOfTotalLabel: string;
 };
 
 type HomeContent = {
@@ -89,18 +95,12 @@ type HomeContent = {
     }[];
   };
   metrics: Metric[];
-  positioning: {
-    kicker: string;
-    title: string;
-    description: string;
-    points: IndexedPoint[];
-  };
   deploymentPlaces: {
     kicker: string;
     title: string;
     description: string;
   };
-  pillars: PillarCard[];
+  latestEvents: LatestEventsContent;
   solutions: {
     kicker: string;
     title: string;
@@ -171,6 +171,25 @@ type AboutContent = {
   };
 };
 
+type NewsContent = {
+  hero: {
+    kicker: string;
+    title: string;
+    description: string;
+  };
+  meta: {
+    categoryLabel: string;
+    dateLabel: string;
+    readArticle: string;
+    backToNews: string;
+    notTranslatedYet: string;
+    previousArticle: string;
+    nextArticle: string;
+    currentOfTotalLabel: string;
+    paginationLabel: string;
+  };
+};
+
 type ContactContent = {
   pageHero: {
     kicker: string;
@@ -211,6 +230,7 @@ export type SiteContent = {
   about: AboutContent;
   contact: ContactContent;
   technology: TechnologyContent;
+  news: NewsContent;
 };
 
 const sharedAddress = "17901 Von Karman Ave, Ste 420, Irvine, CA 92614";
@@ -233,6 +253,7 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
     navigation: {
       items: [
         { label: "Solutions", href: "/solutions" },
+        { label: "News", href: "/news" },
         { label: "About", href: "/about" },
         { label: "Contact", href: "/contact" },
       ],
@@ -247,6 +268,7 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
       contactHeading: "Contact",
       links: [
         { label: "Solutions", href: "/solutions" },
+        { label: "News", href: "/news" },
         { label: "About", href: "/about" },
         { label: "Contact", href: "/contact" },
       ],
@@ -301,68 +323,23 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
         { value: "EN / ZH", label: "Bilingual experience from launch" },
         { value: "Responsive", label: "Mobile to widescreen ready" },
       ],
-      positioning: {
-        kicker: "Why RobotX",
-        title: "Scientific clarity, robotic confidence, production-minded execution.",
-        description:
-          "The new site is designed to feel technical and future-facing while still staying approachable for customers evaluating serious robotics capabilities.",
-        points: [
-          {
-            index: "01",
-            title: "System-level thinking",
-            description:
-              "We present robotics as an integrated stack of mobility, sensing, control, and mission workflow rather than isolated hardware.",
-          },
-          {
-            index: "02",
-            title: "Visual credibility",
-            description:
-              "Motion, grid systems, metallic surfaces, and technical overlays support the brand without making the experience feel gimmicky.",
-          },
-          {
-            index: "03",
-            title: "Extensible architecture",
-            description:
-              "The codebase is structured for future Shopify product display, CMS integration, and richer media without redesigning the foundation.",
-          },
-        ],
-      },
       deploymentPlaces: {
         kicker: "Deployments",
         title: "Production Deployments.\nNumerous Sites Around United States",
         description:
           "Trusted by global industry leaders with many more strategic partnerships to be announced soon.",
       },
-      pillars: [
-        {
-          title: "RobotX Spatial-First Architecture",
-          items: [
-            "3D LiDAR spatial perception: operates without video streams, works on weak or no network",
-            "Multimodal fusion: camera semantics + IMU positioning + edge security filtering",
-            "Real-time 3D SLAM: autonomous navigation, 3D environment modeling, and path planning",
-            "Edge + cloud hybrid: low-latency edge control + cloud reinforcement learning evolution",
-            "RobotX OS: vendor-agnostic spatial operating layer with unified access",
-          ],
-        },
-        {
-          title: "Supply Chain & Deployment Network",
-          items: [
-            "Foundation for real-world data collection",
-            "Exclusive dealership and distribution rights with top robotics companies",
-            "Multi-channel deployment: sales, rental, and education",
-            "Every robot learns from operational data while it works",
-          ],
-        },
-        {
-          title: "Enterprise End-to-End Solutions",
-          items: [
-            "Brain Box hardware",
-            "Custom vertical skill packs (subscription model)",
-            "Enterprise-grade end-to-end solutions",
-            "RobotX Lab simulations",
-          ],
-        },
-      ],
+      latestEvents: {
+        kicker: "Latest from RobotX",
+        title: "Deployments, partnerships, and platform news from the field.",
+        description:
+          "A running view of what RobotX is shipping, where our robots are going, and who we are building with.",
+        ctaLabel: "View all news",
+        ctaHref: "/news",
+        previousLabel: "Previous article",
+        nextLabel: "Next article",
+        currentOfTotalLabel: "{current} of {total}",
+      },
       solutions: {
         kicker: "We Solve Your Problems",
         title: "Built for applied robotics across multiple environments.",
@@ -673,6 +650,25 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
           "Detailed technology page coming soon. For now, explore our solutions or get in touch.",
       },
     },
+    news: {
+      hero: {
+        kicker: "News",
+        title: "Dispatches from the field.",
+        description:
+          "Deployment updates, partnership announcements, and platform milestones from RobotX.",
+      },
+      meta: {
+        categoryLabel: "Category",
+        dateLabel: "Published",
+        readArticle: "Read article",
+        backToNews: "Back to news",
+        notTranslatedYet: "This article has not been translated yet. Showing the English version.",
+        previousArticle: "Previous",
+        nextArticle: "Next",
+        currentOfTotalLabel: "{current} of {total}",
+        paginationLabel: "News pagination",
+      },
+    },
   },
   zh: {
     meta: {
@@ -682,6 +678,7 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
     navigation: {
       items: [
         { label: "解决方案", href: "/solutions" },
+        { label: "新闻", href: "/news" },
         { label: "关于我们", href: "/about" },
         { label: "联系我们", href: "/contact" },
       ],
@@ -696,6 +693,7 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
       contactHeading: "联系信息",
       links: [
         { label: "解决方案", href: "/solutions" },
+        { label: "新闻", href: "/news" },
         { label: "关于我们", href: "/about" },
         { label: "联系我们", href: "/contact" },
       ],
@@ -748,68 +746,23 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
         { value: "中 / EN", label: "上线即支持双语" },
         { value: "响应式", label: "适配移动端到大屏" },
       ],
-      positioning: {
-        kicker: "为什么选择 RobotX",
-        title: "更科学的表达、更机器人的气质、更可扩展的代码结构。",
-        description:
-          "新网站会比当前 WordPress 版本更具技术感与未来感，同时仍然保持清晰、可信、便于客户理解。",
-        points: [
-          {
-            index: "01",
-            title: "系统级表达",
-            description:
-              "我们把机器人展示为移动、感知、控制与任务流程整合后的系统，而不是孤立的单一硬件。",
-          },
-          {
-            index: "02",
-            title: "品牌可信度",
-            description:
-              "通过金属感表面、技术网格、数据化动效与清晰布局，让品牌更专业而不过度炫技。",
-          },
-          {
-            index: "03",
-            title: "面向未来扩展",
-            description:
-              "代码结构已为后续 Shopify 产品展示、CMS 内容管理与更多媒体内容预留接口。",
-          },
-        ],
-      },
       deploymentPlaces: {
         kicker: "部署范围",
         title: "生产级部署。\n遍布美国多个站点",
         description:
           "受全球行业领导者信赖，更多战略合作伙伴关系即将公布。",
       },
-      pillars: [
-        {
-          title: "RobotX 自研 Spatial-First 架构",
-          items: [
-            "3D LiDAR 空间感知：不依赖视频流，弱网/断⽹仍可运⾏",
-            "多模态融合：摄像头语义 + IMU定位 + 边缘安全过滤",
-            "实时 3D SLAM：自主导航、三维环境建模与路径规划",
-            "边缘+云端混合：边缘低延迟控制 + 云端强化学习进化",
-            "RobotX OS：厂商⽆关的空间操作层，统⼀接⼊",
-          ],
-        },
-        {
-          title: "供应链与部署网络",
-          items: [
-            "数据采集的前提",
-            "顶级机器人公司独家代理权、经销权",
-            "多渠道部署：销售/租赁/教育",
-            "每台机器人会边工作边用数据自我学习",
-          ],
-        },
-        {
-          title: "企业级端到端解决方案",
-          items: [
-            "Brain Box 硬件",
-            "定制垂直技能包（订阅制）",
-            "企业级端到端解决方案",
-            "RobotX 实验室，模拟",
-          ],
-        },
-      ],
+      latestEvents: {
+        kicker: "RobotX 最新动态",
+        title: "来自现场的部署、合作与平台更新。",
+        description:
+          "持续记录 RobotX 正在落地的项目、机器人去往的场景，以及我们正在一起合作的伙伴。",
+        ctaLabel: "查看全部新闻",
+        ctaHref: "/news",
+        previousLabel: "上一篇",
+        nextLabel: "下一篇",
+        currentOfTotalLabel: "{current} / {total}",
+      },
       solutions: {
         kicker: "解决方案方向",
         title: "面向多种机器人应用环境而设计。",
@@ -1088,6 +1041,25 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
         kicker: "技术",
         title: "RX BRAIN — 技术",
         description: "详细技术说明即将上线。欢迎先浏览我们的解决方案或联系我们。",
+      },
+    },
+    news: {
+      hero: {
+        kicker: "新闻",
+        title: "来自现场的最新消息。",
+        description:
+          "RobotX 的部署进展、合作公告与平台重要节点都会在这里同步。",
+      },
+      meta: {
+        categoryLabel: "分类",
+        dateLabel: "发布时间",
+        readArticle: "阅读全文",
+        backToNews: "返回新闻列表",
+        notTranslatedYet: "本篇文章尚未翻译，当前显示英文版本。",
+        previousArticle: "上一篇",
+        nextArticle: "下一篇",
+        currentOfTotalLabel: "{current} / {total}",
+        paginationLabel: "新闻翻页",
       },
     },
   },
