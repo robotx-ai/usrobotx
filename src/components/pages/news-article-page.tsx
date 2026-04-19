@@ -1,10 +1,19 @@
 import Link from "next/link";
-import { MDXRemote } from "next-mdx-remote/rsc";
+import { MDXRemote, type MDXRemoteProps } from "next-mdx-remote/rsc";
+import { ImageCarousel, ImageSlide } from "@/components/media/image-carousel";
 import { NewsCoverParallax } from "@/components/pages/news-cover-parallax";
 import type { SiteContent } from "@/data/site-content";
 import type { Locale } from "@/lib/i18n";
 import type { NewsArticle, NewsArticleMeta } from "@/lib/news-types";
 import { formatNewsDate } from "@/lib/news-date";
+
+// next-mdx-remote/rsc only forwards string-literal attributes from MDX.
+// Components that need structured data use the children-composition shape
+// (see `ImageCarousel` + `ImageSlide`).
+const mdxComponents: MDXRemoteProps["components"] = {
+  ImageCarousel,
+  ImageSlide,
+};
 
 type NewsArticlePageProps = {
   locale: Locale;
@@ -66,7 +75,7 @@ export function NewsArticlePage({
         </aside>
 
         <div className="rich-text">
-          <MDXRemote source={article.body} />
+          <MDXRemote source={article.body} components={mdxComponents} />
         </div>
       </section>
 
