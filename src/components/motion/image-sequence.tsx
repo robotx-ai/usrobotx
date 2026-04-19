@@ -164,7 +164,11 @@ export function ImageSequence({
         bitmapsRef.current = [];
       };
     },
-    { dependencies: [reducedMotion, width, manifest, pinnedHeight], scope: containerRef },
+    {
+      dependencies: [reducedMotion, width, manifest, pinnedHeight],
+      scope: containerRef,
+      revertOnUpdate: true,
+    },
   );
 
   return (
