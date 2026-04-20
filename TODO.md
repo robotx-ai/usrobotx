@@ -4,13 +4,6 @@ Known issues carried forward as tech debt. Prioritize against `PLAN.md` phases. 
 
 ## Accessibility / bilingual
 
-### 1. `<html lang="en">` hardcoded on every route
-
-- **Where:** [src/app/layout.tsx](src/app/layout.tsx) — root `<html>` element has `lang="en"` no matter the URL.
-- **Impact:** `/zh` serves Chinese copy but screen readers + `hreflang` think the page is English. Breaks a11y and SEO for the ZH locale.
-- **Fix direction:** move the `<html>` wrapper out of `src/app/layout.tsx` into `src/app/[locale]/layout.tsx` so `lang={locale}` is set per route. Root layout becomes a pass-through or renders children directly. Verify with `document.documentElement.lang` on both locales.
-- **Not touched in Phase 1 hero video spike — this predates it.**
-
 ### 2. Hero `videoAriaLabel` may not match the actual footage
 
 - **Where:** [src/data/site-content.ts](src/data/site-content.ts) `home.hero.videoAriaLabel` in both `en` and `zh`.
@@ -40,12 +33,11 @@ Known issues carried forward as tech debt. Prioritize against `PLAN.md` phases. 
 
 ## Content
 
-### 5. Internal planning copy leaks into the public site
+### 5. History and Team pages are placeholder-only
 
-- **Where:** [src/data/site-content.ts](src/data/site-content.ts) lines ~447–454 (`callout` / rebuild section).
-- **Current copy (en):** "START THE REBUILD / A local-first codebase ready for Netlify, GitHub, and future media expansion." and "This MVP is built to launch without Shopify dependencies today while leaving clean extension points…"
-- **Impact:** visitors see engineering-internal language on the marketing page.
-- **Fix direction:** replace with marketing copy for both locales, or move behind a feature flag until real copy is ready.
+- **Where:** [src/components/pages/about-placeholder-page.tsx](src/components/pages/about-placeholder-page.tsx), wired under `/about/history` and `/about/team`, shipped 2026-04-19 as "Under construction" panels.
+- **Impact:** the About dropdown points at real routes but the content isn't there yet — history narrative and team member cards both need real copy + media.
+- **Fix direction:** when ready, replace the shared `AboutPlaceholderPage` with dedicated page components per route. Extend `AboutContent` in `site-content.ts` (history narrative, team member list with photography). Decide whether team photography is sourced, stock, or rendered/illustrated.
 
 ## Housekeeping
 

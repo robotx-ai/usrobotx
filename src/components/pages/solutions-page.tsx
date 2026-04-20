@@ -1,12 +1,14 @@
 import Link from "next/link";
 import { SolutionDetailRow } from "@/components/pages/sections/solution-detail-row";
 import type { SiteContent } from "@/data/site-content";
+import type { Locale } from "@/lib/i18n";
 
 type SolutionsPageProps = {
   content: SiteContent;
+  locale: Locale;
 };
 
-export function SolutionsPage({ content }: SolutionsPageProps) {
+export function SolutionsPage({ content, locale }: SolutionsPageProps) {
   return (
     <div className="page-shell">
       <section className="page-hero-section">
@@ -39,7 +41,7 @@ export function SolutionsPage({ content }: SolutionsPageProps) {
           <p className="section-copy">{content.solutions.callout.description}</p>
         </div>
         <div className="button-row">
-          <Link className="primary-button" href={content.solutions.callout.primaryHref}>
+          <Link className="primary-button" href={`/${locale}${content.solutions.callout.primaryHref}`}>
             {content.solutions.callout.primaryLabel}
           </Link>
         </div>

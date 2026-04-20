@@ -553,7 +553,7 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
         description:
           "Every environment has its own constraints. We'll walk through your operation and scope a platform that fits.",
         primaryLabel: "Contact us",
-        primaryHref: "/en/contact",
+        primaryHref: "/contact",
       },
     },
     about: {
@@ -960,7 +960,7 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
         description:
           "每个场景都有独特的约束。我们会和您一起梳理运营流程，规划合适的机器人平台与部署方案。",
         primaryLabel: "联系我们",
-        primaryHref: "/zh/contact",
+        primaryHref: "/contact",
       },
     },
     about: {

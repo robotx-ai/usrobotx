@@ -7,10 +7,11 @@ type SolutionsRouteProps = {
 };
 
 export default async function SolutionsRoute({ params }: SolutionsRouteProps) {
-  const { locale } = await params;
-  const content = getSiteContent(locale as Locale);
+  const { locale: rawLocale } = await params;
+  const locale = rawLocale as Locale;
+  const content = getSiteContent(locale);
 
-  return <SolutionsPage content={content} />;
+  return <SolutionsPage content={content} locale={locale} />;
 }
 
 export async function generateStaticParams() {
