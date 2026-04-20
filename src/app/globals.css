@@ -1908,6 +1908,13 @@ p {
   top: 6rem;
 }
 
+@media (max-width: 960px) {
+  .news-article-sidebar.is-sticky {
+    position: static;
+    top: auto;
+  }
+}
+
 .news-article-sidebar-row {
   display: grid;
   gap: 0.3rem;
