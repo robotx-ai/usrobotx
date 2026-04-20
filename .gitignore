@@ -1,7 +1,3 @@
-# fieldai reference mirror — local only, never commit
-# Contains third-party assets with Windows-incompatible long filenames.
-/fieldai-mirror/
-
 # dependencies
 /node_modules
 
@@ -50,6 +46,7 @@ desktop.ini
 # All video masters and raw footage live in /raw_assets and are never committed.
 # Web-ready exports are produced from these and served via CDN or /public/media/.
 /raw_assets/
+/fieldai-mirror
 /public/media/home/Quadruped_secondary_development_solution_1.mp4
 /public/media/videos/
 /public/media/hero/frames/_tmp/

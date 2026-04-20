@@ -39,6 +39,12 @@ Known issues carried forward as tech debt. Prioritize against `PLAN.md` phases. 
 - **Impact:** the About dropdown points at real routes but the content isn't there yet — history narrative and team member cards both need real copy + media.
 - **Fix direction:** when ready, replace the shared `AboutPlaceholderPage` with dedicated page components per route. Extend `AboutContent` in `site-content.ts` (history narrative, team member list with photography). Decide whether team photography is sourced, stock, or rendered/illustrated.
 
+### 10. Technology page is a bare placeholder
+
+- **Where:** [src/app/[locale]/technology/page.tsx](src/app/[locale]/technology/page.tsx) — renders a single hero section from `content.technology.pageHero` in `site-content.ts`. No body content.
+- **Impact:** the route exists and is reachable but has no real content or design.
+- **Fix direction:** define the technology page scope in PLAN.md before building — it's unclear whether this belongs as a standalone page or should fold into the solutions narrative.
+
 ## Housekeeping
 
 ### 6. Dead code from the old hero scroll-scrubber
@@ -64,6 +70,12 @@ After the hero switch to `<video>`, these are unreferenced (verified by Grep 202
 - **Where:** [src/components/pages/sections/home-hero.tsx](src/components/pages/sections/home-hero.tsx) serves the full-resolution `hero.mp4` to every viewport.
 - **Impact:** mobile pays the full 27 MB (item 3). Combined with item 3 (re-encode) this is the path to a <5 MB mobile hero.
 - **Fix direction:** produce `hero-mobile.mp4` (720p, ~4 MB) from the master in `raw_assets/`, add `<source media="(max-width: 768px)" src="/media/hero/hero-mobile.mp4">` above the current source tag. Keep `hero-poster.webp` as-is.
+
+### 11. Open question: CMS is partially answered — resolve it
+
+- **Context:** PLAN.md lists "Will non-engineers need to update copy/news/team?" as an open question. In practice, a MDX-based news CMS is already running (`content/news/`, `src/lib/news.ts`), but copy for all other sections remains hard-coded in `site-content.ts`.
+- **Impact:** the answer determines whether to extend the MDX pattern to other collections (solutions, team, etc.) or leave them hard-coded. Leaving the question open causes ambiguity every time a new section needs content.
+- **Fix direction:** decide explicitly. If MDX extends to other collections, plan it in PLAN.md. If `site-content.ts` is permanent, close the question there.
 
 ### 7. Lint warnings in `deployment-cycle-section.tsx`
 

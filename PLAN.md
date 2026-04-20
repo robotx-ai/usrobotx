@@ -29,11 +29,14 @@ Target experience:
 - Fully bilingual (`en` / `zh`) across every page and motion label
 
 ## Current state
-- App Router scaffolding, bilingual routing, header/footer, 4 routes per locale
-- ~3.2k LOC total; one reveal primitive (`src/components/reveal-section.tsx`)
-- No motion dependencies installed (no `gsap`, `framer-motion`, `motion`, `lenis`)
-- ~27 MB local media, mostly placeholders
-- Content hard-coded bilingually in `src/data/site-content.ts` (~784 lines)
+
+_Last verified: 2026-04-20_
+
+- **Routing:** App Router, bilingual (`en`/`zh`), 9+ routes per locale — home, about, about/history, about/team, contact, solutions, news, news/[slug], technology
+- **Motion stack:** `gsap@^3.15.0` + `@gsap/react` (ScrollTrigger), `lenis@^1.3.23`. Primitives: `LenisProvider`, `ImageSequence` (pinned canvas scrubber), `MediaLoadingPulse`, `reveal-section`
+- **Media:** hero looping video (`public/media/hero/hero.mp4` — 27 MB, see TODO #3 for re-encode plan), rx-brain scroll-scrubbed frame sequence, solutions carousel videos, news cover images
+- **Content:** bilingual strings in `src/data/site-content.ts`; MDX news CMS under `content/news/` (2 live articles: `robotx-agibot-strategic-partner`, `rx-brain-almond-orchard-pilot`)
+- **Infrastructure:** `src/proxy.ts` sets `x-pathname` header; root `layout.tsx` reads it to set `<html lang>` correctly per locale. Netlify cache headers configured in `netlify.toml`.
 
 ## Gaps vs. the target feel
 
@@ -55,49 +58,24 @@ Pick one fieldai section (likely the homepage hero scrubber or a `/solutions/*` 
 
 ---
 
-## Phase 1 — Homepage Hero Video Spike
+## Phase 1 — Homepage Hero Video Spike (Shipped)
 
-**Scope:** one section (homepage hero), looping background video, bilingual, stand-in media OK. Ship it or kill the self-built path.
+**Scope:** one section (homepage hero), looping background video, bilingual, stand-in media OK.
 
-> **Approach change (2026-04-18):** the hero is now a straight looping `<video>` playback, not a scroll-scrubbed image sequence. Simpler to produce, faster to ship. Scroll-coupled motion can return in a later section if warranted. Source master `raw_assets/Hero Content.mp4`.
+> **Approach (2026-04-18):** hero is a straight looping `<video>` — not a scroll-scrubbed image sequence. Motion stack chosen: `gsap` + `ScrollTrigger` + `lenis`. Video self-hosted in `public/media/hero/`. Self-built path confirmed; bilingual `en`/`zh` is firm.
 
-### Pre-work decisions (blockers — resolve before coding)
-- [ ] Confirm bilingual `en`/`zh` is firm for the spike
-- [ ] Confirm self-built vs. Webflow — spike only makes sense if self-built is still on the table
-- [ ] Pick motion stack for non-hero sections: `GSAP + ScrollTrigger` **or** `Motion + Lenis` (recommend GSAP)
-- [ ] Decide video delivery: self-host optimized MP4 in `public/media/hero/` **or** upload to Cloudinary/Mux and reference by URL (recommend self-host for Phase 1, revisit when solutions pages add dense media)
+### Shipped
+- Motion deps installed: `gsap@^3.15.0`, `@gsap/react`, `lenis@^1.3.23`
+- `<LenisProvider>` wired in `src/app/[locale]/layout.tsx`
+- `src/components/motion/` created: `image-sequence.tsx`, `media-loading-pulse.tsx`, `lenis-provider.tsx`, `use-in-view-autoplay.ts`, `use-reduced-motion.ts`
+- `HomeHero` at `src/components/pages/sections/home-hero.tsx` — `<video autoplay muted loop playsInline>`, bilingual copy overlay, `prefers-reduced-motion` fallback to poster
+- Hero media committed: `public/media/hero/hero.mp4` (27 MB — see TODO #3), `public/media/hero/hero-poster.webp`
+- Bilingual hero copy in `src/data/site-content.ts`
+- Rx-brain pinned scroll-scrubbed canvas section built alongside: `src/components/pages/sections/rx-brain-section.tsx`, `src/data/rx-brain-frames.ts`
 
-### Motion foundation
-- [ ] Install chosen motion deps + `lenis` (smooth scroll) — still needed for non-hero sections
-- [ ] Add `<LenisProvider>` in `src/app/[locale]/layout.tsx`
-- [ ] Honor `prefers-reduced-motion` globally (disable Lenis + animations; show static poster image for hero)
-- [ ] Create `src/components/motion/` for future scroll primitives (not blocking the hero video)
-
-### Hero section rebuild
-- [ ] Study `fieldai-mirror/www.fieldai.com/index.html` hero — layout, type, copy overlay pattern
-- [ ] Export web-ready hero from `raw_assets/Hero Content.mp4`:
-  - H.264 MP4, 1920×1080, 30 fps, VBR 2-pass ~6 Mbps, no audio, seamless 6–12s loop, target <5 MB
-  - (optional) WebM/VP9 via `ffmpeg` post-export
-  - Extract a still poster frame (`hero-poster.webp`) for first paint + reduced-motion fallback
-- [ ] Place web-ready exports in `public/media/hero/` (committed); source master stays in `raw_assets/` (gitignored)
-- [ ] Build `HomeHero` with `<video autoplay muted loop playsInline poster=...>` + bilingual copy overlay
-- [ ] Wire bilingual hero copy in `src/data/site-content.ts` (headline, sub, aria label for video)
-- [ ] Replace current homepage hero in `src/components/pages/` composition
-
-### Asset pipeline (minimum viable)
-- [ ] Document hero export recipe (Premiere settings + optional `ffmpeg` WebM step) in this file or a `raw_assets/README`
-- [ ] Document `webp` variant generation for stills (e.g. `sharp-cli`) in `package.json`
-- [ ] Confirm `next/image` config for local multi-resolution serving
-
-### Verification
-- [ ] `pnpm lint` + `pnpm build` clean
-- [ ] `e2e` agent runs `playwright-cli --headed` on `/en` and `/zh` — hero autoplays muted, loops seamlessly, poster shows under `prefers-reduced-motion: reduce`
-- [ ] Check file size and Lighthouse LCP on `/en` — hero video should not regress LCP beyond poster paint
-- [ ] Compare side-by-side with fieldai hero — document gap (feel, type, copy cadence)
-
-### Go/no-go checkpoint
-- [ ] Write a short spike report: effort spent, achieved fidelity, remaining work to apply the pattern across 6 solution pages + news/team
-- [ ] Decide: continue self-built → Phase 2, or pivot to Webflow
+### Not completed (non-blocking)
+- Asset pipeline documentation (hero export recipe, webp variant recipe, `next/image` multi-resolution config) not written
+- No Lighthouse LCP audit on record; fieldai hero gap not formally documented
 
 ## Media requirements
 

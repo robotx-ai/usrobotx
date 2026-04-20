@@ -138,7 +138,7 @@ If anything here fails, stop and surface it to the user before proceeding with t
 
 ## 8. Known quirks
 
-- **`<html lang>` on `/zh`** — as of the last smoke test, the root `<html lang>` stays `"en"` on Chinese routes even though the copy renders correctly in Chinese. A11y / SEO regression; likely a one-line fix in `src/app/layout.tsx` or `src/app/[locale]/layout.tsx`. Not yet addressed — confirm before claiming it's fixed.
+- **`<html lang>` on `/zh`** — fixed. `src/proxy.ts` sets the `x-pathname` header; `src/app/layout.tsx` reads it to resolve locale and sets `lang={lang}` on `<html>` correctly for both locales.
 - **`.claude/settings.local.json`** is auto-generated when Claude records Bash permissions. Personal and should be gitignored; don't edit by hand.
 - **No tests yet.** No Jest/Vitest/Playwright test suite. Verification is `pnpm build` + live browser via the `e2e` agent.
-- **No motion library installed.** If PLAN.md's motion-fidelity spike lands, a deliberate choice (GSAP/ScrollTrigger, `motion`, Lenis) will be introduced. Until then, the only primitive is `src/components/reveal-section.tsx`.
+- **Motion stack in use:** `gsap@^3.15.0` + `@gsap/react` (ScrollTrigger) + `lenis@^1.3.23`. Primitives: `LenisProvider`, `ImageSequence`, `MediaLoadingPulse`, `reveal-section`. Do not add a second motion library — extend these.
