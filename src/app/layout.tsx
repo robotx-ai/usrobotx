@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import localFont from "next/font/local";
+import { locales, type Locale } from "@/lib/i18n";
 import "./globals.css";
 
 const satoshi = localFont({
@@ -19,13 +21,18 @@ export const metadata: Metadata = {
     "RobotX AI Inc. builds advanced robotics solutions for industrial automation, education, and mission-critical safety.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const headerList = await headers();
+  const pathname = headerList.get("x-pathname") ?? "/";
+  const segment = pathname.split("/")[1];
+  const lang: Locale = locales.includes(segment as Locale) ? (segment as Locale) : "en";
+
   return (
-    <html lang="en" className={`${satoshi.variable} ${satoshi.className}`}>
+    <html lang={lang} className={`${satoshi.variable} ${satoshi.className}`}>
       <body>{children}</body>
     </html>
   );
