@@ -1,3 +1,7 @@
+# fieldai reference mirror — local only, never commit
+# Contains third-party assets with Windows-incompatible long filenames.
+/fieldai-mirror/
+
 # dependencies
 /node_modules
 
