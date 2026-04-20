@@ -3,6 +3,7 @@ import type { Locale } from "@/lib/i18n";
 type NavigationItem = {
   label: string;
   href: string;
+  children?: NavigationItem[];
 };
 
 type LanguageOption = {
@@ -12,6 +13,7 @@ type LanguageOption = {
 export type NavigationContent = {
   items: NavigationItem[];
   languages: LanguageOption[];
+  submenuLabel: string;
 };
 
 export type FooterContent = {
@@ -164,6 +166,22 @@ type AboutContent = {
     description: string;
     points: IndexedPoint[];
   };
+  history: {
+    pageHero: {
+      kicker: string;
+      title: string;
+      description: string;
+      statusBadge: string;
+    };
+  };
+  team: {
+    pageHero: {
+      kicker: string;
+      title: string;
+      description: string;
+      statusBadge: string;
+    };
+  };
 };
 
 type NewsContent = {
@@ -247,10 +265,18 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
       items: [
         { label: "Solutions", href: "/solutions" },
         { label: "News", href: "/news" },
-        { label: "About", href: "/about" },
+        {
+          label: "About",
+          href: "/about",
+          children: [
+            { label: "History", href: "/about/history" },
+            { label: "Team", href: "/about/team" },
+          ],
+        },
         { label: "Contact", href: "/contact" },
       ],
       languages: [{ locale: "en" }, { locale: "zh" }],
+      submenuLabel: "Open submenu",
     },
     footer: {
       tagline: "Future-ready robotics",
@@ -586,6 +612,24 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
           },
         ],
       },
+      history: {
+        pageHero: {
+          kicker: "OUR STORY",
+          title: "History",
+          statusBadge: "Under construction",
+          description:
+            "We're writing the story of how RobotX AI came to be. Check back soon.",
+        },
+      },
+      team: {
+        pageHero: {
+          kicker: "THE TEAM",
+          title: "Team",
+          statusBadge: "Under construction",
+          description:
+            "Team profiles are coming soon. We're putting the final touches on introducing the people behind RobotX AI.",
+        },
+      },
     },
     contact: {
       pageHero: {
@@ -653,10 +697,18 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
       items: [
         { label: "解决方案", href: "/solutions" },
         { label: "新闻", href: "/news" },
-        { label: "关于我们", href: "/about" },
+        {
+          label: "关于我们",
+          href: "/about",
+          children: [
+            { label: "发展历程", href: "/about/history" },
+            { label: "团队", href: "/about/team" },
+          ],
+        },
         { label: "联系我们", href: "/contact" },
       ],
       languages: [{ locale: "en" }, { locale: "zh" }],
+      submenuLabel: "展开子菜单",
     },
     footer: {
       tagline: "面向未来的机器人品牌",
@@ -960,6 +1012,23 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
             description: "方便后续增加表单、CMS 工作流与 Shopify 展示型产品数据。",
           },
         ],
+      },
+      history: {
+        pageHero: {
+          kicker: "我们的故事",
+          title: "发展历程",
+          statusBadge: "建设中",
+          description: "我们正在整理 RobotX AI 的发展故事，敬请期待。",
+        },
+      },
+      team: {
+        pageHero: {
+          kicker: "团队介绍",
+          title: "团队",
+          statusBadge: "建设中",
+          description:
+            "团队介绍正在准备中，我们会尽快向您呈现 RobotX AI 背后的团队。",
+        },
       },
     },
     contact: {

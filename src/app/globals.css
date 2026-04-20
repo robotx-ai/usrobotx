@@ -313,10 +313,109 @@ p {
   gap: 2rem;
 }
 
+.site-navigation-item {
+  display: inline-flex;
+  align-items: center;
+}
+
 .site-navigation-link {
   font-size: 0.95rem;
   color: inherit;
   transition: color var(--transition-standard);
+}
+
+/* Dropdown — desktop hover/focus reveal, mobile inline accordion */
+
+.site-navigation-dropdown {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.site-navigation-dropdown-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem;
+  background: transparent;
+  color: inherit;
+  line-height: 0;
+  transition: color var(--transition-standard);
+}
+
+.site-navigation-dropdown-trigger:hover {
+  color: var(--accent-primary);
+}
+
+.site-navigation-dropdown-chevron {
+  transition: transform var(--transition-standard);
+}
+
+.site-navigation-dropdown-trigger[aria-expanded="true"] .site-navigation-dropdown-chevron {
+  transform: rotate(180deg);
+}
+
+.site-navigation-dropdown-panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 11rem;
+  padding: 0.75rem 0;
+  background: var(--background-panel);
+  border: 1px solid var(--surface-border);
+  opacity: 0;
+  transform: translateY(-4px);
+  pointer-events: none;
+  transition:
+    opacity var(--transition-standard),
+    transform var(--transition-standard);
+  z-index: 10;
+}
+
+.site-navigation-dropdown-panel-open,
+.site-navigation-dropdown:focus-within .site-navigation-dropdown-panel {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .site-navigation-dropdown:hover .site-navigation-dropdown-panel {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+}
+
+.site-navigation-dropdown-link {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  transition: color var(--transition-standard);
+}
+
+.site-navigation-dropdown-link:hover,
+.site-navigation-dropdown-link:focus-visible {
+  color: var(--accent-primary);
+}
+
+/* Status badge — used on placeholder page heroes */
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  justify-self: start;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-pill);
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  letter-spacing: var(--tracking-kicker);
+  text-transform: uppercase;
 }
 
 .site-navigation-link:hover,
@@ -1240,6 +1339,59 @@ p {
   .site-navigation {
     flex-direction: column;
     align-items: flex-start;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .site-navigation-item {
+    width: 100%;
+  }
+
+  .site-navigation-dropdown {
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .site-navigation-dropdown-trigger {
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+  }
+
+  .site-navigation-dropdown-panel {
+    position: static;
+    width: 100%;
+    min-width: 0;
+    padding: 0.25rem 0 0.5rem;
+    border: none;
+    background: transparent;
+    transform: none;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    pointer-events: none;
+    transition:
+      opacity var(--transition-standard),
+      max-height var(--transition-standard);
+  }
+
+  .site-navigation-dropdown:hover .site-navigation-dropdown-panel,
+  .site-navigation-dropdown:focus-within .site-navigation-dropdown-panel {
+    opacity: 0;
+    max-height: 0;
+    pointer-events: none;
+  }
+
+  .site-navigation-dropdown-panel-open,
+  .site-navigation-dropdown:hover .site-navigation-dropdown-panel-open,
+  .site-navigation-dropdown:focus-within .site-navigation-dropdown-panel-open {
+    opacity: 1;
+    max-height: 20rem;
+    pointer-events: auto;
+  }
+
+  .site-navigation-dropdown-link {
+    padding: 0.5rem 0 0.5rem 1rem;
   }
 
   .hero-layout,
