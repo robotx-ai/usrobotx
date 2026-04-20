@@ -458,12 +458,12 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
         ],
       },
       callout: {
-        kicker: "Start the rebuild",
-        title: "A local-first codebase ready for Netlify, GitHub, and future media expansion.",
+        kicker: "Let's build",
+        title: "Ready to put RobotX AI to work in your environment?",
         description:
-          "This MVP is built to launch without Shopify dependencies today while leaving clean extension points for display-only product content later.",
-        primaryAction: "Contact RobotX",
-        secondaryAction: "See Our Approach",
+          "Tell us about your operation and we'll map out the right platform, deployment, and support path with you.",
+        primaryAction: "Talk to our team",
+        secondaryAction: "About RobotX",
       },
     },
     solutions: {
@@ -549,10 +549,10 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
       ],
       callout: {
         kicker: "Next step",
-        title: "Need a tailored robotics page or product showcase next?",
+        title: "Don't see your exact use case?",
         description:
-          "The current code structure is ready for deeper solution subpages and a future Shopify-fed display layer.",
-        primaryLabel: "Contact Us",
+          "Every environment has its own constraints. We'll walk through your operation and scope a platform that fits.",
+        primaryLabel: "Contact us",
         primaryHref: "/en/contact",
       },
     },
@@ -865,12 +865,12 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
         ],
       },
       callout: {
-        kicker: "本次重建目标",
-        title: "先把本地代码环境和品牌基础搭建好，再逐步扩展媒体与产品展示。",
+        kicker: "合作洽谈",
+        title: "准备将 RobotX AI 部署到您的场景吗？",
         description:
-          "这个 MVP 当前不依赖 Shopify，也不会阻碍后续加入只展示不售卖的产品模块。",
-        primaryAction: "联系 RobotX",
-        secondaryAction: "了解我们",
+          "告诉我们您的场地与运营需求，我们会一起规划合适的机器人平台、部署方案与支持路径。",
+        primaryAction: "与团队沟通",
+        secondaryAction: "了解 RobotX",
       },
     },
     solutions: {
@@ -956,9 +956,9 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
       ],
       callout: {
         kicker: "下一步",
-        title: "后续如需更细分的解决方案页面或产品展示层，也可以直接扩展。",
+        title: "没有找到您的场景？",
         description:
-          "当前代码结构已经为未来的子页面、案例展示和 Shopify 产品数据接入留出空间。",
+          "每个场景都有独特的约束。我们会和您一起梳理运营流程，规划合适的机器人平台与部署方案。",
         primaryLabel: "联系我们",
         primaryHref: "/zh/contact",
       },

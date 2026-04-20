@@ -900,52 +900,14 @@ p {
   line-height: 1.3;
 }
 
-/* Callout (dark CTA bar) */
-
 .callout-panel {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: 2.5rem;
   padding: 4rem var(--container-inline-padding, 2rem);
-  background: var(--background-dark);
-  color: var(--text-on-dark);
-}
-
-.callout-panel .section-kicker {
-  color: #b03e10; /* darker rust for legibility on white emphasis bg */
-  opacity: 1;
-}
-
-.callout-panel .section-title {
-  color: var(--text-on-dark);
-}
-
-.callout-panel .section-copy {
-  color: var(--text-on-dark-muted);
-}
-
-.callout-panel .primary-button {
-  background: var(--accent-primary);
-  border-color: var(--accent-primary);
-  color: #ffffff;
-}
-
-.callout-panel .primary-button:hover {
-  background: var(--accent-primary-hover);
-  border-color: var(--accent-primary-hover);
-  color: #ffffff;
-}
-
-.callout-panel .secondary-button {
-  background: transparent;
-  border-color: var(--text-on-dark);
-  color: var(--text-on-dark);
-}
-
-.callout-panel .secondary-button:hover {
-  background: var(--text-on-dark);
-  color: var(--background-dark);
+  background: var(--background-panel-strong);
+  border: 1px solid var(--surface-border);
 }
 
 /* About / Contact / Solutions — shared primitives */
