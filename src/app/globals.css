@@ -1073,13 +1073,68 @@ button {
   transform: translateY(0);
 }
 
+/* video reveal section */
+
+.video-reveal-outer {
+  position: relative;
+}
+
+.video-reveal-sticky {
+  position: sticky;
+  top: 4rem;
+  height: calc(100vh - 4rem);
+  overflow: hidden;
+}
+
+.video-reveal-clip {
+  width: 100%;
+  height: 100%;
+  will-change: clip-path;
+  clip-path: inset(6% 12% 6% 12% round 24px);
+}
+
+.video-reveal-video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.video-reveal-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  padding: 3rem 3.5rem;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.52) 0%, transparent 48%);
+  pointer-events: none;
+}
+
+.video-reveal-line {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.6rem, 3.2vw, 3rem);
+  color: #fff;
+  line-height: 1.15;
+  opacity: 0;
+  transform: translateY(22px);
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
+}
+
 /* deployment-places */
 
 .deployment-places-panel {
   display: flex;
-  gap: 3rem;
+  gap: 2rem;
   align-items: stretch;
-  min-height: 28rem;
+  min-height: 30rem;
+  border-radius: var(--radius-large);
+  background-image: url("/media/home/united-map.png");
+  background-size: contain;
+  background-position: right bottom;
+  background-repeat: no-repeat;
+
 }
 
 .deployment-places-copy {
@@ -1090,18 +1145,15 @@ button {
   align-content: start;
 }
 
-.deployment-places-map {
+/* .deployment-places-map {
   flex: 1 1 auto;
   min-height: 24rem;
   margin: 0;
   padding: 0;
   border: none;
-  border-radius: var(--radius-large);
-  background-image: url("/media/home/united-map.png");
-  background-size: cover;
-  background-position: center;
+  
   overflow: hidden;
-}
+} */
 
 /* positioning pillars */
 

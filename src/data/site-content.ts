@@ -69,6 +69,9 @@ type HomeContent = {
       label: string;
     }[];
   };
+  videoReveal: {
+    lines: [string, string];
+  };
   metrics: Metric[];
   positioning: {
     kicker: string;
@@ -261,6 +264,9 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
           { key: "evolve", label: "Evolve" },
         ],
       },
+      videoReveal: {
+        lines: ["Autonomy with unlimited use-cases.", "Evolve with 3D spatial intelligence."],
+      },
       metrics: [
         { value: "4", label: "Core solution tracks" },
         { value: "EN / ZH", label: "Bilingual experience from launch" },
@@ -440,10 +446,10 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
         ],
       },
       callout: {
-        kicker: "Start the rebuild",
+        kicker: "Contact Us",
         title: "A local-first codebase ready for Netlify, GitHub, and future media expansion.",
         description:
-          "This MVP is built to launch without Shopify dependencies today while leaving clean extension points for display-only product content later.",
+          "",
         primaryAction: "Contact RobotX",
         secondaryAction: "See Our Approach",
       },
@@ -684,6 +690,9 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
           { key: "learn", label: "Learn" },
           { key: "evolve", label: "Evolve" },
         ],
+      },
+      videoReveal: {
+        lines: ["自主运行，场景无界。", "3D空间智能，持续进化。"],
       },
       metrics: [
         { value: "4", label: "核心解决方案方向" },

@@ -55,7 +55,7 @@ export function DeploymentCycleSection({
       timeoutIds = items.map((_, index) =>
         window.setTimeout(() => {
           setVisibleItemCount(index + 1);
-        }, index * 360),
+        }, index * 160),
       );
     };
 

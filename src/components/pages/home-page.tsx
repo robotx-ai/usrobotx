@@ -2,6 +2,7 @@ import Link from "next/link";
 import { DeploymentCycleSection } from "@/components/deployment-cycle-section";
 import { RevealSection } from "@/components/reveal-section";
 import { SolutionsCarouselSection } from "@/components/solutions-carousel-section";
+import { VideoRevealSection } from "@/components/video-reveal-section";
 import type { SiteContent } from "@/data/site-content";
 import type { Locale } from "@/lib/i18n";
 
@@ -70,6 +71,8 @@ export function HomePage({ locale, content }: HomePageProps) {
         />
       </RevealSection>
 
+      <VideoRevealSection src="/media/home/banner0101.mp4" />
+
       <RevealSection className="section-spacing">
         <section className="section-container deployment-places-panel">
           <div className="deployment-places-copy">
@@ -83,7 +86,14 @@ export function HomePage({ locale, content }: HomePageProps) {
               {content.home.deploymentPlaces.description}
             </p>
           </div>
-          <div className="deployment-places-map" />
+          {/* <div className="deployment-places-map" >
+            <img
+              src="/media/home/united-map.png"
+              alt="/media/home/united-map.png"
+              className="deployment-places-map-image"
+            />
+          </div> */}
+          
         </section>
       </RevealSection>
 
@@ -141,7 +151,7 @@ export function HomePage({ locale, content }: HomePageProps) {
         </section>
       </RevealSection> */}
 
-      <RevealSection className="section-spacing">
+      {/* <RevealSection className="section-spacing">
         <section
           className="section-container callout-panel"
           id="contact-callout"
@@ -162,7 +172,7 @@ export function HomePage({ locale, content }: HomePageProps) {
             </Link>
           </div>
         </section>
-      </RevealSection>
+      </RevealSection> */}
     </>
   );
 }

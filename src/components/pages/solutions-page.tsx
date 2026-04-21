@@ -8,11 +8,26 @@ type SolutionsPageProps = {
 export function SolutionsPage({ content }: SolutionsPageProps) {
   return (
     <div className="page-shell">
-      <section className="page-hero-section">
-        <div className="section-container section-stack">
-          <span className="section-kicker">{content.solutions.pageHero.kicker}</span>
-          <h1 className="section-title">{content.solutions.pageHero.title}</h1>
-          <p className="section-copy">{content.solutions.pageHero.description}</p>
+      <section className="hero-section media-background-section">
+        <div className="hero-video-layer">
+          <video
+            className="solution-hero-video hero-background-video"
+            autoPlay
+            muted
+            loop
+            playsInline
+          >
+            <source src="/media/solutions/robot-dog-farm-1.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <div className="hero-media-overlay" />
+        <div className="hero-grid-layer" />
+        <div className="section-container hero-layout">
+          <div className="hero-copy-panel">
+            <span className="section-kicker">{content.solutions.pageHero.kicker}</span>
+            <h1 className="hero-title">{content.solutions.pageHero.title}</h1>
+            <p className="hero-copy">{content.solutions.pageHero.description}</p>
+          </div>
         </div>
       </section>
 
