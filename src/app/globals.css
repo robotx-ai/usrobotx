@@ -26,7 +26,7 @@
   --radius-small: 0;
   --radius-pill: 999px;
 
-  --site-max-width: 1100px;
+  --site-max-width: 1400px;
   --section-spacing: clamp(4rem, 7vw, 7.5rem);
   --container-inline-padding: clamp(1.25rem, 4vw, 2rem);
   --transition-standard: 180ms ease;

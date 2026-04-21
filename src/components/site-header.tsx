@@ -216,7 +216,7 @@ export function SiteHeader({ locale, navigation }: SiteHeaderProps) {
               })}
             </nav>
           </div>
-          <div className="language-switcher" aria-label="Language selector">
+          {/* <div className="language-switcher" aria-label="Language selector">
             {navigation.languages.map((language) => {
               const isActive = language.locale === locale;
 
@@ -232,7 +232,7 @@ export function SiteHeader({ locale, navigation }: SiteHeaderProps) {
                 </Link>
               );
             })}
-          </div>
+          </div> */}
         </div>
       </div>
     </header>
