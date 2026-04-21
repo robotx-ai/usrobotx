@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { LenisProvider } from "@/components/motion/lenis-provider";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { getSiteContent } from "@/data/site-content";
@@ -47,10 +48,12 @@ export default async function LocaleLayout({
   const content = getSiteContent(locale as Locale);
 
   return (
-    <div className="site-background">
-      <SiteHeader locale={locale as Locale} navigation={content.navigation} />
-      <main>{children}</main>
-      <SiteFooter locale={locale as Locale} footer={content.footer} />
-    </div>
+    <LenisProvider>
+      <div className="site-background">
+        <SiteHeader locale={locale as Locale} navigation={content.navigation} />
+        <main>{children}</main>
+        <SiteFooter locale={locale as Locale} footer={content.footer} />
+      </div>
+    </LenisProvider>
   );
 }

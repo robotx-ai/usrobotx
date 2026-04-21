@@ -1,6 +1,7 @@
 import { HomePage } from "@/components/pages/home-page";
 import { getSiteContent } from "@/data/site-content";
 import { locales, type Locale } from "@/lib/i18n";
+import { listLatestNewsArticles } from "@/lib/news";
 
 type LocalePageProps = {
   params: Promise<{ locale: string }>;
@@ -8,9 +9,17 @@ type LocalePageProps = {
 
 export default async function LocaleHomePage({ params }: LocalePageProps) {
   const { locale } = await params;
-  const content = getSiteContent(locale as Locale);
+  const typedLocale = locale as Locale;
+  const content = getSiteContent(typedLocale);
+  const latestArticles = listLatestNewsArticles(typedLocale, 4);
 
-  return <HomePage locale={locale as Locale} content={content} />;
+  return (
+    <HomePage
+      locale={typedLocale}
+      content={content}
+      latestArticles={latestArticles}
+    />
+  );
 }
 
 export async function generateStaticParams() {

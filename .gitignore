@@ -43,10 +43,29 @@ desktop.ini
 *.key
 
 # large local source media
+# All video masters and raw footage live in /raw_assets and are never committed.
+# Web-ready exports are produced from these and served via CDN or /public/media/.
+/raw_assets/
+/fieldai-mirror
 /public/media/home/Quadruped_secondary_development_solution_1.mp4
+/public/media/videos/
+/public/media/hero/frames/_tmp/
 
 # TypeScript
 *.tsbuildinfo
+
+# Claude Code — personal permission cache (not project config)
+.claude/settings.local.json
+
+# playwright runtime artifacts (snapshots, screenshots, console logs)
+.playwright-cli/
+.playwright-mcp/
+# stray screenshots / network dumps written to repo root during interactive QA
+/*.png
+/*.jpg
+/*.jpeg
+/*-network.txt
+/fix-verify-*.txt
 
 # package manager caches
 /.pnp

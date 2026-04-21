@@ -3,6 +3,7 @@ import type { Locale } from "@/lib/i18n";
 type NavigationItem = {
   label: string;
   href: string;
+  children?: NavigationItem[];
 };
 
 type LanguageOption = {
@@ -12,6 +13,7 @@ type LanguageOption = {
 export type NavigationContent = {
   items: NavigationItem[];
   languages: LanguageOption[];
+  submenuLabel: string;
 };
 
 export type FooterContent = {
@@ -35,11 +37,24 @@ type HeroContent = {
   secondaryAction: string;
   backgroundVideoSrc: string;
   backgroundPosterSrc: string;
+  videoAriaLabel: string;
 };
 
-type Metric = {
-  value: string;
-  label: string;
+export type RxBrainContent = {
+  kicker: string;
+  subtitle: string;
+  description: string;
+  ctaLabel: string;
+  wordmarkAlt: string;
+  imageSequenceAriaLabel: string;
+};
+
+type TechnologyContent = {
+  pageHero: {
+    kicker: string;
+    title: string;
+    description: string;
+  };
 };
 
 type IndexedPoint = {
@@ -48,9 +63,15 @@ type IndexedPoint = {
   description: string;
 };
 
-type PillarCard = {
+type LatestEventsContent = {
+  kicker: string;
   title: string;
-  items: string[];
+  description: string;
+  ctaLabel: string;
+  ctaHref: string;
+  previousLabel: string;
+  nextLabel: string;
+  currentOfTotalLabel: string;
 };
 
 type HomeContent = {
@@ -60,6 +81,7 @@ type HomeContent = {
     title: string;
     description: string;
   };
+  rxBrain: RxBrainContent;
   deploymentCycle: {
     kicker: string;
     title: string;
@@ -85,18 +107,13 @@ type HomeContent = {
     description: string;
   };
   pillars: PillarCard[];
+  latestEvents: LatestEventsContent;
   solutions: {
     kicker: string;
     title: string;
     description: string;
   };
   featuredSolutions: SolutionCard[];
-  story: {
-    kicker: string;
-    title: string;
-    description: string;
-    steps: IndexedPoint[];
-  };
   callout: {
     kicker: string;
     title: string;
@@ -111,7 +128,7 @@ type SolutionCard = {
   title: string;
   description: string;
   highlights: string[];
-  imageSrc: string;
+  imageSrc?: string;
   backgroundVideoSrc?: string;
   backgroundPosterSrc?: string;
 };
@@ -152,6 +169,41 @@ type AboutContent = {
     title: string;
     description: string;
     points: IndexedPoint[];
+  };
+  history: {
+    pageHero: {
+      kicker: string;
+      title: string;
+      description: string;
+      statusBadge: string;
+    };
+  };
+  team: {
+    pageHero: {
+      kicker: string;
+      title: string;
+      description: string;
+      statusBadge: string;
+    };
+  };
+};
+
+type NewsContent = {
+  hero: {
+    kicker: string;
+    title: string;
+    description: string;
+  };
+  meta: {
+    categoryLabel: string;
+    dateLabel: string;
+    readArticle: string;
+    backToNews: string;
+    notTranslatedYet: string;
+    previousArticle: string;
+    nextArticle: string;
+    currentOfTotalLabel: string;
+    paginationLabel: string;
   };
 };
 
@@ -194,6 +246,8 @@ export type SiteContent = {
   solutions: SolutionsContent;
   about: AboutContent;
   contact: ContactContent;
+  technology: TechnologyContent;
+  news: NewsContent;
 };
 
 const sharedAddress = "17901 Von Karman Ave, Ste 420, Irvine, CA 92614";
@@ -201,8 +255,8 @@ const sharedPhoneLabel = "1-800-519-0881";
 const sharedPhoneRaw = "18005190881";
 const sharedEmail = "info@usrobotx.com";
 const homeHeroVideoSrc = "/media/home/Quadruped_secondary_development_solution_1_web.mp4";
-const homeHeroPosterSrc = "/media/home/Pudu_CC1-8.webp";
-const sharedSolutionImageSrc = "/media/home/Pudu_CC1-8.webp";
+const homepageHeroVideoSrc = "/media/hero/hero.mp4";
+const homepageHeroPosterSrc = "/media/hero/hero-poster.webp";
 
 const siteContentByLocale: Record<Locale, SiteContent> = {
   en: {
@@ -214,10 +268,19 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
     navigation: {
       items: [
         { label: "Solutions", href: "/solutions" },
-        { label: "About", href: "/about" },
+        { label: "News", href: "/news" },
+        {
+          label: "About",
+          href: "/about",
+          children: [
+            { label: "History", href: "/about/history" },
+            { label: "Team", href: "/about/team" },
+          ],
+        },
         { label: "Contact", href: "/contact" },
       ],
       languages: [{ locale: "en" }, { locale: "zh" }],
+      submenuLabel: "Open submenu",
     },
     footer: {
       tagline: "Future-ready robotics",
@@ -228,6 +291,7 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
       contactHeading: "Contact",
       links: [
         { label: "Solutions", href: "/solutions" },
+        { label: "News", href: "/news" },
         { label: "About", href: "/about" },
         { label: "Contact", href: "/contact" },
       ],
@@ -244,14 +308,27 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
           "We build advanced robotic platforms and applied solutions.",
         primaryAction: "Explore Solutions",
         secondaryAction: "Talk to Us",
-        backgroundVideoSrc: homeHeroVideoSrc,
-        backgroundPosterSrc: homeHeroPosterSrc,
+        backgroundVideoSrc: homepageHeroVideoSrc,
+        backgroundPosterSrc: homepageHeroPosterSrc,
+        videoAriaLabel:
+          "Quadruped inspection robot walking through an industrial yard",
       },
       companyIntroduction: {
         kicker: "What we do",
         title: "A data-driven ecosystem for evolving AI robotics.",
         description:
           "We use a global supply network and offer flexible options—including sales, rental, and education—to make robotics accessible and practical for our customers.\n\nBy combining real-world industry experience with advanced technology, we build and customize robots for environments like factories and construction sites. Our solutions are designed to improve over time and adapt to your changing needs.",
+      },
+      rxBrain: {
+        kicker: "Coming soon",
+        subtitle:
+          "RX BRAIN™ is the general-purpose intelligence at the core of every RobotX platform.",
+        description:
+          "RX BRAIN unifies perception, planning, and control across tasks and environments. Every deployment teaches it. Every robot runs it. Every fleet gets sharper.",
+        ctaLabel: "Technology",
+        wordmarkAlt: "RX BRAIN",
+        imageSequenceAriaLabel:
+          "Abstract visualization of the RX BRAIN system",
       },
       deploymentCycle: {
         kicker: "Closed-Loop Intelligence",
@@ -275,65 +352,17 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
       positioning: {
         kicker: "Why RobotX",
         title: "Scientific clarity, robotic confidence, production-minded execution.",
+      latestEvents: {
+        kicker: "Latest from RobotX",
+        title: "Deployments, partnerships, and platform news from the field.",
         description:
-          "The new site is designed to feel technical and future-facing while still staying approachable for customers evaluating serious robotics capabilities.",
-        points: [
-          {
-            index: "01",
-            title: "System-level thinking",
-            description:
-              "We present robotics as an integrated stack of mobility, sensing, control, and mission workflow rather than isolated hardware.",
-          },
-          {
-            index: "02",
-            title: "Visual credibility",
-            description:
-              "Motion, grid systems, metallic surfaces, and technical overlays support the brand without making the experience feel gimmicky.",
-          },
-          {
-            index: "03",
-            title: "Extensible architecture",
-            description:
-              "The codebase is structured for future Shopify product display, CMS integration, and richer media without redesigning the foundation.",
-          },
-        ],
+          "A running view of what RobotX is shipping, where our robots are going, and who we are building with.",
+        ctaLabel: "View all news",
+        ctaHref: "/news",
+        previousLabel: "Previous article",
+        nextLabel: "Next article",
+        currentOfTotalLabel: "{current} of {total}",
       },
-      deploymentPlaces: {
-        kicker: "Deployments",
-        title: "Production Deployments.\nNumerous Sites Around United States",
-        description:
-          "Trusted by global industry leaders with many more strategic partnerships to be announced soon.",
-      },
-      pillars: [
-        {
-          title: "RobotX Spatial-First Architecture",
-          items: [
-            "3D LiDAR spatial perception: operates without video streams, works on weak or no network",
-            "Multimodal fusion: camera semantics + IMU positioning + edge security filtering",
-            "Real-time 3D SLAM: autonomous navigation, 3D environment modeling, and path planning",
-            "Edge + cloud hybrid: low-latency edge control + cloud reinforcement learning evolution",
-            "RobotX OS: vendor-agnostic spatial operating layer with unified access",
-          ],
-        },
-        {
-          title: "Supply Chain & Deployment Network",
-          items: [
-            "Foundation for real-world data collection",
-            "Exclusive dealership and distribution rights with top robotics companies",
-            "Multi-channel deployment: sales, rental, and education",
-            "Every robot learns from operational data while it works",
-          ],
-        },
-        {
-          title: "Enterprise End-to-End Solutions",
-          items: [
-            "Brain Box hardware",
-            "Custom vertical skill packs (subscription model)",
-            "Enterprise-grade end-to-end solutions",
-            "RobotX Lab simulations",
-          ],
-        },
-      ],
       solutions: {
         kicker: "We Solve Your Problems",
         title: "Built for applied robotics across multiple environments.",
@@ -349,11 +378,9 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
           highlights: [
             "Routine patrol automation",
             "Condition monitoring workflows",
-            "Factory-ready deployment storytelling",
+            "Factory-ready deployment",
           ],
-          imageSrc: sharedSolutionImageSrc,
           backgroundVideoSrc: "/media/solutions/robot-dog-farm-1.mp4",
-          backgroundPosterSrc: homeHeroPosterSrc,
         },
         {
           tag: "Cleaning AI: Malls / Factories",
@@ -363,9 +390,8 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
           highlights: [
             "Large-area coverage",
             "Autonomous cleaning routes",
-            "Facility operations positioning",
+            "Digitization and visualization of cleaning effects",
           ],
-          imageSrc: sharedSolutionImageSrc,
           backgroundVideoSrc: "/media/solutions/cleaning-robot.mp4",
         },
         {
@@ -378,7 +404,6 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
             "Multi-warehouse transport path optimization",
             "Multi-Robot Collaborative Material Handling",
           ],
-          imageSrc: sharedSolutionImageSrc,
           backgroundVideoSrc: "/media/solutions/logistic-robot.mp4",
         },
         {
@@ -392,7 +417,6 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
             "Dynamic terrain communication",
             "Field deployment credibility",
           ],
-          imageSrc: sharedSolutionImageSrc,
           backgroundVideoSrc: homeHeroVideoSrc,
         },
         {
@@ -402,7 +426,6 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
           description:
             "Best suited for hotels and restaurants where a robotic presence can streamline service touchpoints while reinforcing a modern, technology-forward guest experience.",
           highlights: ["Guest interaction", "Hospitality delivery service"],
-          imageSrc: sharedSolutionImageSrc,
           backgroundVideoSrc: "/media/solutions/restaurant-robot.mp4",
         },
         {
@@ -412,46 +435,19 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
           description:
             "A future-facing category for family environments where companionship, assistance, and intuitive interaction matter as much as the robotic platform itself.",
           highlights: [
-            "Assistance and care positioning",
-            "Emotion-aware product storytelling",
+            "Household assistance and care",
+            "Emotion support and Health monitoring",
           ],
-          imageSrc: sharedSolutionImageSrc,
-          backgroundVideoSrc: "/media/solutions/compaion-robot.mp4",
+          backgroundVideoSrc: "/media/solutions/companion-robot.mp4",
         },
       ],
-      story: {
-        kicker: "Deployment Flow",
-        title: "From concept briefing to field-ready communication.",
-        description:
-          "Each section of the site is designed to help customers understand what RobotX builds, where those systems fit, and how to start the conversation.",
-        steps: [
-          {
-            index: "01",
-            title: "Frame the application",
-            description:
-              "Identify whether the customer is evaluating robotics for education, industrial workflows, humanoid interfaces, or firefighting and emergency response.",
-          },
-          {
-            index: "02",
-            title: "Surface the technical edge",
-            description:
-              "Use media-rich panels, highlighted specifications, and clear language to communicate sensing, mobility, control, and remote operation capability.",
-          },
-          {
-            index: "03",
-            title: "Convert into inquiry",
-            description:
-              "Route traffic into direct contact rather than checkout, keeping the site focused on partnership, consultation, and future product display expansion.",
-          },
-        ],
-      },
       callout: {
-        kicker: "Contact Us",
-        title: "A local-first codebase ready for Netlify, GitHub, and future media expansion.",
+        kicker: "Let's build",
+        title: "Ready to put RobotX AI to work in your environment?",
         description:
-          "",
-        primaryAction: "Contact RobotX",
-        secondaryAction: "See Our Approach",
+          "Tell us about your operation and we'll map out the right platform, deployment, and support path with you.",
+        primaryAction: "Talk to our team",
+        secondaryAction: "About RobotX",
       },
     },
     solutions: {
@@ -459,7 +455,7 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
         kicker: "Solutions",
         title: "Robotics platforms aligned to real mission needs.",
         description:
-          "The current WordPress site highlights humanoid, industrial, educational, and firefighting directions. The new experience keeps that structure while making it clearer and more premium.",
+          "RobotX helps businesses automate operations with intelligent robotics. We don’t just provide solutions—we ensure they continuously improve, with robots learning from daily work, adapting over time, and performing tasks more efficiently.",
       },
       cards: [
         {
@@ -470,11 +466,9 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
           highlights: [
             "Routine patrol automation",
             "Condition monitoring workflows",
-            "Factory-ready deployment storytelling",
+            "Factory-ready deployment",
           ],
-          imageSrc: sharedSolutionImageSrc,
-          backgroundVideoSrc: homeHeroVideoSrc,
-          backgroundPosterSrc: homeHeroPosterSrc,
+          backgroundVideoSrc: "/media/solutions/robot-dog-farm-1.mp4",
         },
         {
           tag: "Cleaning AI: Malls / Factories",
@@ -484,9 +478,9 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
           highlights: [
             "Large-area coverage",
             "Autonomous cleaning routes",
-            "Facility operations positioning",
+            "Digitization and visualization of cleaning effects",
           ],
-          imageSrc: sharedSolutionImageSrc,
+          backgroundVideoSrc: "/media/solutions/cleaning-robot.mp4",
         },
         {
           tag: "Logistics AI: Warehouses",
@@ -495,10 +489,10 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
             "A strong fit for warehouse environments where robotic mobility can reduce manual transport friction and improve workflow continuity from storage to dispatch.",
           highlights: [
             "Intra-warehouse transport",
-            "Operational efficiency framing",
-            "Scalable fulfillment storytelling",
+            "Operational efficiency",
+            "Scalable fulfillment",
           ],
-          imageSrc: sharedSolutionImageSrc,
+          backgroundVideoSrc: "/media/solutions/logistic-robot.mp4",
         },
         {
           tag: "Construction AI: Job Sites",
@@ -510,7 +504,7 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
             "Dynamic terrain communication",
             "Field deployment credibility",
           ],
-          imageSrc: sharedSolutionImageSrc,
+          backgroundVideoSrc: homeHeroVideoSrc,
         },
         {
           tag: "Service AI: Hotels / Restaurants",
@@ -518,11 +512,11 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
           description:
             "Best suited for hotels and restaurants where a robotic presence can streamline service touchpoints while reinforcing a modern, technology-forward guest experience.",
           highlights: [
-            "Guest interaction framing",
-            "Hospitality scenario storytelling",
+            "Guest interaction",
+            "Hospitality delivery service",
             "Front-of-house automation value",
           ],
-          imageSrc: sharedSolutionImageSrc,
+          backgroundVideoSrc: "/media/solutions/restaurant-robot.mp4",
         },
         {
           tag: "Companion AI: Homes",
@@ -530,20 +524,19 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
           description:
             "A future-facing category for family environments where companionship, assistance, and intuitive interaction matter as much as the robotic platform itself.",
           highlights: [
-            "Home interaction narratives",
-            "Assistance and care positioning",
-            "Emotion-aware product storytelling",
+            "Household assistance and care",
+            "Emotion support and Health monitoring",
           ],
-          imageSrc: sharedSolutionImageSrc,
+          backgroundVideoSrc: "/media/solutions/companion-robot.mp4",
         },
       ],
       callout: {
         kicker: "Next step",
-        title: "Need a tailored robotics page or product showcase next?",
+        title: "Don't see your exact use case?",
         description:
-          "The current code structure is ready for deeper solution subpages and a future Shopify-fed display layer.",
-        primaryLabel: "Contact Us",
-        primaryHref: "/en/contact",
+          "Every environment has its own constraints. We'll walk through your operation and scope a platform that fits.",
+        primaryLabel: "Contact us",
+        primaryHref: "/contact",
       },
     },
     about: {
@@ -602,19 +595,37 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
           },
         ],
       },
+      history: {
+        pageHero: {
+          kicker: "OUR STORY",
+          title: "History",
+          statusBadge: "Under construction",
+          description:
+            "We're writing the story of how RobotX AI came to be. Check back soon.",
+        },
+      },
+      team: {
+        pageHero: {
+          kicker: "THE TEAM",
+          title: "Team",
+          statusBadge: "Under construction",
+          description:
+            "Team profiles are coming soon. We're putting the final touches on introducing the people behind RobotX AI.",
+        },
+      },
     },
     contact: {
       pageHero: {
         kicker: "Contact",
         title: "Start the robotics conversation.",
         description:
-          "We are focusing the MVP on inquiry and relationship-building instead of direct e-commerce, so the contact experience needs to feel direct, confident, and clear.",
+          "",
       },
       info: {
         kicker: "Reach RobotX",
         title: "Talk with our team about solutions, deployment, or collaboration.",
         description:
-          "The contact details are based on the current live website and can be adjusted easily as the new site evolves.",
+          "",
         address: sharedAddress,
         phoneLabel: sharedPhoneLabel,
         phoneRaw: sharedPhoneRaw,
@@ -632,6 +643,33 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
         submitLabel: "Send Inquiry",
       },
     },
+    technology: {
+      pageHero: {
+        kicker: "Technology",
+        title: "RX BRAIN — Technology",
+        description:
+          "Detailed technology page coming soon. For now, explore our solutions or get in touch.",
+      },
+    },
+    news: {
+      hero: {
+        kicker: "News",
+        title: "Dispatches from the field.",
+        description:
+          "Deployment updates, partnership announcements, and platform milestones from RobotX.",
+      },
+      meta: {
+        categoryLabel: "Category",
+        dateLabel: "Published",
+        readArticle: "Read article",
+        backToNews: "Back to news",
+        notTranslatedYet: "This article has not been translated yet. Showing the English version.",
+        previousArticle: "Previous",
+        nextArticle: "Next",
+        currentOfTotalLabel: "{current} of {total}",
+        paginationLabel: "News pagination",
+      },
+    },
   },
   zh: {
     meta: {
@@ -641,10 +679,19 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
     navigation: {
       items: [
         { label: "解决方案", href: "/solutions" },
-        { label: "关于我们", href: "/about" },
+        { label: "新闻", href: "/news" },
+        {
+          label: "关于我们",
+          href: "/about",
+          children: [
+            { label: "发展历程", href: "/about/history" },
+            { label: "团队", href: "/about/team" },
+          ],
+        },
         { label: "联系我们", href: "/contact" },
       ],
       languages: [{ locale: "en" }, { locale: "zh" }],
+      submenuLabel: "展开子菜单",
     },
     footer: {
       tagline: "面向未来的机器人品牌",
@@ -655,6 +702,7 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
       contactHeading: "联系信息",
       links: [
         { label: "解决方案", href: "/solutions" },
+        { label: "新闻", href: "/news" },
         { label: "关于我们", href: "/about" },
         { label: "联系我们", href: "/contact" },
       ],
@@ -671,14 +719,25 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
           "我们专注于工业、教育、人形机器人与消防等方向的先进机器人平台与解决方案，强调精确控制、工程能力与落地部署。",
         primaryAction: "查看解决方案",
         secondaryAction: "联系我们",
-        backgroundVideoSrc: homeHeroVideoSrc,
-        backgroundPosterSrc: homeHeroPosterSrc,
+        backgroundVideoSrc: homepageHeroVideoSrc,
+        backgroundPosterSrc: homepageHeroPosterSrc,
+        videoAriaLabel: "四足巡检机器人在工业场景中行走",
       },
       companyIntroduction: {
         kicker: "公司简介",
         title: "以数据驱动智能的闭环生态",
         description:
           "我们依托全球供应链体系，并结合销售、租赁及教育等多元化业务模式，为客户提供稳定且可扩展的机器人解决方案。\n\n通过融合不同行业的实际数据，并结合先进的感知与运动控制技术，我们能够针对制造业、建筑业等复杂应用场景进行定制化开发。我们的机器人系统具备持续优化与智能升级的能力，能够随着客户需求不断演进。",
+      },
+      rxBrain: {
+        kicker: "即将推出",
+        subtitle:
+          "RX BRAIN™ 是支撑每一台 RobotX 机器人的通用智能核心。",
+        description:
+          "RX BRAIN 将感知、规划与控制融合在同一模型中，跨任务、跨场景持续进化。每一次部署都在训练它，每一台机器人都在运行它，整支机队变得更敏锐。",
+        ctaLabel: "技术",
+        wordmarkAlt: "RX BRAIN",
+        imageSequenceAriaLabel: "RX BRAIN 系统的抽象可视化",
       },
       deploymentCycle: {
         kicker: "闭环智能",
@@ -728,39 +787,17 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
       deploymentPlaces: {
         kicker: "部署范围",
         title: "生产级部署。\n遍布美国多个站点",
+      latestEvents: {
+        kicker: "RobotX 最新动态",
+        title: "来自现场的部署、合作与平台更新。",
         description:
-          "受全球行业领导者信赖，更多战略合作伙伴关系即将公布。",
+          "持续记录 RobotX 正在落地的项目、机器人去往的场景，以及我们正在一起合作的伙伴。",
+        ctaLabel: "查看全部新闻",
+        ctaHref: "/news",
+        previousLabel: "上一篇",
+        nextLabel: "下一篇",
+        currentOfTotalLabel: "{current} / {total}",
       },
-      pillars: [
-        {
-          title: "RobotX 自研 Spatial-First 架构",
-          items: [
-            "3D LiDAR 空间感知：不依赖视频流，弱网/断⽹仍可运⾏",
-            "多模态融合：摄像头语义 + IMU定位 + 边缘安全过滤",
-            "实时 3D SLAM：自主导航、三维环境建模与路径规划",
-            "边缘+云端混合：边缘低延迟控制 + 云端强化学习进化",
-            "RobotX OS：厂商⽆关的空间操作层，统⼀接⼊",
-          ],
-        },
-        {
-          title: "供应链与部署网络",
-          items: [
-            "数据采集的前提",
-            "顶级机器人公司独家代理权、经销权",
-            "多渠道部署：销售/租赁/教育",
-            "每台机器人会边工作边用数据自我学习",
-          ],
-        },
-        {
-          title: "企业级端到端解决方案",
-          items: [
-            "Brain Box 硬件",
-            "定制垂直技能包（订阅制）",
-            "企业级端到端解决方案",
-            "RobotX 实验室，模拟",
-          ],
-        },
-      ],
       solutions: {
         kicker: "解决方案方向",
         title: "面向多种机器人应用环境而设计。",
@@ -773,9 +810,7 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
           description:
             "为需要机器人进行设备状态采集、异常情况识别并反馈可执行数据的工业现场量身打造。",
           highlights: ["例行巡检自动化", "设备状态监测工作流", "工厂部署就绪"],
-          imageSrc: sharedSolutionImageSrc,
           backgroundVideoSrc: homeHeroVideoSrc,
-          backgroundPosterSrc: homeHeroPosterSrc,
         },
         {
           tag: "清洁AI：商场 / 工厂",
@@ -783,7 +818,6 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
           description:
             "为需要自主清洁、全覆盖路线规划和服务质量标准化的购物中心、公共设施和生产车间而设计。",
           highlights: ["大面积覆盖", "自主清洁路线", "智能清洁"],
-          imageSrc: sharedSolutionImageSrc,
           backgroundVideoSrc: "/media/solutions/cleaning-robot.mp4",
         },
         {
@@ -792,7 +826,6 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
           description:
             "完美适配仓储环境，通过机器人移动能力减少人工搬运阻力，提升工作流连贯性，从存储到派遣的全流程优化。",
           highlights: ["多仓库运输路径优化", "多机器人协同重物搬运"],
-          imageSrc: sharedSolutionImageSrc,
           backgroundVideoSrc: "/media/solutions/logistic-robot.mp4",
         },
         {
@@ -801,7 +834,6 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
           description:
             "为建筑团队提供现场监测、数据采集和动态户外环境中更安全、更高效的现场执行能力支持。",
           highlights: ["现场数据采集", "动态地形沟通", "现场部署可信度"],
-          imageSrc: sharedSolutionImageSrc,
           backgroundVideoSrc: homeHeroVideoSrc,
         },
         {
@@ -810,7 +842,6 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
           description:
             "最适合酒店和餐厅应用，机器人可优化服务接触点并强化现代科技导向的客户体验。",
           highlights: ["宾客互动", "酒店餐厅运送服务"],
-          imageSrc: sharedSolutionImageSrc,
           backgroundVideoSrc: "/media/solutions/restaurant-robot.mp4",
         },
         {
@@ -819,43 +850,16 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
           description:
             "面向未来的应用场景，在家庭环境中，陪伴、协助与直观交互与机器人平台本身一样重要。",
           highlights: ["协助与护理定位", "情感感知的产品叙事"],
-          imageSrc: sharedSolutionImageSrc,
-          backgroundVideoSrc: "/media/solutions/compaion-robot.mp4",
+          backgroundVideoSrc: "/media/solutions/companion-robot.mp4",
         },
       ],
-      story: {
-        kicker: "转化路径",
-        title: "从业务场景到合作咨询的完整信息路径。",
-        description:
-          "每一个页面板块都在帮助访客理解 RobotX 做什么、适合哪些场景，以及如何开始进一步沟通。",
-        steps: [
-          {
-            index: "01",
-            title: "明确应用场景",
-            description:
-              "帮助访客快速判断需求属于教育、工业、人形机器人，还是消防与应急响应方向。",
-          },
-          {
-            index: "02",
-            title: "突出技术优势",
-            description:
-              "用媒体化模块、重点参数和简洁文案表达感知、控制、运动与远程操作能力。",
-          },
-          {
-            index: "03",
-            title: "引导业务咨询",
-            description:
-              "MVP 以咨询转化为主，不放结账流程，为后续展示型产品页面保留扩展空间。",
-          },
-        ],
-      },
       callout: {
-        kicker: "本次重建目标",
-        title: "先把本地代码环境和品牌基础搭建好，再逐步扩展媒体与产品展示。",
+        kicker: "合作洽谈",
+        title: "准备将 RobotX AI 部署到您的场景吗？",
         description:
-          "这个 MVP 当前不依赖 Shopify，也不会阻碍后续加入只展示不售卖的产品模块。",
-        primaryAction: "联系 RobotX",
-        secondaryAction: "了解我们",
+          "告诉我们您的场地与运营需求，我们会一起规划合适的机器人平台、部署方案与支持路径。",
+        primaryAction: "与团队沟通",
+        secondaryAction: "了解 RobotX",
       },
     },
     solutions: {
@@ -863,65 +867,86 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
         kicker: "解决方案",
         title: "围绕真实任务需求构建的机器人能力展示。",
         description:
-          "当前 WordPress 网站中的人形、工业、教育和消防方向会被保留，但新的表达方式会更清晰、更高级、更符合机器人品牌气质。",
+          "RobotX 借助智能机器人技术，助力企业实现运营自动化。我们提供的不仅仅是解决方案，更致力于确保其持续优化——通过让机器人从日常工作中不断学习、随时间推移自我适应，从而更高效地执行各项任务。",
       },
       cards: [
         {
-          tag: "人形机器人",
-          title: "适用于交互、研究与服务场景的人形机器人方案。",
+          tag: "巡检 AI：工厂",
+          title: "面向工厂巡检、异常检测与运营可视化的巡检 AI。",
           description:
-            "面向需要展示人机交互、前沿研究能力和品牌形象输出的组织与项目。",
+            "面向需要机器人捕捉设备状态、识别异常情况并将可执行数据回传到运营闭环的工业场景。",
           highlights: [
-            "强化人机交互场景表达",
-            "适合研究与展示型页面结构",
-            "后续可扩展产品展示模块",
+            "日常巡检自动化",
+            "设备状态监测流程",
+            "智能工厂部署",
           ],
-          imageSrc: sharedSolutionImageSrc,
+          backgroundVideoSrc: "/media/solutions/robot-dog-farm-1.mp4",
         },
         {
-          tag: "工业机器人",
-          title: "服务于巡检、移动作业与效率提升的工业机器人方案。",
+          tag: "清洁 AI：商场 / 工厂",
+          title: "面向商业空间与工业场所的清洁 AI。",
           description:
-            "适合强调自动化、监测、远程操控和复杂环境作业能力的技术型内容展示。",
+            "为需要自主清洁、可复用巡线与稳定服务质量的团队打造，覆盖购物中心、公共设施与生产车间。",
           highlights: [
-            "清晰讲述感知与移动能力",
-            "突出操作端和系统控制逻辑",
-            "适合媒体较多的案例扩展",
+            "大面积覆盖能力",
+            "自主清洁路径规划",
+            "智能清扫定位与效果可视化",
           ],
-          imageSrc: sharedSolutionImageSrc,
+          backgroundVideoSrc: "/media/solutions/cleaning-robot.mp4",
         },
         {
-          tag: "教育机器人",
-          title: "面向实验室、教学项目与技术培训的教育机器人方案。",
+          tag: "物流 AI：仓储",
+          title: "面向仓内搬运、调度与物料流转的物流 AI。",
           description:
-            "突出教学价值、平台开放性以及科研和课程结合的可能性，适合学校与研究机构。",
+            "适合机器人移动能力能够减少人工搬运摩擦、在存储到出货全流程中保持作业连续性的仓储环境。",
           highlights: [
-            "强调学习与实验价值",
-            "支持中英双语学术传播",
-            "后续方便加入实验室照片与视频",
+            "仓内运输自动化",
+            "运营效率提升",
           ],
-          imageSrc: sharedSolutionImageSrc,
+          backgroundVideoSrc: "/media/solutions/logistic-robot.mp4",
         },
         {
-          tag: "消防机器人",
-          title: "面向极端环境与人员安全的机器人消防方案。",
+          tag: "施工 AI：工地",
+          title: "面向复杂、多变与高噪声建筑工地的施工 AI。",
           description:
-            "延续当前网站中消防方向的核心价值，重点突出远程操控、现场感知与人员保护能力。",
+            "延续当前网站中安全优先的表达，强调远程操控、态势感知与人员保护能力。",
           highlights: [
-            "任务导向型叙事",
-            "适合高风险场景表达",
-            "可直接承接现场视频素材",
+            "工地态势采集",
+            "动态地形通讯",
           ],
-          imageSrc: sharedSolutionImageSrc,
+          backgroundVideoSrc: homeHeroVideoSrc,
+        },
+        {
+          tag: "服务 AI：酒店 / 餐饮",
+          title: "面向面客配送、引导与酒店餐饮流程的服务 AI。",
+          description:
+            "适合酒店与餐饮场景，机器人可以优化服务触点，同时强化现代、科技感的宾客体验。",
+          highlights: [
+            "宾客互动",
+            "酒店餐饮运送服务",
+            "前厅自动化",
+          ],
+          backgroundVideoSrc: "/media/solutions/restaurant-robot.mp4",
+        },
+        {
+          tag: "陪伴 AI：家庭",
+          title: "面向家庭陪伴、互动与日常辅助的陪伴 AI。",
+          description:
+            "面向家庭环境的未来方向，陪伴、辅助与自然互动与机器人平台本身同等重要。",
+          highlights: [
+            "家务辅助与关怀定位",
+            "情感感知与健康监测",
+          ],
+          backgroundVideoSrc: "/media/solutions/companion-robot.mp4",
         },
       ],
       callout: {
         kicker: "下一步",
-        title: "后续如需更细分的解决方案页面或产品展示层，也可以直接扩展。",
+        title: "没有找到您的场景？",
         description:
-          "当前代码结构已经为未来的子页面、案例展示和 Shopify 产品数据接入留出空间。",
+          "每个场景都有独特的约束。我们会和您一起梳理运营流程，规划合适的机器人平台与部署方案。",
         primaryLabel: "联系我们",
-        primaryHref: "/zh/contact",
+        primaryHref: "/contact",
       },
     },
     about: {
@@ -974,19 +999,36 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
           },
         ],
       },
+      history: {
+        pageHero: {
+          kicker: "我们的故事",
+          title: "发展历程",
+          statusBadge: "建设中",
+          description: "我们正在整理 RobotX AI 的发展故事，敬请期待。",
+        },
+      },
+      team: {
+        pageHero: {
+          kicker: "团队介绍",
+          title: "团队",
+          statusBadge: "建设中",
+          description:
+            "团队介绍正在准备中，我们会尽快向您呈现 RobotX AI 背后的团队。",
+        },
+      },
     },
     contact: {
       pageHero: {
         kicker: "联系我们",
         title: "开启一次关于机器人应用的沟通。",
         description:
-          "MVP 阶段我们聚焦业务咨询与合作沟通，而不是直接电商销售，因此联系页面需要足够直接、专业和清晰。",
+          "",
       },
       info: {
         kicker: "联系 RobotX",
         title: "欢迎与我们讨论解决方案、部署需求或合作想法。",
         description:
-          "这里的联系方式基于当前官网公开信息，后续也可以在新站中很方便地调整。",
+          "",
         address: sharedAddress,
         phoneLabel: sharedPhoneLabel,
         phoneRaw: sharedPhoneRaw,
@@ -1002,6 +1044,32 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
         messageLabel: "留言",
         messagePlaceholder: "请介绍你的机器人应用场景、时间计划或具体问题。",
         submitLabel: "发送咨询",
+      },
+    },
+    technology: {
+      pageHero: {
+        kicker: "技术",
+        title: "RX BRAIN — 技术",
+        description: "详细技术说明即将上线。欢迎先浏览我们的解决方案或联系我们。",
+      },
+    },
+    news: {
+      hero: {
+        kicker: "新闻",
+        title: "来自现场的最新消息。",
+        description:
+          "RobotX 的部署进展、合作公告与平台重要节点都会在这里同步。",
+      },
+      meta: {
+        categoryLabel: "分类",
+        dateLabel: "发布时间",
+        readArticle: "阅读全文",
+        backToNews: "返回新闻列表",
+        notTranslatedYet: "本篇文章尚未翻译，当前显示英文版本。",
+        previousArticle: "上一篇",
+        nextArticle: "下一篇",
+        currentOfTotalLabel: "{current} / {total}",
+        paginationLabel: "新闻翻页",
       },
     },
   },

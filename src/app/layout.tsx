@@ -1,15 +1,18 @@
 import type { Metadata } from "next";
-import { Orbitron, Space_Grotesk } from "next/font/google";
+import { headers } from "next/headers";
+import localFont from "next/font/local";
+import { locales, type Locale } from "@/lib/i18n";
 import "./globals.css";
 
-const bodyFont = Space_Grotesk({
+const satoshi = localFont({
+  src: [
+    { path: "../../public/fonts/satoshi/Satoshi-Light.woff2", weight: "300", style: "normal" },
+    { path: "../../public/fonts/satoshi/Satoshi-Regular.woff2", weight: "400", style: "normal" },
+    { path: "../../public/fonts/satoshi/Satoshi-Medium.woff2", weight: "500", style: "normal" },
+    { path: "../../public/fonts/satoshi/Satoshi-Bold.woff2", weight: "700", style: "normal" },
+  ],
   variable: "--font-body",
-  subsets: ["latin"],
-});
-
-const displayFont = Orbitron({
-  variable: "--font-display",
-  subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -18,13 +21,18 @@ export const metadata: Metadata = {
     "RobotX AI Inc. builds advanced robotics solutions for industrial automation, education, and mission-critical safety.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const headerList = await headers();
+  const pathname = headerList.get("x-pathname") ?? "/";
+  const segment = pathname.split("/")[1];
+  const lang: Locale = locales.includes(segment as Locale) ? (segment as Locale) : "en";
+
   return (
-    <html lang="en" className={`${bodyFont.variable} ${displayFont.variable}`}>
+    <html lang={lang} className={`${satoshi.variable} ${satoshi.className}`}>
       <body>{children}</body>
     </html>
   );
