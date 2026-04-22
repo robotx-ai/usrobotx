@@ -1,6 +1,6 @@
-# usrobotx — Plan
+﻿# usrobotx — Plan
 
-_Last updated: 2026-04-19_
+_Last updated: 2026-04-22_
 
 > **Asset convention:** all raw footage and video masters live in `/raw_assets/` (gitignored). Web-ready exports are produced from those sources and either served via CDN or copied into `/public/media/`. Never commit large video binaries to the repo.
 
@@ -30,7 +30,7 @@ Target experience:
 
 ## Current state
 
-_Last verified: 2026-04-20_
+_Last verified: 2026-04-22_
 
 - **Routing:** App Router, bilingual (`en`/`zh`), 9+ routes per locale — home, about, about/history, about/team, contact, solutions, news, news/[slug], technology
 - **Motion stack:** `gsap@^3.15.0` + `@gsap/react` (ScrollTrigger), `lenis@^1.3.23`. Primitives: `LenisProvider`, `ImageSequence` (pinned canvas scrubber), `MediaLoadingPulse`, `reveal-section`
@@ -40,7 +40,7 @@ _Last verified: 2026-04-20_
 
 ## Gaps vs. the target feel
 
-1. **Motion system** — introduce `GSAP` + `ScrollTrigger` (or `Motion` + `Lenis`) and build reusable scroll primitives: `PinnedSection`, `Parallax`, `ImageSequence`, `StickyReveal`
+1. ~~**Motion system**~~ — shipped in Phase 1: `gsap@^3.15.0` + `@gsap/react` (ScrollTrigger) + `lenis@^1.3.23` installed; primitives `ImageSequence`, `LenisProvider`, `MediaLoadingPulse`, `reveal-section` in `src/components/motion/`
 2. **Media density** — source or produce multi-resolution `webp` variants (500 / 800 / 1080 / 1600 / 2000 widths) and short section videos; replace placeholders
 3. **Content depth** — expand `site-content.ts` with real copy for every solution, news, and team entry; consider splitting into per-collection files as it grows
 4. **Asset pipeline** — decide on responsive image sources (`next/image` with remote CDN vs. local), and a process for generating `webp` variants
@@ -53,8 +53,6 @@ _Last verified: 2026-04-20_
 - **What real product photography and robot footage exists today vs. needs to be produced?** This is the long-pole cost, not the code.
 - **Build ourselves vs. Webflow?** For a pure marketing site with frequent non-technical edits, Webflow ships in days and stays editable. Building here only wins if this site needs to share components/auth with a future product app, or needs motion beyond what GSAP-in-Webflow can do.
 
-## Suggested next move
-Pick one fieldai section (likely the homepage hero scrubber or a `/solutions/*` page) and rebuild it here as a **motion-fidelity spike** — one page, real motion, real media. That spike tells us the true gap and whether the self-built path is worth the ongoing cost.
 
 ---
 
@@ -164,3 +162,15 @@ After Plan B landed the user reported (1) the pulse placeholder flashed and vani
 - `[context.production] ignore = "exit 0"` in `netlify.toml` means pushing to `main` does **not** trigger a Netlify production deploy. Production ships only via `npm run deploy:prod` (CLI, from an authenticated shell with Windows Developer Mode enabled so `@netlify/plugin-nextjs` can create its symlinks).
 - Preview deploys: `npm run deploy:preview` → returns a throwaway preview URL for pre-merge checking.
 - Repo is a sparse checkout — `git add <path>` sometimes errors with "outside of your sparse-checkout definition"; pass `--sparse` to override.
+
+---
+
+## Phase 3 — Default locale routing (English as root) [Shipped]
+
+**Goal:** English URLs lose the `/en` prefix. `/` and `/solutions` serve English; `/zh` and `/zh/solutions` serve Chinese.
+
+**Approach:** middleware rewrite — no route-file duplication. The `[locale]` dynamic segment stays. `src/proxy.ts` intercepts every request: paths with no locale prefix rewrite internally to `/en/...` (URL stays clean); paths starting with `/en` redirect to the prefix-free canonical. A `localePrefix(locale)` helper in `src/lib/i18n.ts` centralizes link generation across all components.
+
+**Files:** `src/proxy.ts`, `src/lib/i18n.ts`, `src/app/page.tsx` (deleted), + 7 component files (`site-header`, `site-footer`, `home-page`, `latest-events-section`, `news-article-page`, `news-grid-reveal`, `solutions-page`).
+
+See git log for implementation details.

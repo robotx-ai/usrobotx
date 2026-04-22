@@ -1,9 +1,9 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import type { Locale } from "@/lib/i18n";
+import { localePrefix, type Locale } from "@/lib/i18n";
 import type { NewsArticleMeta } from "@/lib/news-types";
 import { formatNewsDate } from "@/lib/news-date";
 
@@ -93,7 +93,7 @@ export function LatestEventsSection({
           <Link
             key={spotlight.slug}
             className="latest-events-spotlight-link"
-            href={`/${locale}/news/${spotlight.slug}`}
+            href={`${localePrefix(locale)}/news/${spotlight.slug}`}
           >
             <div className="latest-events-spotlight-media">
               <Image
@@ -171,7 +171,7 @@ export function LatestEventsSection({
               >
                 <Link
                   className="latest-events-rail-link"
-                  href={`/${locale}/news/${article.slug}`}
+                  href={`${localePrefix(locale)}/news/${article.slug}`}
                   onMouseEnter={() => setActiveIndex(index)}
                 >
                   <span className="news-card-category">
@@ -191,7 +191,7 @@ export function LatestEventsSection({
       </div>
 
       <div className="latest-events-cta-row">
-        <Link className="secondary-button" href={`/${locale}${copy.ctaHref}`}>
+        <Link className="secondary-button" href={`${localePrefix(locale)}${copy.ctaHref}`}>
           {copy.ctaLabel}
         </Link>
       </div>

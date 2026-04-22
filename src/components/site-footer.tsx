@@ -1,7 +1,7 @@
-import Image from "next/image";
+﻿import Image from "next/image";
 import Link from "next/link";
 import type { FooterContent } from "@/data/site-content";
-import type { Locale } from "@/lib/i18n";
+import { localePrefix, type Locale } from "@/lib/i18n";
 
 type SiteFooterProps = {
   locale: Locale;
@@ -28,7 +28,7 @@ export function SiteFooter({ locale, footer }: SiteFooterProps) {
         <div className="site-footer-column">
           <h3 className="site-footer-heading">{footer.navigationHeading}</h3>
           {footer.links.map((link) => (
-            <Link key={link.href} className="site-footer-link" href={`/${locale}${link.href}`}>
+            <Link key={link.href} className="site-footer-link" href={`${localePrefix(locale)}${link.href}`}>
               {link.label}
             </Link>
           ))}

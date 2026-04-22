@@ -1,10 +1,10 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { MDXRemote, type MDXRemoteProps } from "next-mdx-remote/rsc";
 import { ImageCarousel, ImageSlide } from "@/components/media/image-carousel";
 import { NewsVideo } from "@/components/media/news-video";
 import { NewsCoverParallax } from "@/components/pages/news-cover-parallax";
 import type { SiteContent } from "@/data/site-content";
-import type { Locale } from "@/lib/i18n";
+import { localePrefix, type Locale } from "@/lib/i18n";
 import type { NewsArticle, NewsArticleMeta } from "@/lib/news-types";
 import { formatNewsDate } from "@/lib/news-date";
 
@@ -70,7 +70,7 @@ export function NewsArticlePage({
           ) : null}
           <Link
             className="news-article-sidebar-back"
-            href={`/${locale}/news`}
+            href={`${localePrefix(locale)}/news`}
           >
             ← {meta.backToNews}
           </Link>
@@ -86,7 +86,7 @@ export function NewsArticlePage({
           {previous ? (
             <Link
               className="news-article-nav-link news-article-nav-previous"
-              href={`/${locale}/news/${previous.slug}`}
+              href={`${localePrefix(locale)}/news/${previous.slug}`}
             >
               <span className="news-article-nav-direction">
                 ← {meta.previousArticle}
@@ -99,7 +99,7 @@ export function NewsArticlePage({
           {next ? (
             <Link
               className="news-article-nav-link news-article-nav-next"
-              href={`/${locale}/news/${next.slug}`}
+              href={`${localePrefix(locale)}/news/${next.slug}`}
             >
               <span className="news-article-nav-direction">
                 {meta.nextArticle} →

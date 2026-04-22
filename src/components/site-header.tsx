@@ -1,11 +1,11 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import type { NavigationContent } from "@/data/site-content";
-import { localeNames, type Locale } from "@/lib/i18n";
+import { localeNames, localePrefix, type Locale } from "@/lib/i18n";
 
 type SiteHeaderProps = {
   locale: Locale;
@@ -95,7 +95,7 @@ export function SiteHeader({ locale, navigation }: SiteHeaderProps) {
       <div className="site-header-inner">
         <Link
           className="site-logo"
-          href={`/${locale}`}
+          href={localePrefix(locale) || "/"}
           aria-label="RobotX AI home"
           onClick={closeMenu}
         >
@@ -139,7 +139,7 @@ export function SiteHeader({ locale, navigation }: SiteHeaderProps) {
                     <div key={item.href} className="site-navigation-item">
                       <Link
                         className="site-navigation-link"
-                        href={`/${locale}${item.href}`}
+                        href={`${localePrefix(locale)}${item.href}`}
                         onClick={closeMenu}
                       >
                         {item.label}
@@ -159,7 +159,7 @@ export function SiteHeader({ locale, navigation }: SiteHeaderProps) {
                   >
                     <Link
                       className="site-navigation-link"
-                      href={`/${locale}${item.href}`}
+                      href={`${localePrefix(locale)}${item.href}`}
                       onClick={closeMenu}
                     >
                       {item.label}
@@ -203,7 +203,7 @@ export function SiteHeader({ locale, navigation }: SiteHeaderProps) {
                         <Link
                           key={child.href}
                           className="site-navigation-dropdown-link"
-                          href={`/${locale}${child.href}`}
+                          href={`${localePrefix(locale)}${child.href}`}
                           role="menuitem"
                           onClick={closeMenu}
                         >

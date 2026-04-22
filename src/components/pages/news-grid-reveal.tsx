@@ -1,11 +1,11 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import type { NewsArticleMeta } from "@/lib/news-types";
 import { formatNewsDate } from "@/lib/news-date";
-import type { Locale } from "@/lib/i18n";
+import { localePrefix, type Locale } from "@/lib/i18n";
 
 type NewsGridRevealProps = {
   locale: Locale;
@@ -69,7 +69,7 @@ export function NewsGridReveal({
           <Link
             key={article.slug}
             className={`news-card ${isVisible ? "news-card-visible" : ""}`}
-            href={`/${locale}/news/${article.slug}`}
+            href={`${localePrefix(locale)}/news/${article.slug}`}
           >
             <div className="news-card-media">
               <Image

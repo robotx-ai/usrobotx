@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { DeploymentCycleSection } from "@/components/deployment-cycle-section";
 import { HomeHero } from "@/components/pages/sections/home-hero";
 import { LatestEventsSection } from "@/components/pages/sections/latest-events-section";
@@ -6,7 +6,7 @@ import { RxBrainSection } from "@/components/pages/sections/rx-brain-section";
 import { RevealSection } from "@/components/reveal-section";
 import { SolutionsCarouselSection } from "@/components/solutions-carousel-section";
 import type { SiteContent } from "@/data/site-content";
-import type { Locale } from "@/lib/i18n";
+import { localePrefix, type Locale } from "@/lib/i18n";
 import type { NewsArticleMeta } from "@/lib/news-types";
 
 type HomePageProps = {
@@ -71,10 +71,10 @@ export function HomePage({ locale, content, latestArticles }: HomePageProps) {
             <p className="section-copy">{content.home.callout.description}</p>
           </div>
           <div className="button-row">
-            <Link className="primary-button" href={`/${locale}/contact`}>
+            <Link className="primary-button" href={`${localePrefix(locale)}/contact`}>
               {content.home.callout.primaryAction}
             </Link>
-            <Link className="secondary-button" href={`/${locale}/about`}>
+            <Link className="secondary-button" href={`${localePrefix(locale)}/about`}>
               {content.home.callout.secondaryAction}
             </Link>
           </div>
