@@ -359,7 +359,7 @@ p {
 .site-navigation-dropdown-panel {
   position: absolute;
   top: 100%;
-  left: 0;
+  left: -50%;
   min-width: 11rem;
   padding: 0.75rem 0;
   background: var(--background-panel);

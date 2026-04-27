@@ -257,8 +257,8 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
           label: "About",
           href: "/about",
           children: [
-            { label: "History", href: "/about/history" },
-            { label: "Team", href: "/about/team" },
+            { label: "About Us", href: "/about" },
+            { label: "Our Team", href: "/about/team" },
           ],
         },
         { label: "Contact", href: "/contact" },
