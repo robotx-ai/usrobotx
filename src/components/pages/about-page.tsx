@@ -1,4 +1,5 @@
 import type { SiteContent } from "@/data/site-content";
+import { AboutStats } from "@/components/pages/sections/about-stats";
 
 type AboutPageProps = {
   content: SiteContent;
@@ -7,11 +8,26 @@ type AboutPageProps = {
 export function AboutPage({ content }: AboutPageProps) {
   return (
     <div className="page-shell">
-      <section className="page-hero-section">
-        <div className="section-container section-stack">
-          <span className="section-kicker">{content.about.pageHero.kicker}</span>
-          <h1 className="section-title">{content.about.pageHero.title}</h1>
-          <p className="section-copy">{content.about.pageHero.description}</p>
+      <section className="media-background-section">
+        <div className="page-hero-video-frame">
+          <video
+            className="hero-media-video"
+            src="/media/solutions/logistic-robot.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            aria-hidden="true"
+          />
+          <div className="hero-media-overlay" />
+          <div className="section-container page-hero-video-copy">
+            <div className="section-stack">
+              <span className="section-kicker">{content.about.pageHero.kicker}</span>
+              <h1 className="section-title">{content.about.pageHero.title}</h1>
+              <p className="section-copy">{content.about.pageHero.description}</p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -45,6 +61,30 @@ export function AboutPage({ content }: AboutPageProps) {
               <p className="feature-panel-copy">{point.description}</p>
             </article>
           ))}
+        </div>
+      </section>
+
+      <section className="section-container traction-section section-spacing">
+        <div className="section-stack traction-header">
+          <span className="section-kicker">{content.about.traction.kicker}</span>
+          <h2 className="section-title">{content.about.traction.title}</h2>
+          <p className="section-copy">{content.about.traction.description}</p>
+        </div>
+        <AboutStats stats={content.about.traction.stats} />
+        <div className="panel-grid">
+          {content.about.traction.partners.map((partner) => (
+            <article key={partner.name} className="feature-panel">
+              <h3 className="feature-panel-title">{partner.name}</h3>
+              <p className="feature-panel-copy">{partner.description}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="vision-section section-spacing">
+        <div className="section-container">
+          <span className="section-kicker vision-kicker">{content.about.vision.kicker}</span>
+          <p className="vision-statement">{content.about.vision.statement}</p>
         </div>
       </section>
     </div>

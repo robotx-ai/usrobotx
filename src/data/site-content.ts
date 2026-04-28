@@ -154,6 +154,17 @@ type AboutContent = {
     description: string;
     points: IndexedPoint[];
   };
+  traction: {
+    kicker: string;
+    title: string;
+    description: string;
+    stats: { value: string; label: string }[];
+    partners: { name: string; description: string }[];
+  };
+  vision: {
+    kicker: string;
+    statement: string;
+  };
   history: {
     pageHero: {
       kicker: string;
@@ -514,59 +525,87 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
     },
     about: {
       pageHero: {
-        kicker: "About",
-        title: "A robotics company building trust through technical clarity.",
+        kicker: "Physical AI",
+        title: "Building the Brain Behind the Machine.",
         description:
-          "RobotX AI combines advanced robotics interest with practical deployment thinking. The redesigned website presents that identity with a more scientific and futuristic tone.",
+          "RobotX is a physical artificial intelligence company based in Irvine, specializing in advanced robotics applications and next-generation robot intelligence systems. Founded by a team of leading robotics experts, RobotX is dedicated to redefining how robots perceive, think, and act in the real world.",
       },
       mission: {
-        kicker: "Mission",
-        title: "Show the brand as capable, credible, and ready to collaborate.",
+        kicker: "Core Technology — Xmind",
+        title: "One Brain. Multiple Robots. Multiple Tasks.",
         description:
-          "The About page should help visitors quickly understand the company, the problem spaces it cares about, and the way it approaches modern robotics.",
+          "At the core of RobotX is our proprietary robot brain model, Xmind — a powerful AI system trained on large-scale multimodal data. Xmind enables a \"one brain, multiple robots, multiple tasks\" architecture, allowing diverse robotic platforms — including humanoid robots, quadrupeds, and robotic arms — to share a unified intelligence layer.",
         values: [
           {
-            title: "Precision",
+            title: "Unified Intelligence",
             description:
-              "Design and messaging should feel measured, intentional, and rooted in technical confidence.",
+              "A single Xmind model drives perception, planning, and control across humanoid robots, quadrupeds, and robotic arms — eliminating the need for separate AI systems per platform.",
           },
           {
-            title: "Adaptability",
+            title: "Strong Generalization",
             description:
-              "The site is structured to grow from a marketing presence into a richer product and solution platform over time.",
+              "Unlike traditional systems that require task-specific programming and retraining, Xmind-powered robots seamlessly adapt to new environments and complex tasks — navigation, manipulation, and autonomous operations — without extensive reconfiguration.",
           },
           {
-            title: "Accessibility",
+            title: "Cross-Platform Coverage",
             description:
-              "English and Chinese content, clear sections, and responsive design make the experience easier to use across audiences.",
+              "The same intelligence layer runs across diverse form factors. One software investment scales across every robot in the fleet.",
           },
         ],
       },
       advantage: {
-        kicker: "How we present the company",
-        title: "A modern site architecture designed for long-term growth.",
+        kicker: "Solution Focus",
+        title: "Scalable Automation for Unstructured Environments.",
         description:
-          "Instead of copying the WordPress theme, the rebuild uses clearer components, reusable sections, and a brand system made for code ownership.",
+          "RobotX focuses on deploying intelligent robotic solutions across real-world, unstructured environments where rigid legacy systems have historically failed to scale.",
         points: [
           {
             index: "01",
-            title: "Code-managed content",
+            title: "Industrial Operations & Warehousing",
             description:
-              "Pages are easy to version, review, and deploy through GitHub and Netlify.",
+              "Autonomous patrol, anomaly detection, and logistics automation for factories, warehouses, and industrial sites requiring continuous, reliable operations.",
           },
           {
             index: "02",
-            title: "Structured styling",
+            title: "Inspection & Infrastructure",
             description:
-              "Reusable global CSS tokens support consistent spacing, color, typography, and motion.",
+              "Intelligent inspection robots that capture equipment status, identify irregular conditions, and feed actionable data back into operations — with no human in the loop.",
           },
           {
             index: "03",
-            title: "Future integration points",
+            title: "Emergency Response",
             description:
-              "The architecture leaves room for forms, CMS workflows, and Shopify product display without a rewrite.",
+              "Robotic platforms designed for high-risk environments including firefighting and hazmat response, where human safety constraints demand autonomous capability.",
           },
         ],
+      },
+      traction: {
+        kicker: "Growth",
+        title: "$5M Seed Round. Strategic Partnerships.",
+        description:
+          "RobotX has secured $5 million in seed funding and established strategic partnerships with leading robotics innovators, accelerating the integration of advanced AI with cutting-edge robotic hardware.",
+        stats: [
+          { value: "$5M", label: "Seed Funding Secured" },
+          { value: "2+", label: "Strategic Hardware Partners" },
+          { value: "3+", label: "Deployment Environments" },
+        ],
+        partners: [
+          {
+            name: "AGIBOT",
+            description:
+              "Strategic partner advancing humanoid robot development and commercialization. The collaboration brings Xmind intelligence to AGIBOT's next-generation humanoid platforms.",
+          },
+          {
+            name: "Unitree Robotics",
+            description:
+              "World-leading quadruped and humanoid robot manufacturer. Unitree's hardware paired with Xmind enables high-performance autonomous operation across field and industrial environments.",
+          },
+        ],
+      },
+      vision: {
+        kicker: "Vision",
+        statement:
+          "At RobotX, we believe the future of robotics lies in intelligent, adaptable systems that can operate across forms and functions. By building the brain behind the machine, we are shaping a new era of physical AI.",
       },
       history: {
         pageHero: {
@@ -887,53 +926,87 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
     },
     about: {
       pageHero: {
-        kicker: "关于我们",
-        title: "用更清晰的技术表达建立机器人品牌信任感。",
+        kicker: "具身人工智能",
+        title: "构建机器背后的大脑。",
         description:
-          "RobotX AI 将先进机器人兴趣与真实部署思维结合起来，新的官网会以更科学、更未来的方式呈现这一品牌形象。",
+          "RobotX 是一家总部位于加州尔湾的具身人工智能公司，专注于先进机器人应用与下一代机器人智能系统的研发。公司由顶尖机器人专家团队创立，致力于重新定义机器人的感知、思考与行动方式。",
       },
       mission: {
-        kicker: "品牌目标",
-        title: "让访客快速理解公司能力、可信度与合作方式。",
+        kicker: "核心技术 — Xmind",
+        title: "一个大脑，多种机器人，多类任务。",
         description:
-          "关于我们页面需要帮助访客理解公司是谁、关注哪些问题、以及如何理解 RobotX 对现代机器人应用的判断。",
+          "RobotX 的核心是我们自主研发的机器人大脑模型 Xmind —— 一套基于大规模多模态数据训练的强大 AI 系统。Xmind 实现了「一脑多机多任务」架构，使人形机器人、四足机器人、机械臂等多种平台共享统一的智能层。",
         values: [
           {
-            title: "精确",
-            description: "视觉与文案都应体现克制、专业与工程化的品牌气质。",
+            title: "统一智能",
+            description:
+              "单一 Xmind 模型驱动人形机器人、四足机器人和机械臂的感知、规划与控制，无需为每个平台单独开发 AI 系统。",
           },
           {
-            title: "适应性",
-            description: "网站结构能从公司展示站逐步演进为更丰富的产品与方案平台。",
+            title: "强泛化能力",
+            description:
+              "与需要针对特定任务编程和重新训练的传统系统不同，Xmind 驱动的机器人能够无缝适应新环境，执行导航、操作、自主运行等复杂任务，无需大量重新配置。",
           },
           {
-            title: "可访问性",
-            description: "双语与响应式设计帮助不同背景的访客更容易理解与使用网站。",
+            title: "跨平台覆盖",
+            description:
+              "同一智能层运行于多种形态的机器人平台，单次软件投入即可覆盖整个机器人集群。",
           },
         ],
       },
       advantage: {
-        kicker: "重建方式",
-        title: "用现代代码架构替代主题式堆叠，支持长期增长。",
+        kicker: "部署方向",
+        title: "面向非结构化环境的可扩展自动化。",
         description:
-          "我们不会简单复制 WordPress 的样子，而是通过更清晰的组件体系和品牌系统来重建整个官网基础。",
+          "RobotX 专注于在真实、非结构化的场景中部署智能机器人解决方案，覆盖传统刚性系统长期难以规模化的行业领域。",
         points: [
           {
             index: "01",
-            title: "代码化管理内容",
-            description: "页面内容易于通过 GitHub 管理、审查与部署到 Netlify。",
+            title: "工业运营与仓储物流",
+            description:
+              "面向工厂、仓库及工业现场的自主巡检、异常检测与物流自动化，实现持续可靠的全天候运营。",
           },
           {
             index: "02",
-            title: "结构化样式系统",
-            description: "全局 CSS 变量统一控制色彩、间距、字体与动效。",
+            title: "巡检与基础设施维护",
+            description:
+              "智能巡检机器人采集设备状态、识别异常情况，并将可操作数据回传至运营系统，无需人工干预。",
           },
           {
             index: "03",
-            title: "预留未来集成接口",
-            description: "方便后续增加表单、CMS 工作流与 Shopify 展示型产品数据。",
+            title: "应急响应",
+            description:
+              "专为高风险环境设计的机器人平台，覆盖消防、危化品处置等场景，在人员安全受限的情况下实现自主处置能力。",
           },
         ],
+      },
+      traction: {
+        kicker: "增长",
+        title: "500万美元种子轮融资，战略合作伙伴已就位。",
+        description:
+          "RobotX 已完成 500 万美元种子轮融资，并与顶尖机器人创新企业建立战略合作，加速先进 AI 与前沿机器人硬件的融合落地。",
+        stats: [
+          { value: "$500万", label: "种子轮融资" },
+          { value: "2+", label: "战略硬件合作伙伴" },
+          { value: "3+", label: "已覆盖部署场景" },
+        ],
+        partners: [
+          {
+            name: "宇树科技 (Unitree Robotics)",
+            description:
+              "全球领先的四足及人形机器人制造商。宇树的硬件与 Xmind 结合，实现了在野外及工业环境中的高性能自主运行。",
+          },
+          {
+            name: "智元机器人 (AGIBOT)",
+            description:
+              "专注于人形机器人研发与商业化的战略合作伙伴。此次合作将 Xmind 智能引入 AGIBOT 的下一代人形机器人平台。",
+          },
+        ],
+      },
+      vision: {
+        kicker: "愿景",
+        statement:
+          "在 RobotX，我们相信机器人的未来在于能够跨越形态与功能界限的智能、可适应系统。通过构建机器背后的大脑，我们正在开创具身人工智能的新纪元。",
       },
       history: {
         pageHero: {

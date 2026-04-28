@@ -920,6 +920,116 @@ p {
   padding: 8rem 0 2rem;
 }
 
+.page-hero-video-frame {
+  position: relative;
+  width: 100%;
+  min-height: 65svh;
+  overflow: hidden;
+  background: var(--background-primary);
+  display: flex;
+  align-items: flex-end;
+}
+
+.page-hero-video-frame .hero-media-video {
+  z-index: 1;
+}
+
+.page-hero-video-frame .hero-media-overlay {
+  z-index: 2;
+  background: linear-gradient(
+    90deg,
+    rgba(16, 15, 21, 0.78) 0%,
+    rgba(16, 15, 21, 0.55) 40%,
+    rgba(16, 15, 21, 0.2) 100%
+  );
+}
+
+.page-hero-video-copy {
+  position: relative;
+  z-index: 3;
+  padding: 6rem 0 4rem;
+  color: var(--text-on-dark);
+}
+
+.page-hero-video-copy .section-title {
+  color: #ffffff;
+  font-size: clamp(2.25rem, 4.5vw, 4.5rem);
+  line-height: 1;
+  letter-spacing: var(--tracking-display);
+}
+
+.page-hero-video-copy .section-copy {
+  max-width: 52ch;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+/* Traction / Growth section */
+
+.traction-section {
+  text-align: center;
+  padding-bottom: 10ch;;
+}
+.traction-header .section-kicker {
+  text-align: left;
+}
+
+.traction-header {
+  margin-bottom: 2.5rem;
+}
+.traction-header .section-title, .traction-header .section-copy {
+  max-width: 58ch;
+  margin-inline: auto;
+}
+
+.about-stats-panel {
+  margin-bottom: 3rem;
+}
+
+.about-stats-panel .metric-card {
+  text-align: center;
+  justify-items: center;
+}
+
+/* Vision section */
+
+.vision-section {
+  position: relative;
+  text-align: center;
+  padding-bottom: var(--section-spacing);
+  background-image: url('/media/hero/hero-poster.webp');
+  background-size: cover;
+  background-position: center 40%;
+  overflow: hidden;
+  min-height: 50ch;
+}
+
+.vision-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(9, 9, 14, 0.78);
+  z-index: 0;
+}
+
+.vision-section .section-container {
+  position: relative;
+  z-index: 1;
+}
+
+.vision-kicker {
+  display: block;
+  margin-bottom: 1.5rem;
+}
+
+.vision-statement {
+  max-width: 52rem;
+  margin: 0 auto;
+  font-size: clamp(1.35rem, 2.2vw, 1.9rem);
+  line-height: 1.5;
+  letter-spacing: var(--tracking-tight);
+  color: rgba(255, 255, 255, 0.92);
+}
+
 .content-grid,
 .story-layout,
 .contact-layout {
@@ -1379,6 +1489,9 @@ p {
   .metrics-panel,
   .contact-form-layout {
     grid-template-columns: 1fr;
+  }
+  .vision-section{
+    min-height: 30ch;
   }
 
   .metric-card {
