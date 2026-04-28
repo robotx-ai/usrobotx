@@ -178,8 +178,12 @@ type AboutContent = {
       kicker: string;
       title: string;
       description: string;
-      statusBadge: string;
     };
+    members: {
+      name: string;
+      role: string;
+      bio: string;
+    }[];
   };
 };
 
@@ -618,12 +622,38 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
       },
       team: {
         pageHero: {
-          kicker: "THE TEAM",
-          title: "Team",
-          statusBadge: "Under construction",
+          kicker: "The Team",
+          title: "The people building RobotX.",
           description:
-            "Team profiles are coming soon. We're putting the final touches on introducing the people behind RobotX AI.",
+            "Meet the leadership team driving innovation in physical AI and intelligent robotics.",
         },
+        members: [
+          {
+            name: "Sam Li",
+            role: "Chief Executive Officer (CEO)",
+            bio: "Sam Li is the Chief Executive Officer of RobotX and a visionary entrepreneur in the field of physical artificial intelligence and robotics. He leads the company's overall strategy, business development, and global expansion. With a strong background in technology innovation and company building, Sam has a proven track record of bringing cutting-edge ideas from concept to commercialization. He is passionate about advancing intelligent robotics and shaping the future of automation across industries.",
+          },
+          {
+            name: "Jason Liu",
+            role: "Chief Technology Officer (CTO)",
+            bio: "Jason serves as the Chief Technology Officer of RobotX, where he leads the development of the company's core AI technologies, including the Xmind robot brain model. With deep expertise in robotics, artificial intelligence, and large-scale systems, Jason has extensive experience in building intelligent platforms that integrate perception, planning, and control. He is responsible for driving technological innovation and ensuring the scalability and performance of RobotX's solutions.",
+          },
+          {
+            name: "Evelyn Zhou",
+            role: "Chief Financial Officer (CFO)",
+            bio: "Evelyn is the Chief Financial Officer of RobotX, overseeing the company's financial strategy, capital planning, and investor relations. She brings strong expertise in financial management, corporate finance, and fundraising, with experience supporting high-growth technology companies. Evelyn plays a key role in optimizing financial operations and supporting the company's long-term growth and expansion.",
+          },
+          {
+            name: "Vera Zhang",
+            role: "Chief Operating Officer (COO)",
+            bio: "Vera is the Chief Operating Officer of RobotX, responsible for managing the company's day-to-day operations and ensuring efficient execution across all departments. She has extensive experience in operations management, process optimization, and organizational scaling. Vera focuses on building strong internal systems and driving operational excellence to support the company's rapid growth.",
+          },
+          {
+            name: "Carrie Wang",
+            role: "Chief Marketing Officer (CMO)",
+            bio: "Carrie is the Chief Marketing Officer of RobotX, leading the company's branding, marketing strategy, and global communications. With a strong background in technology marketing and brand development, she specializes in positioning innovative products in competitive markets. Carrie is responsible for driving market awareness, customer engagement, and the overall brand presence of RobotX.",
+          },
+        ],
       },
     },
     contact: {
@@ -1018,12 +1048,38 @@ const siteContentByLocale: Record<Locale, SiteContent> = {
       },
       team: {
         pageHero: {
-          kicker: "团队介绍",
-          title: "团队",
-          statusBadge: "建设中",
+          kicker: "核心团队",
+          title: "构建 RobotX 的人们。",
           description:
-            "团队介绍正在准备中，我们会尽快向您呈现 RobotX AI 背后的团队。",
+            "认识推动具身人工智能与智能机器人领域创新的领导团队。",
         },
+        members: [
+          {
+            name: "Sam Li",
+            role: "首席执行官 (CEO)",
+            bio: "Sam Li 是 RobotX 的首席执行官，是具身人工智能与机器人领域极具远见的企业家。他负责领导公司整体战略、业务拓展与全球化布局。凭借深厚的技术创新与企业建设背景，Sam 拥有将前沿创意从概念推向商业化的丰富经验。他热衷于推动智能机器人的发展，致力于重塑跨行业自动化的未来。",
+          },
+          {
+            name: "Jason Liu",
+            role: "首席技术官 (CTO)",
+            bio: "Jason 担任 RobotX 首席技术官，负责领导公司核心 AI 技术的研发，包括 Xmind 机器人大脑模型。他在机器人学、人工智能及大规模系统领域拥有深厚积累，具备丰富的智能平台建设经验，擅长融合感知、规划与控制能力。Jason 负责推动技术创新，确保 RobotX 解决方案的可扩展性与性能表现。",
+          },
+          {
+            name: "Evelyn Zhou",
+            role: "首席财务官 (CFO)",
+            bio: "Evelyn 是 RobotX 的首席财务官，负责监管公司财务战略、资本规划与投资者关系。她在财务管理、公司金融与融资方面拥有丰富专长，并具备支持高速成长型科技企业的实战经验。Evelyn 在优化财务运营、推动公司长期增长与扩张方面发挥着关键作用。",
+          },
+          {
+            name: "Vera Zhang",
+            role: "首席运营官 (COO)",
+            bio: "Vera 是 RobotX 的首席运营官，负责统筹公司日常运营，确保各部门高效协同执行。她在运营管理、流程优化与组织规模化方面积累了深厚经验。Vera 专注于构建稳健的内部体系，以运营卓越为驱动力支撑公司的快速成长。",
+          },
+          {
+            name: "Carrie Wang",
+            role: "首席营销官 (CMO)",
+            bio: "Carrie 是 RobotX 的首席营销官，负责领导公司品牌建设、营销战略与全球传播。她在科技营销与品牌发展领域具有深厚积累，擅长在竞争激烈的市场中精准定位创新产品。Carrie 负责提升市场认知度、深化客户互动，并全面塑造 RobotX 的品牌影响力。",
+          },
+        ],
       },
     },
     contact: {

@@ -1,8 +1,6 @@
 import type { SiteContent } from "@/data/site-content";
 
-type AboutPlaceholderContent =
-  | SiteContent["about"]["history"]
-  | SiteContent["about"]["team"];
+type AboutPlaceholderContent = SiteContent["about"]["history"];
 
 type Props = {
   content: AboutPlaceholderContent;
